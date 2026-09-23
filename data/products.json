@@ -1,12 +1,12 @@
 {
   "site": {
     "name": "BuyRight Notes",
-    "affiliate_links_enabled": false,
+    "affiliate_links_enabled": true,
     "tracking_id": "buyrightnotes-evergreen-20",
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-23T17:50:08.321Z"
+    "generated_at": "2026-09-23T17:54:41.945Z"
   },
   "reels": [
     {
