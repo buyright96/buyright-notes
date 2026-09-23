@@ -15,7 +15,7 @@
   /* Text */
   --bone: #f3e7d6;
   --bone-2: #cdbba6;
-  --bone-3: #8f7f6d;
+  --bone-3: #9c8c79; /* faint text; 4.9:1 on cards, 5.5:1 on surfaces (was #8f7f6d, 4.1:1 on cards) */
 
   /* Accent: ember (the lamp) */
   --ember: #f0a458;

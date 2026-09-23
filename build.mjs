@@ -98,7 +98,7 @@ function md(src) {
 const contactBlock = cfg.contact_email
   ? `**Email:** [${cfg.contact_email}](mailto:${cfg.contact_email})`
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
-for (const slug of ['about', 'how-we-pick', 'privacy', 'contact']) {
+for (const slug of ['about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
   const raw = rd(`content/${slug}.md`).replace('{{CONTACT_BLOCK}}', contactBlock);
   const fm = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const front = Object.fromEntries((fm ? fm[1] : '').split('\n').map(l => l.split(/:\s(.*)/)).filter(a => a[0]).map(([k, v]) => [k.trim(), (v || '').trim()]));
@@ -121,7 +121,7 @@ written.push(wr('404.html', pageTpl
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
-const urls = [`${base}/`, ...buildable.map(p => `${base}/p/${p.product_id}/`), ...['about', 'how-we-pick', 'privacy', 'contact'].map(s => `${base}/${s}/`)];
+const urls = [`${base}/`, ...buildable.map(p => `${base}/p/${p.product_id}/`), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => `${base}/${s}/`)];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u)}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod></url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));

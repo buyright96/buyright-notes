@@ -18,7 +18,7 @@ A note left by someone who measured. The mood is a lamplit room at night: deep e
 | Token | Hex | Job |
 |---|---|---|
 | ink-950 / 900 / 800 | #14100D / #1C1714 / #27201B | page, surface, card |
-| bone / bone-2 / bone-3 | #F3E7D6 / #CDBBA6 / #8F7F6D | text, quiet text, faint |
+| bone / bone-2 / bone-3 | #F3E7D6 / #CDBBA6 / #9C8C79 | text, quiet text, faint (every text color clears 4.5:1 on every surface) |
 | ember / ember-2 / ember-deep | #F0A458 / #FFC68A / #C9782E | the one button, glow and check, fold |
 | blush / clay | #F3B8A0 / #C96A4A | warmth, hot-deal dot |
 | sage | #A7BFA0 | a checked fact |
