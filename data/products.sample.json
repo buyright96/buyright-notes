@@ -1,0 +1,77 @@
+{
+  "_comment": "SAMPLE DATA for building the storefront. The real file is data/products.json, written only by Codex's exporter. Rows with example=true are never shown in production.",
+  "site": {
+    "name": "BuyRight Notes",
+    "affiliate_links_enabled": false,
+    "tracking_id": "buyrightnotes-evergreen-20",
+    "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
+    "blog_url": "https://buyrightnotes.blogspot.com/",
+    "generated_at": "2026-09-23"
+  },
+  "reels": [
+    { "id": "hot_deals", "label": "Hot deals", "hot": true },
+    { "id": "coffee_bar", "label": "Coffee bar" },
+    { "id": "home_decor", "label": "Home decor" }
+  ],
+  "products": [
+    {
+      "product_id": "BAMBINO-54",
+      "asin": "B0B1JPPG2L",
+      "title": "Compact espresso, 54 mm",
+      "category": "coffee_bar",
+      "reels": ["coffee_bar", "hot_deals"],
+      "hero_eligible": true,
+      "reason_to_buy": "The one we'd put in a small kitchen: heats in seconds and takes 54 mm accessories you can actually find.",
+      "detail": "Small footprint, fast heat-up, and a 54 mm portafilter. Measure your cabinet clearance before you buy; the tank fills from the top.",
+      "guide_url": "https://buyrightnotes.blogspot.com/2026/09/three-compact-espresso-choices-fit.html",
+      "guide_label": "Read the fit guide",
+      "card_image": "assets/fit-guide-three-specs.jpg",
+      "image_alt": "Compact stainless espresso machine with its water tank lifted, a grinder beside it, on a quartz counter",
+      "tracking_id": "buyrightnotes-evergreen-20",
+      "amazon_url": "https://www.amazon.com/dp/B0B1JPPG2L?tag=buyrightnotes-evergreen-20",
+      "status": "DRAFT",
+      "last_offer_check": "2026-09-23"
+    },
+    {
+      "product_id": "ENCORE-ESP",
+      "asin": "B0BW272XCV",
+      "title": "Espresso burr grinder",
+      "category": "coffee_bar",
+      "reels": ["coffee_bar"],
+      "hero_eligible": true,
+      "reason_to_buy": "Fine enough for espresso, quiet enough for a 6 a.m. house, and it fits under a cabinet.",
+      "detail": "A stepped burr grinder with a true espresso range. Pair it with any 51 to 58 mm machine.",
+      "guide_url": "https://buyrightnotes.blogspot.com/2026/09/three-compact-espresso-choices-fit.html",
+      "guide_label": "Read the grinder guide",
+      "card_image": "assets/fit-guide-wrong-for.jpg",
+      "image_alt": "Three compact espresso machines lined up on a counter with a tape measure along the front edge",
+      "tracking_id": "buyrightnotes-evergreen-20",
+      "amazon_url": "https://www.amazon.com/dp/B0BW272XCV?tag=buyrightnotes-evergreen-20",
+      "status": "DRAFT",
+      "last_offer_check": "2026-09-23"
+    },
+    {
+      "product_id": "CASABREWS-51",
+      "asin": "B09X3WGJ3R",
+      "title": "Starter espresso, 51 mm",
+      "category": "coffee_bar",
+      "reels": ["coffee_bar", "hot_deals"],
+      "hero_eligible": true,
+      "reason_to_buy": "The budget pick, with one catch: it takes 51 mm baskets, and most accessory kits don't.",
+      "detail": "Simple, small and cheap to start with. Buy 51 mm accessories only; 54 mm tools will not fit.",
+      "guide_url": "https://buyrightnotes.blogspot.com/2026/09/three-compact-espresso-choices-fit.html",
+      "guide_label": "Read the fit guide",
+      "card_image": "assets/fit-guide-accessory-size.jpg",
+      "image_alt": "Two portafilters of different sizes on a counter beside a steel ruler and a tamper",
+      "tracking_id": "buyrightnotes-evergreen-20",
+      "amazon_url": "https://www.amazon.com/dp/B09X3WGJ3R?tag=buyrightnotes-evergreen-20",
+      "status": "DRAFT",
+      "last_offer_check": "2026-09-23"
+    },
+    { "product_id": "EX-LAMP", "example": true, "title": "Warm reading lamp", "category": "home_decor", "reels": ["home_decor", "hot_deals"], "hero_eligible": true, "reason_to_buy": "Example card. Dims low enough for a bedroom, no app required.", "detail": "Example product to show layout. Not a real recommendation.", "guide_url": "https://buyrightnotes.blogspot.com/", "guide_label": "Read the guide", "card_image": "", "image_alt": "", "tint": "#5a3d2a", "amazon_url": "", "status": "EXAMPLE" },
+    { "product_id": "EX-RUG", "example": true, "title": "Washable low-pile rug", "category": "home_decor", "reels": ["home_decor"], "hero_eligible": false, "reason_to_buy": "Example card. Goes in the washer; pets and coffee spills forgiven.", "detail": "Example product to show layout.", "guide_url": "https://buyrightnotes.blogspot.com/", "guide_label": "Read the guide", "card_image": "", "image_alt": "", "tint": "#4a4530", "amazon_url": "", "status": "EXAMPLE" },
+    { "product_id": "EX-SHELF", "example": true, "title": "Floating oak shelf", "category": "home_decor", "reels": ["home_decor"], "hero_eligible": false, "reason_to_buy": "Example card. Holds real weight; the bracket is hidden.", "detail": "Example product to show layout.", "guide_url": "https://buyrightnotes.blogspot.com/", "guide_label": "Read the guide", "card_image": "", "image_alt": "", "tint": "#3f4a3a", "amazon_url": "", "status": "EXAMPLE" },
+    { "product_id": "EX-KETTLE", "example": true, "title": "Gooseneck kettle", "category": "coffee_bar", "reels": ["coffee_bar", "hot_deals"], "hero_eligible": false, "reason_to_buy": "Example card. Holds 90 degrees for pour-over without babysitting.", "detail": "Example product to show layout.", "guide_url": "https://buyrightnotes.blogspot.com/", "guide_label": "Read the guide", "card_image": "", "image_alt": "", "tint": "#3a4a52", "amazon_url": "", "status": "EXAMPLE" },
+    { "product_id": "EX-TRAY", "example": true, "title": "Stone catch-all tray", "category": "home_decor", "reels": ["home_decor", "hot_deals"], "hero_eligible": false, "reason_to_buy": "Example card. Keys, rings, earbuds: one place by the door.", "detail": "Example product to show layout.", "guide_url": "https://buyrightnotes.blogspot.com/", "guide_label": "Read the guide", "card_image": "", "image_alt": "", "tint": "#5c3a3a", "amazon_url": "", "status": "EXAMPLE" }
+  ]
+}

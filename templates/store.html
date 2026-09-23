@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--META-->
+<link rel="icon" href="{{ROOT}}brand/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="{{ROOT}}manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400,0..100&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ROOT}}brand/brand.css">
+<link rel="stylesheet" href="{{ROOT}}storefront.css">
+<!--ANALYTICS-->
+</head>
+<body class="grain">
+<div class="lampfield" aria-hidden="true"></div>
+<div class="page">
+  <header class="top">
+    <a class="brand" href="{{ROOT}}./" aria-label="BuyRight Notes home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8H40L56 24V42a14 14 0 0 1-14 14H22A14 14 0 0 1 8 42V22A14 14 0 0 1 22 8Z" fill="#27201b" stroke="#f0a458" stroke-opacity=".55" stroke-width="2"/><path d="M40 8v10a6 6 0 0 0 6 6h10Z" fill="#c9782e"/><path d="M19 34l11 11 23-25" fill="none" stroke="#ffc68a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>BuyRight <em>Notes</em></span>
+    </a>
+    <span class="spacer"></span>
+  </header>
+
+  <p class="preview-note" id="preview-note" hidden>Preview with sample products</p>
+
+  <main>
+    <section class="hero reveal" id="hero" aria-labelledby="hero-title">
+      <div class="hero-media" id="hero-media"></div>
+      <div class="hero-text">
+        <span class="chip" id="hero-chip"></span>
+        <h1 class="h1" id="hero-title">{{HERO_TITLE}}</h1>
+        <p class="why" id="hero-why">{{HERO_WHY}}</p>
+        <div class="slots" aria-hidden="true"><span class="slot-price"></span><span class="slot-rating"></span><span class="slot-badge"></span></div>
+        <div class="actions">
+          <a class="btn btn-primary" id="hero-cta" href="#" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
+          <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
+        </div>
+        <details class="more" id="hero-more">
+          <summary>Why we picked it</summary>
+          <p class="detail" id="hero-detail"></p>
+          <p class="checked" id="hero-checked"></p>
+          <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
+        </details>
+      </div>
+    </section>
+
+    <p class="disclosure" id="disclosure"></p>
+
+    <div id="shelves"></div>
+  </main>
+
+  <footer>
+    <nav>
+      <a href="{{ROOT}}about/">About</a>
+      <a href="{{ROOT}}how-we-pick/">How we pick</a>
+      <a href="{{ROOT}}privacy/">Privacy</a>
+      <a href="{{ROOT}}contact/">Contact</a>
+      <a href="{{BLOG_URL}}">The guides</a>
+    </nav>
+    <span>Prices and availability change. We link you to Amazon to see today's.</span>
+  </footer>
+</div>
+
+<div class="buybar" id="buybar" aria-hidden="true">
+  <div class="inner">
+    <span class="name" id="buybar-name"></span>
+    <a class="btn btn-primary btn-sm" id="buybar-cta" href="#" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
+  </div>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-inner">
+    <div class="grip" aria-hidden="true"></div>
+    <div class="sheet-media" id="sheet-media"></div>
+    <span class="chip" id="sheet-chip"></span>
+    <h2 class="h2" id="sheet-title"></h2>
+    <p class="why" id="sheet-why"></p>
+    <p class="detail" id="sheet-detail"></p>
+    <p class="checked small" id="sheet-checked"></p>
+    <div class="actions">
+      <a class="btn btn-primary" id="sheet-cta" href="#" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
+      <a class="btn btn-ghost" id="sheet-guide" href="#" hidden>Read the guide</a>
+      <button class="btn btn-quiet btn-sm close" type="button" id="sheet-close">Close</button>
+    </div>
+    <p class="sheet-more" id="sheet-more" hidden>Want the long version? <a id="sheet-more-link" href="#">Read our guide</a></p>
+  </div>
+</dialog>
+
+<script>window.__ROOT = "{{ROOT}}"; window.__HERO = "{{HERO_ID}}";</script>
+<script src="{{ROOT}}storefront.js" defer></script>
+</body>
+</html>

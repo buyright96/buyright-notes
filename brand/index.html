@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BuyRight Notes brand kit</title>
+<meta name="description" content="Logo, colors, type, buttons, card and reel patterns for the BuyRight Notes storefront.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400,0..100&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand.css">
+<style>
+  body { background: var(--bg); }
+  .lampfield { position: fixed; inset: 0 0 auto 0; height: 70vh; background: var(--lamp); pointer-events: none; z-index: 0; }
+  main { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 0 var(--gutter) var(--sp-8); }
+  header.hero { padding: 18vh 0 var(--sp-7); display: grid; gap: var(--sp-5); }
+  .lockup { width: min(100%, 360px); }
+  .kit-nav { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+  section { padding: var(--sp-7) 0 0; display: grid; gap: var(--sp-4); }
+  section > * { min-width: 0; }
+  section > .h2 { margin-top: var(--sp-2); }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); }
+  @media (min-width: 560px) { .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .grid3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); }
+
+  /* Logo stage */
+  .stage { border-radius: var(--r-md); padding: var(--sp-6); display: grid; place-items: center; min-height: 160px; box-shadow: var(--glow-soft); }
+  .stage.dark { background: var(--ink-900); }
+  .stage.paper { background: var(--paper); }
+  .stage.ember { background: var(--ember); }
+  .marks { display: flex; gap: var(--sp-4); align-items: flex-end; }
+  .marks svg { height: auto; }
+  .clear { position: relative; display: inline-block; padding: 24px; outline: 1px dashed rgba(240,164,88,.5); border-radius: 8px; }
+  .clear::after { content: "clear space = fold height"; position: absolute; left: 0; bottom: -22px; font-size: var(--fs-xs); color: var(--text-3); }
+
+  /* Swatches */
+  .sw { border-radius: var(--r-sm); padding: var(--sp-3); min-height: 92px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; box-shadow: inset 0 0 0 1px var(--line); }
+  .sw b { font-size: var(--fs-sm); }
+  .sw span { font-size: var(--fs-xs); opacity: .8; font-variant-numeric: tabular-nums; }
+
+  /* Type specimen */
+  .spec { display: grid; gap: var(--sp-3); }
+  .spec .display { max-width: 12ch; }
+
+  /* Product card sample */
+  .pcard .card-media { position: relative; background: radial-gradient(80% 60% at 50% 20%, #4a3728, #27201b 70%); display: grid; place-items: center; }
+  .pcard .card-media img { width: 100%; height: 100%; object-fit: cover; }
+  .pcard .why { font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 18, "SOFT" 40; color: var(--text); font-size: 1.05rem; line-height: 1.35; }
+  .pcard .meta { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
+  .pcard .actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
+  .checked { font-size: var(--fs-xs); color: var(--text-3); }
+
+  /* Reel demo */
+  .reel-wrap { margin: 0 calc(-1 * var(--gutter)); }
+  .reel-head { display: flex; align-items: baseline; justify-content: space-between; padding: 0 var(--gutter); }
+  .reel .card { transform-origin: 50% 100%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reel.spin .card { animation: settle var(--dur-3) var(--ease-settle) both; }
+    .reel.spin .card:nth-child(2) { animation-delay: 60ms; }
+    .reel.spin .card:nth-child(3) { animation-delay: 120ms; }
+    .reel.spin .card:nth-child(4) { animation-delay: 180ms; }
+    .reel.spin .card:nth-child(5) { animation-delay: 240ms; }
+  }
+  @keyframes settle { 0% { transform: translateY(46px) scale(.96); opacity: 0; } 55% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+  .mini .card-media { aspect-ratio: 4 / 5; }
+  .mini .card-body { padding: var(--sp-3); gap: 6px; }
+  .mini .why { font-size: .95rem; }
+
+  /* Voice */
+  .voice { display: grid; gap: var(--sp-3); }
+  .voice .line { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-sm); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); display: grid; gap: 4px; }
+  .voice .line .small { color: var(--text-3); }
+  .no { text-decoration: line-through; color: var(--text-3); }
+
+  /* Rules */
+  .rules { display: grid; gap: var(--sp-2); padding: 0; margin: 0; list-style: none; }
+  .rules li { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-sm); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: var(--fs-sm); color: var(--text-2); }
+  .rules li b { color: var(--text); }
+
+  /* Sticky bar demo */
+  .bar { position: sticky; bottom: 12px; z-index: 5; display: flex; align-items: center; gap: var(--sp-3); padding: 10px 10px 10px 16px; border-radius: var(--r-pill); background: color-mix(in srgb, var(--ink-900) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--glow-ember); margin-top: var(--sp-5); }
+  .bar .name { flex: 1; min-width: 0; font-family: var(--font-display); font-size: var(--fs-md); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  footer { padding-top: var(--sp-7); color: var(--text-3); font-size: var(--fs-xs); }
+</style>
+</head>
+<body class="grain">
+<div class="lampfield" aria-hidden="true"></div>
+<main>
+  <header class="hero reveal">
+    <img class="lockup" src="logo-lockup.svg" alt="BuyRight Notes" width="420" height="88">
+    <h1 class="display">Shop like it's <em class="ital">late</em> and the lamp is on.</h1>
+    <p class="lede">The BuyRight Notes brand kit. One warm light, deep quiet surfaces, a soft serif that reads like a note a friend left you, and one button that matters.</p>
+    <nav class="kit-nav" aria-label="Sections">
+      <a class="chip" href="#logo">Logo</a><a class="chip" href="#color">Color</a><a class="chip" href="#type">Type</a><a class="chip" href="#ui">Buttons</a><a class="chip" href="#card">Card</a><a class="chip" href="#reel">Reel</a><a class="chip" href="#voice">Voice</a><a class="chip" href="#rules">Rules</a>
+    </nav>
+  </header>
+
+  <section id="logo" class="reveal">
+    <p class="eyebrow">01 — Logo</p>
+    <h2 class="h2">The note with the check.</h2>
+    <p class="small">A dog-eared card is the "note". The single check stroke is the "right buy". The check leaves the card toward the fold, so the mark reads as decided, not filed away. Use the ember version on dark, the paper version on light. Never rotate, recolor to blue, or add a shadow.</p>
+    <div class="stage dark"><img src="logo-lockup.svg" alt="Lockup on dark" width="420" height="88"></div>
+    <div class="stage paper"><img src="logo-lockup-paper.svg" alt="Lockup on paper" width="420" height="88"></div>
+    <div class="grid2">
+      <div class="stage dark"><div class="marks"><img src="logo-mark.svg" width="96" height="96" alt="Mark, large"><img src="logo-mark.svg" width="48" height="48" alt="Mark, medium"><img src="logo-mark.svg" width="24" height="24" alt="Mark, small"></div></div>
+      <div class="stage ember"><img src="favicon.svg" width="72" height="72" alt="App icon"></div>
+    </div>
+    <div class="stage dark" style="padding-bottom:48px"><span class="clear"><img src="logo-mark.svg" width="64" height="64" alt="Mark with clear space"></span></div>
+  </section>
+
+  <section id="color" class="reveal">
+    <p class="eyebrow">02 — Color</p>
+    <h2 class="h2">Espresso, bone, and one ember.</h2>
+    <p class="small">Dark surfaces carry 90% of every screen. Bone is for words. Ember is the lamp: it lights the one thing to tap, and nothing else. Blush and clay mark heat ("Hot deals"), sage marks a checked fact.</p>
+    <div class="grid3">
+      <div class="sw" style="background:var(--ink-950)"><b>Ink 950</b><span>#14100D · page</span></div>
+      <div class="sw" style="background:var(--ink-900)"><b>Ink 900</b><span>#1C1714 · surface</span></div>
+      <div class="sw" style="background:var(--ink-800)"><b>Ink 800</b><span>#27201B · card</span></div>
+      <div class="sw" style="background:var(--bone);color:var(--paper-ink)"><b>Bone</b><span>#F3E7D6 · text</span></div>
+      <div class="sw" style="background:var(--bone-2);color:var(--paper-ink)"><b>Bone 2</b><span>#CDBBA6 · quiet text</span></div>
+      <div class="sw" style="background:var(--bone-3)"><b>Bone 3</b><span>#8F7F6D · faint</span></div>
+      <div class="sw" style="background:var(--ember);color:var(--ember-ink)"><b>Ember</b><span>#F0A458 · the button</span></div>
+      <div class="sw" style="background:var(--ember-2);color:var(--ember-ink)"><b>Ember light</b><span>#FFC68A · glow, check</span></div>
+      <div class="sw" style="background:var(--ember-deep)"><b>Ember deep</b><span>#C9782E · fold, paper accent</span></div>
+      <div class="sw" style="background:var(--blush);color:var(--paper-ink)"><b>Blush</b><span>#F3B8A0 · warmth</span></div>
+      <div class="sw" style="background:var(--clay)"><b>Clay</b><span>#C96A4A · hot deals dot</span></div>
+      <div class="sw" style="background:var(--sage);color:var(--paper-ink)"><b>Sage</b><span>#A7BFA0 · checked</span></div>
+    </div>
+  </section>
+
+  <section id="type" class="reveal">
+    <p class="eyebrow">03 — Type</p>
+    <h2 class="h2">Fraunces for the note, Bricolage for the rest.</h2>
+    <p class="small">Fraunces is a soft, slightly wonky serif; it makes headlines feel handwritten without being cute. Bricolage Grotesque handles labels, buttons and body copy with a little character. Headlines stay short. Numbers are tabular.</p>
+    <div class="spec">
+      <p class="display">A grinder your counter can forgive.</p>
+      <p class="h1">Fits under the cabinet. Fits the routine.</p>
+      <p class="h2">Three specs to check before you buy</p>
+      <p class="h3">Why we picked it</p>
+      <p>Body: Most compact machines look the same until you measure the portafilter. Get that one number right and every accessory you buy later will fit.</p>
+      <p class="small">Small: Manufacturer specs, checked September 23, 2026.</p>
+      <p class="eyebrow">Eyebrow · Hot deals</p>
+    </div>
+  </section>
+
+  <section id="ui" class="reveal">
+    <p class="eyebrow">04 — Buttons and chips</p>
+    <h2 class="h2">One lit button per screen.</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a class="btn btn-primary" href="#">Check today's price</a>
+      <a class="btn btn-ghost" href="#">Read the guide</a>
+      <button class="btn btn-quiet btn-sm" type="button">Shuffle</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="chip chip-hot">Hot deals</span><span class="chip">Home decor</span><span class="chip">Coffee bar</span><span class="chip">Small kitchens</span>
+    </div>
+    <div class="disclosure">As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.</div>
+  </section>
+
+  <section id="card" class="reveal">
+    <p class="eyebrow">05 — Product card</p>
+    <h2 class="h2">Picture, one honest line, one button.</h2>
+    <p class="small">Every card carries our own reason-to-buy line in Fraunces italic, a "checked on" date, and a link to the matching guide. The dotted slots are reserved for live price, stars and badges from Amazon's Creators API and stay hidden until then.</p>
+    <article class="card pcard">
+      <div class="card-media"><img src="../../01_WORKSPACE/content/pins/assets/fit-guide-three-specs.png" alt="Compact espresso machine with its water tank lifted, a grinder beside it, on a quartz counter" loading="lazy"></div>
+      <div class="card-body">
+        <div class="meta"><span class="chip">Coffee bar</span><span class="slot-price"></span><span class="slot-rating"></span><span class="slot-badge"></span></div>
+        <h3 class="h3">Compact espresso, 54 mm</h3>
+        <p class="why">"The one we'd put in a small kitchen: the tank lifts from the top, so it can live under a cabinet."</p>
+        <p class="checked">Specs checked Sep 23, 2026 · <a href="#">Read the fit guide</a></p>
+        <div class="actions"><a class="btn btn-primary" href="#">Check today's price</a></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="reel" class="reveal">
+    <p class="eyebrow">06 — Slot reel</p>
+    <h2 class="h2">Swipe, don't wait.</h2>
+    <p class="small">Reels never move on their own. On first view they settle into place like a slot machine landing. Shuffle re-rolls the order. The next card always peeks in from the right edge. Off when the phone asks for reduced motion.</p>
+    <div class="reel-wrap">
+      <div class="reel-head"><span class="chip chip-hot">Hot deals</span><button class="btn btn-quiet btn-sm" type="button" id="shuffle">Shuffle</button></div>
+      <div class="reel spin mini" id="reel">
+        <article class="card"><div class="card-media" style="background:radial-gradient(80% 60% at 50% 20%,#5a3d2a,#27201b 70%)"></div><div class="card-body"><p class="why">"Quiet enough for a 6 a.m. house."</p><a class="btn btn-primary btn-sm" href="#">Check today's price</a></div></article>
+        <article class="card"><div class="card-media" style="background:radial-gradient(80% 60% at 50% 20%,#3f4a3a,#27201b 70%)"></div><div class="card-body"><p class="why">"Fits a 51 mm basket; most kits don't."</p><a class="btn btn-primary btn-sm" href="#">Check today's price</a></div></article>
+        <article class="card"><div class="card-media" style="background:radial-gradient(80% 60% at 50% 20%,#5c3a3a,#27201b 70%)"></div><div class="card-body"><p class="why">"The tank lifts from the top."</p><a class="btn btn-primary btn-sm" href="#">Check today's price</a></div></article>
+        <article class="card"><div class="card-media" style="background:radial-gradient(80% 60% at 50% 20%,#4a4530,#27201b 70%)"></div><div class="card-body"><p class="why">"One knob. No app."</p><a class="btn btn-primary btn-sm" href="#">Check today's price</a></div></article>
+        <article class="card"><div class="card-media" style="background:radial-gradient(80% 60% at 50% 20%,#3a4a52,#27201b 70%)"></div><div class="card-body"><p class="why">"Steams milk without a tantrum."</p><a class="btn btn-primary btn-sm" href="#">Check today's price</a></div></article>
+      </div>
+    </div>
+    <div class="bar"><span class="name">Compact espresso, 54 mm</span><a class="btn btn-primary btn-sm" href="#">Check price</a></div>
+  </section>
+
+  <section id="voice" class="reveal">
+    <p class="eyebrow">07 — Voice</p>
+    <h2 class="h2">A note from someone who measured.</h2>
+    <p class="small">Short, specific, kind. We say what fits, who it's for, and what we checked. We never invent a rating, quote a price, or promise a deal.</p>
+    <div class="voice">
+      <div class="line"><span>"Fits under a 15-inch cabinet with the tank in."</span><span class="small">Say this: a measured fact.</span></div>
+      <div class="line"><span>"Our pick if you already own a grinder."</span><span class="small">Say this: who it's for.</span></div>
+      <div class="line"><span class="no">"4.8 stars, 40,000 reviews, Amazon's Choice."</span><span class="small">Not this: Amazon's data, in part or in whole, until the Creators API serves it.</span></div>
+      <div class="line"><span class="no">"Only $139 today!"</span><span class="small">Not this: prices only when Amazon serves them live.</span></div>
+    </div>
+  </section>
+
+  <section id="rules" class="reveal">
+    <p class="eyebrow">08 — Rules that never bend</p>
+    <h2 class="h2">Keep the account safe.</h2>
+    <ul class="rules">
+      <li><b>Disclosure</b> near the first Amazon link on every page.</li>
+      <li><b>No Amazon images, prices, stars, review counts or badges</b> unless served through the Creators API. The card slots stay hidden until then.</li>
+      <li><b>Plain tagged links</b> to amazon.com/dp/ASIN, opened by a real tap. No redirects, no shorteners, no auto-forward.</li>
+      <li><b>Every card has an original line</b> and a guide link. Polish never replaces content.</li>
+      <li><b>Generated art never impersonates</b> the exact product. Scene and mood, or an accurate depiction.</li>
+      <li><b>Tagged links go live</b> only after the site is on the Associates website list with its own tracking ID.</li>
+    </ul>
+  </section>
+
+  <footer>BuyRight Notes brand kit · v1 · September 23, 2026 · 03_STOREFRONT/brand</footer>
+</main>
+<script>
+  // Shuffle: re-roll the reel and replay the settle animation once.
+  const reel = document.getElementById('reel');
+  document.getElementById('shuffle').addEventListener('click', () => {
+    const cards = [...reel.children];
+    for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [cards[i], cards[j]] = [cards[j], cards[i]]; }
+    reel.classList.remove('spin'); void reel.offsetWidth;
+    cards.forEach(c => reel.appendChild(c));
+    reel.scrollTo({ left: 0, behavior: 'auto' });
+    reel.classList.add('spin');
+  });
+</script>
+</body>
+</html>

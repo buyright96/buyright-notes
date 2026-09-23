@@ -1,0 +1,28 @@
+{
+  "_how_to_add_a_product": [
+    "1. Copy the object below into data/products.json (Codex's exporter normally writes that file from the registry; this is the shape it produces).",
+    "2. Fill every field. Keep reason_to_buy to one sentence in our own words. Never type a price, star rating, review count or badge anywhere.",
+    "3. Put the card image in assets/ (our own generated scene, 4:5 or 2:3, JPEG under 250 KB). Never an Amazon photo.",
+    "4. Set status to DRAFT to keep it out of the live site, LIVE to publish it. last_offer_check must be within 7 days for LIVE.",
+    "5. Run: node build.mjs   (this writes p/<product_id>/index.html, updates the sitemap, and the home page picks it up automatically).",
+    "6. The Pin for this product links to <base_url>/p/<product_id>/?utm_source=pinterest&utm_medium=organic&utm_campaign=<product_id>"
+  ],
+  "product": {
+    "product_id": "SHORT-UNIQUE-ID",
+    "asin": "B0XXXXXXXX",
+    "title": "Plain product name, our words, under 40 characters",
+    "category": "coffee_bar | home_decor | hot_deals | (any reel id listed in site reels)",
+    "reels": ["coffee_bar", "hot_deals"],
+    "hero_eligible": true,
+    "reason_to_buy": "One honest sentence: who it is for and the one thing that makes it right.",
+    "detail": "Two or three sentences for the tap-to-open note: the fit check, the trade-off, what to verify.",
+    "guide_url": "https://buyrightnotes.blogspot.com/... (optional; shows only as a small link inside the note)",
+    "guide_label": "Read the fit guide",
+    "card_image": "assets/your-scene.jpg",
+    "image_alt": "What is literally in the picture, one sentence.",
+    "tracking_id": "buyrightnotes-evergreen-20",
+    "amazon_url": "https://www.amazon.com/dp/B0XXXXXXXX?tag=buyrightnotes-evergreen-20",
+    "status": "DRAFT",
+    "last_offer_check": "2026-09-23"
+  }
+}

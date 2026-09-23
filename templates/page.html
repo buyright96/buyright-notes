@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--META-->
+<link rel="icon" href="{{ROOT}}brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400,0..100&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ROOT}}brand/brand.css">
+<link rel="stylesheet" href="{{ROOT}}storefront.css">
+<style>
+  .prose { max-width: 680px; margin: 0 auto; padding: var(--sp-6) var(--gutter) var(--sp-8); display: grid; gap: var(--sp-4); }
+  .prose h1 { font-size: var(--fs-2xl); }
+  .prose h2 { font-size: var(--fs-xl); margin-top: var(--sp-4); }
+  .prose p, .prose li { color: var(--text-2); }
+  .prose a { color: var(--text); }
+  .prose ul, .prose ol { padding-left: 1.2em; margin: 0; display: grid; gap: 6px; }
+  .prose .updated { font-size: var(--fs-xs); color: var(--text-3); }
+  .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
+</style>
+<!--ANALYTICS-->
+</head>
+<body class="grain">
+<div class="lampfield" aria-hidden="true"></div>
+<div class="page">
+  <header class="top">
+    <a class="brand" href="{{ROOT}}./" aria-label="BuyRight Notes home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8H40L56 24V42a14 14 0 0 1-14 14H22A14 14 0 0 1 8 42V22A14 14 0 0 1 22 8Z" fill="#27201b" stroke="#f0a458" stroke-opacity=".55" stroke-width="2"/><path d="M40 8v10a6 6 0 0 0 6 6h10Z" fill="#c9782e"/><path d="M19 34l11 11 23-25" fill="none" stroke="#ffc68a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>BuyRight <em>Notes</em></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="guides" href="{{ROOT}}">Shop</a>
+  </header>
+  <main class="prose">
+{{CONTENT}}
+  </main>
+  <footer>
+    <nav>
+      <a href="{{ROOT}}about/">About</a>
+      <a href="{{ROOT}}how-we-pick/">How we pick</a>
+      <a href="{{ROOT}}privacy/">Privacy</a>
+      <a href="{{ROOT}}contact/">Contact</a>
+      <a href="{{BLOG_URL}}">The guides</a>
+    </nav>
+    <span>As an Amazon Associate, BuyRight Notes earns from qualifying purchases.</span>
+  </footer>
+</div>
+</body>
+</html>

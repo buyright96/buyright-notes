@@ -1,0 +1,14 @@
+{
+  "_comment": "Storefront site settings. base_url is filled in once the host exists (no trailing slash). Empty strings mean 'not set yet'.",
+  "name": "BuyRight Notes",
+  "tagline": "Products we measured, checked, and would buy again.",
+  "base_url": "",
+  "blog_url": "https://buyrightnotes.blogspot.com/",
+  "ga4_measurement_id": "G-YMLG0Q6ETM",
+  "pinterest_domain_verify": "",
+  "google_site_verification": "",
+  "bing_site_verification": "",
+  "contact_email": "",
+  "theme_color": "#14100d",
+  "default_share_image": "assets/fit-guide-three-specs.jpg"
+}
