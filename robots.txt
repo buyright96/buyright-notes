@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /data/
+Sitemap: https://buyright96.github.io/buyright-notes/sitemap.xml
