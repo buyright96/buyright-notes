@@ -38,7 +38,15 @@
   // Buy links: tagged Special Link once the site is on the Associates list (site.affiliate_links_enabled),
   // otherwise a plain untagged Amazon product link. Never a redirect, never a shortener.
   const linksOn = site.affiliate_links_enabled === true;
-  const buyHref = (p) => p.example ? '#' : (linksOn && p.amazon_url) ? p.amazon_url : (p.asin ? `https://www.amazon.com/dp/${p.asin}` : '#');
+  // Internal mode (set in the page head from ?internal=on): our own visits get plain, untagged Amazon links, so our
+  // clicks never count as affiliate clicks, and a small chip says so (tap it to turn internal mode off).
+  const internal = window.__INTERNAL === true;
+  const plain = (p) => p.asin ? `https://www.amazon.com/dp/${p.asin}` : '#';
+  const buyHref = (p) => p.example ? '#' : internal ? plain(p) : (linksOn && p.amazon_url) ? p.amazon_url : plain(p);
+  if (internal && !/^(localhost|127\.)/.test(location.hostname)) {
+    const tag = Object.assign(document.createElement('a'), { className: 'internal-chip', href: '?internal=off', textContent: 'Internal · not counted', title: 'This browser is marked as ours: visits are labeled internal and Buy links are untagged. Tap to turn off.' });
+    document.querySelector('.top .spacer')?.after(tag);
+  }
   const buyLabel = () => 'Buy on Amazon';
   const checkedLine = (p) => p.last_offer_check ? `Specs checked ${fmtDate(p.last_offer_check)}` : (p.example ? 'Example card for layout' : '');
   const setBuy = (a, p, placement = 'card') => { a.href = buyHref(p); a.textContent = buyLabel(); a.onclick = () => track('buy_click', p, placement); if (p.example) { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('target'); } };

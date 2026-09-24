@@ -51,8 +51,15 @@ function meta({ title, description, url, image, type = 'website', extra = '' }) 
     extra,
   ].filter(Boolean).join('\n');
 }
+// Internal mode (owner, 2026-09-24): opening any page once with ?internal=on marks that browser as ours (?internal=off undoes it).
+// Our visits are then sent with traffic_type=internal, so GA4's Internal Traffic filter can drop or count them, and
+// storefront.js gives our Buy buttons untagged Amazon links, so our clicks never reach the Associates report.
+// Local previews (localhost) are always internal.
 const analytics = cfg.ga4_measurement_id ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${cfg.ga4_measurement_id}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${cfg.ga4_measurement_id}',{send_page_view:true});</script>` : '<!-- analytics: no GA4 id in site.config.json -->';
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());
+(function(){var i=false;try{var q=new URLSearchParams(location.search).get('internal');if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');i=localStorage.getItem('br_internal')==='1';}catch(e){}
+if(/^(localhost|127\\.|\\[::1\\])/.test(location.hostname))i=true;window.__INTERNAL=i;if(i)gtag('set',{traffic_type:'internal'});
+gtag('config','${cfg.ga4_measurement_id}',i?{send_page_view:true,traffic_type:'internal'}:{send_page_view:true});})();</script>` : '<!-- analytics: no GA4 id in site.config.json -->';
 
 function jsonld(obj) { return `<script type="application/ld+json">${JSON.stringify(obj)}</script>`; }
 // The exact Pin B image each product is promoted with (01_WORKSPACE/tools/export_pin_media.mjs), shown on its page so

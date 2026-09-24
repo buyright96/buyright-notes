@@ -35,7 +35,10 @@
   .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMLG0Q6ETM"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YMLG0Q6ETM',{send_page_view:true});</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());
+(function(){var i=false;try{var q=new URLSearchParams(location.search).get('internal');if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');i=localStorage.getItem('br_internal')==='1';}catch(e){}
+if(/^(localhost|127\.|\[::1\])/.test(location.hostname))i=true;window.__INTERNAL=i;if(i)gtag('set',{traffic_type:'internal'});
+gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{send_page_view:true});})();</script>
 </head>
 <body class="grain">
 <div class="lampfield" aria-hidden="true"></div>
