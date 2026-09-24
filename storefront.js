@@ -32,7 +32,7 @@
   try { data = await load(); } catch (e) { $('hero-title').textContent = 'The store is being restocked.'; return; }
   const site = data.site || {};
   const sample = data._source.endsWith('sample.json');
-  $('preview-note').hidden = !(sample || preview);
+  const previewNote = $('preview-note'); if (previewNote) previewNote.hidden = !(sample || preview); // only sample builds carry it
 
   // Production never shows example rows. Preview does, labeled.
   const showExamples = sample || preview;
@@ -92,6 +92,7 @@
   if (!(heroImg && hero.card_image && heroImg.getAttribute('src').endsWith(hero.card_image))) $('hero-media').replaceWith(Object.assign(media(hero, 'hero-media'), { id: 'hero-media' }));
   $('hero-chip').replaceWith(Object.assign(chip(hero), { id: 'hero-chip' }));
   if (!onHome && fromPinterest && !hero.example) { const c = $('hero-chip'); c.textContent = 'Your Pinterest pick'; c.classList.add('chip-pin'); }
+  if (onHome && !hero.example) $('hero-chip').textContent = 'Newest pick'; // the home hero is the latest pick, not a category
   $('hero-title').textContent = hero.title;
   $('hero-why').textContent = hero.reason_to_buy ? `"${hero.reason_to_buy}"` : '';
   $('hero-checked').textContent = checkedLine(hero);
@@ -139,6 +140,7 @@
   }
   // The first-view spin plays once, when a wheel is a third on screen (not at load, when wheels sit below the fold).
   const spinIO = 'IntersectionObserver' in window ? new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { spinIO.unobserve(e.target); e.target._spin(); } }, { threshold: 0.35 }) : null;
+  shelves.replaceChildren(); // the build's plain lists (for crawlers and no-script visitors) give way to the wheels
   for (const cat of wheelCats) {
     const section = wheel(cat);
     shelves.appendChild(section);
@@ -187,7 +189,7 @@
   // "navigation that takes you to a home area that shows all of the sections"). Tiles open that wheel on the home page.
   const grid = $('catgrid');
   if (grid && !onHome && categories.length) {
-    const tiles = $('catgrid-tiles');
+    const tiles = $('catgrid-tiles'); tiles.replaceChildren(); // the build pre-renders the same tiles
     for (const cat of categories) {
       const a = document.createElement('a'); a.className = 'tile'; a.href = `${ROOT}./#${cat.id}`;
       if (cat.id === hero.category) a.setAttribute('aria-current', 'true');

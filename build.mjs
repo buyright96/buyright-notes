@@ -97,12 +97,40 @@ function renderDetail(text) {
   }
   close(); return out.join('');
 }
+// Everything a crawler needs is in the HTML itself: the category bar, every category's picks, and (on product pages)
+// the "All our picks" tiles. storefront.js rebuilds the same things with the wheels; without it the plain links work.
+// Same rules as storefront.js: a category exists when a LIVE product lists it; a product page shows its own category
+// (if it has more than one pick, else the first non-hot category with more than one) and then Hot deals.
+const categories = (data.reels || []).map(r => ({ ...r, items: buildable.filter(p => (p.reels || [p.category]).includes(r.id)) })).filter(r => r.items.length);
+const pageCats = (hero, isHome) => {
+  if (isHome) return categories;
+  const own = categories.find(r => r.id === hero.category && r.items.length > 1) || categories.find(r => r.id !== 'hot_deals' && r.items.length > 1);
+  return [own, categories.find(r => r.id === 'hot_deals')].filter((r, i, a) => r && a.indexOf(r) === i);
+};
+const catnav = (hero, isHome, rootPrefix) => {
+  const here = new Set(pageCats(hero, isHome).map(c => c.id));
+  return [`<a href="${isHome ? '#top' : rootPrefix + './'}" data-target="top"${isHome ? ' aria-current=""' : ''}>All picks</a>`,
+    ...categories.map(c => `<a href="${here.has(c.id) ? '#' + c.id : rootPrefix + './#' + c.id}" data-target="${c.id}">${esc(c.label)}</a>`)].join('');
+};
+const staticShelves = (hero, isHome, rootPrefix) => pageCats(hero, isHome).map(c => `<section class="shelf static" id="${c.id}" aria-labelledby="shelf-${c.id}">
+  <div class="shelf-head"><h2 class="h2" id="shelf-${c.id}">${esc(c.label)}</h2></div>
+  <ul class="picks">${c.items.map(p => `<li><a href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b>${p.reason_to_buy ? `<span>${esc(p.reason_to_buy)}</span>` : ''}</a></li>`).join('')}</ul>
+</section>`).join('\n');
+const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.items.find(p => p.product_id !== hero.product_id) || c.items[0]; return `<a class="tile" href="${rootPrefix}./#${c.id}"${c.id === hero.category ? ' aria-current="true"' : ''}><span class="card-media">${pic.card_image ? `<img src="${esc(rootPrefix + pic.card_image)}" alt="${esc(pic.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(c.label)}</b><span>${c.items.length} ${c.items.length === 1 ? 'pick' : 'picks'}</span></a>`; }).join('');
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
+  const isHome = !heroId;
   return storeTpl
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
     .replace('{{HERO_DETAIL}}', hero ? renderDetail(hero.detail) : '')
+    .replace('{{CATNAV}}', hero ? catnav(hero, isHome, rootPrefix) : '')
+    .replace('{{SHELVES}}', hero ? staticShelves(hero, isHome, rootPrefix) : '')
+    .replace('{{CATGRID_HIDDEN}}', isHome ? ' hidden' : '')
+    .replace('{{CATGRID}}', hero && !isHome ? staticTiles(hero, rootPrefix) : '')
+    .replace('{{DISCLOSURE}}', esc(site.disclosure || 'As an Amazon Associate we earn from qualifying purchases.'))
+    .replace('{{PREVIEW_NOTE}}', dataFile.endsWith('sample.json') ? '\n  <p class="preview-note" id="preview-note">Preview with sample products</p>\n' : '')
+    .replace('{{HOME_INTRO}}', isHome ? `\n  <p class="intro">Research before you buy. Every pick here says who it is for, what to check first, and who should skip it.</p>\n` : '')
     .replace('<!--ANALYTICS-->', analytics)
     .replaceAll('{{ROOT}}', rootPrefix)
     .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
@@ -110,7 +138,7 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
     .replace('{{BACK_HIDDEN}}', heroId ? '' : ' hidden')
     .replace('{{HERO_TITLE}}', esc(hero ? hero.title : title))
     .replace('{{HERO_WHY}}', hero && hero.reason_to_buy ? esc(`"${hero.reason_to_buy}"`) : '')
-    .replace('{{HERO_CHIP}}', hero ? esc(reelLabel(hero.category)) : '')
+    .replace('{{HERO_CHIP}}', isHome ? 'Newest pick' : hero ? esc(reelLabel(hero.category)) : '')
     .replace('{{HERO_MEDIA}}', heroMedia(hero, rootPrefix))
     .replaceAll('{{HERO_BUY_URL}}', esc(heroBuyUrl || '#'))
     .replaceAll('{{HERO_GUIDE_URL}}', esc(heroGuideUrl || '#'));

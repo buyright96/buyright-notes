@@ -22,11 +22,9 @@
       <span>BuyRight <em>Notes</em></span>
     </a>
     <span class="spacer"></span>
-    <nav class="catnav" id="catnav" aria-label="Browse picks"></nav>
+    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>
   </header>
-
-  <p class="preview-note" id="preview-note" hidden>Preview with sample products</p>
-
+{{PREVIEW_NOTE}}{{HOME_INTRO}}
   <main>
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <a class="backlink" id="backlink" href="{{ROOT}}./"{{BACK_HIDDEN}}><span aria-hidden="true">&larr;</span> All picks</a>
@@ -49,16 +47,16 @@
       </div>
     </section>
 
-    <noscript><p class="disclosure">JavaScript is off. The main Amazon button and guide link above still work; the interactive product shelves require JavaScript.</p></noscript>
+    <noscript><p class="disclosure">JavaScript is off. Every pick below is a plain link to its page; the rotating wheels need JavaScript.</p></noscript>
 
-    <p class="disclosure" id="disclosure"></p>
+    <p class="disclosure" id="disclosure">{{DISCLOSURE}}</p>
 {{PIN_FIGURE}}
 
-    <div id="shelves"></div>
+    <div id="shelves">{{SHELVES}}</div>
 
-    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h"{{CATGRID_HIDDEN}}>
       <h2 class="h2" id="catgrid-h">All our picks</h2>
-      <div class="tiles" id="catgrid-tiles"></div>
+      <div class="tiles" id="catgrid-tiles">{{CATGRID}}</div>
       <a class="btn btn-ghost all" href="{{ROOT}}./">See everything on one page</a>
     </nav>
   </main>

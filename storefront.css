@@ -271,6 +271,18 @@ footer a { color: var(--text-2); text-decoration: none; }
   footer a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
+/* Home intro: one line that says what the shop is (a review on Sept 24 read the home page as a demo). */
+.intro { margin: var(--sp-4) var(--gutter) 0; font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 24, "SOFT" 40; font-size: 1.05rem; line-height: 1.4; color: var(--text-2); text-wrap: pretty; max-width: 40em; }
+
+/* Plain picks lists: what the build writes into each category before the wheels take over. Crawlers and no-script
+   visitors read these; with JavaScript they are replaced within a frame, so they never show. */
+.shelf.static .picks { list-style: none; margin: 0; padding: 0 var(--gutter); display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3); }
+.shelf.static .picks a { display: grid; gap: 6px; text-decoration: none; color: var(--text); }
+.shelf.static .card-media { display: block; border-radius: var(--r-md); overflow: hidden; background: var(--ink-800); }
+.shelf.static .card-media img { width: 100%; height: 100%; object-fit: cover; }
+.shelf.static b { font: 600 var(--fs-sm)/1.25 var(--font-ui); }
+.shelf.static .picks a > span:last-child { font-size: var(--fs-xs); color: var(--text-3); line-height: 1.4; }
+
 /* Preview banner (only when showing sample data) */
 .preview-note { margin: 0 var(--gutter); padding: 8px 12px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--sage) 14%, transparent); color: var(--sage); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 
