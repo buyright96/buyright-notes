@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B0DJMP6T3N?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it because it handles the messes that actually happen: coffee on the couch, a pet accident on the rug, crumbs in car seats.</p><ul class="highlights"><li>Sprays, scrubs and suctions in one pass</li><li>Stain tool and self-rinsing hose tool included</li><li>Small enough to keep in a closet</li></ul><dl class="specs"><dt>Size</dt><dd>13.5 in wide, 12.1 in tall, 10 in deep; 7 lb</dd><dt>Tank</dt><dd>16 oz</dd><dt>Includes</dt><dd>4 in tough stain tool, HydroRinse self-cleaning hose tool, 8 oz of Little Green formula</dd><dt>Power</dt><dd>corded</dd></dl><p class="skip">Skip it if you need to clean whole rooms of carpet. Empty and rinse the dirty-water tank after each use.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

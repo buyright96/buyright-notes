@@ -147,7 +147,10 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 .wheel-item.right { transform: perspective(900px) rotateY(14deg) scale(.88); }
 .wheel-item.active { opacity: 1; transform: perspective(900px) rotateY(0deg) scale(1); box-shadow: 0 0 0 2px var(--accent), var(--glow-ember); }
 .wheel-item .card-media { position: relative; }
-.wheel-item .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* A mouse drag turns the wheel like a swipe, so the pictures must not start a browser image drag. */
+.wheel-item .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; }
+/* The wheels are built by script. Holding their space keeps the footer below the fold on tall screens, so nothing jumps. */
+#shelves:empty { min-height: 60vh; }
 .wheel-item .card-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
 .wheel-item:active .card-media { opacity: .85; }
 .wheel-item:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: -3px; }
@@ -275,6 +278,60 @@ footer a { color: var(--text-2); text-decoration: none; }
   .hero { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--sp-6); padding-top: var(--sp-7); }
   .hero-media { aspect-ratio: 4 / 5; }
   .hero-text { display: grid; gap: var(--sp-4); }
+  .hero-text .chip { justify-self: start; }
   .wheel { --gap: 18px; }
   .wheel-info { max-width: 560px; }
+}
+
+/* Product pages: the notes sit open under the product (owner, Sept 24: "why we chose it ... sizing, what attachments
+   fit"), with a small facts grid. The home page keeps the featured pick's notes folded. */
+.specs { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin: 0; padding: 12px 14px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--surface) 80%, transparent); box-shadow: inset 0 0 0 1px var(--line); font-size: var(--fs-sm); }
+.specs dt { font: 700 var(--fs-xs)/1.6 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+.specs dd { margin: 0; color: var(--text); line-height: 1.5; }
+.is-product .more summary { color: var(--text); }
+/* The product at the top of a product page is the one tapped on Pinterest, not a featured hero. */
+.chip-pin { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
+
+/* All picks: product pages end with every category in one grid, so the whole shop is one tap from any Pin. */
+.catgrid { padding: var(--sp-7) var(--gutter) 0; display: grid; gap: var(--sp-4); }
+.catgrid h2 { font-size: var(--fs-xl); }
+.catgrid .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--sp-3); }
+.tile { display: grid; gap: 8px; align-content: start; text-decoration: none; color: var(--text); -webkit-tap-highlight-color: transparent; }
+.tile .card-media { border-radius: var(--r-md); overflow: hidden; background: var(--ink-800); transition: box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out); }
+.tile .card-media img { width: 100%; height: 100%; object-fit: cover; }
+.tile b { font: 600 var(--fs-md)/1.2 var(--font-ui); }
+.tile span { font-size: var(--fs-xs); color: var(--text-3); }
+.tile:active .card-media { transform: scale(.98); }
+.tile:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: var(--r-md); }
+.tile[aria-current] .card-media { box-shadow: 0 0 0 2px var(--accent); }
+@media (hover: hover) and (pointer: fine) { .tile:hover .card-media { box-shadow: 0 0 0 2px var(--accent), var(--glow-ember); } }
+.catgrid .all { justify-self: start; }
+
+/* Three sizes (owner, Sept 24). Phone is the default above: the category bar swipes sideways. Tablet (720px and up):
+   a wider page and every category chip in view, nothing to swipe. Desktop (1080px and up): the page uses the screen,
+   the categories sit in the header row beside the brand, the product photo and text share the width, and each wheel's
+   description sits beside it instead of underneath. */
+@media (min-width: 720px) {
+  :root { --gutter: 28px; }
+  .page { max-width: 1040px; }
+  .catnav { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+}
+@media (min-width: 960px) {
+  .shelf { grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); column-gap: var(--sp-6); align-items: center; padding-right: var(--gutter); }
+  .shelf-head { grid-column: 1 / -1; padding-right: 0; }
+  .shelf .wheel { margin-right: 0; }
+  .wheel-info { margin: 0; max-width: none; }
+  .catgrid .tiles { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+}
+@media (min-width: 1080px) {
+  :root { --gutter: 40px; }
+  .page { max-width: 1360px; }
+  .top { flex-wrap: nowrap; padding-bottom: 10px; }
+  .top .spacer { flex: 0 0 var(--sp-5); }
+  .catnav { flex: 1 1 auto; justify-content: flex-end; row-gap: 6px; }
+  .hero { grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: var(--sp-8); padding-top: var(--sp-8); }
+  .hero h1 { font-size: clamp(2.4rem, 3.2vw, 3.2rem); }
+  .inuse { max-width: 420px; }
+  .shelf { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); }
+  .buybar .inner { max-width: 840px; }
 }

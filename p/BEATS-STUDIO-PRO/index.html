@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B0C8PR4W22?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose them for home offices and commutes where focus matters.</p><ul class="highlights"><li>Active noise cancelling, plus Transparency mode to hear the room</li><li>Up to 40 hours of battery; a 10-minute charge gives up to 4 hours</li><li>One-touch pairing with Apple and Android</li></ul><dl class="specs"><dt>Size</dt><dd>7 in by 7.1 in, 3.1 in deep; 9.2 oz</dd><dt>Connects</dt><dd>Bluetooth, USB-C for lossless audio, or the 3.5 mm cable</dd></dl><p class="reason">Skip them if you want small earbuds for workouts.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

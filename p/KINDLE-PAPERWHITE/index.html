@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B0CFPJYX7P?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it for readers who want a book, not a tablet, at bedtime.</p><ul class="highlights"><li>7-inch glare-free screen that shifts from white to amber for reading in the dark</li><li>Up to 12 weeks on one USB-C charge</li><li>No social media, notifications or distracting apps</li></ul><dl class="specs"><dt>Size</dt><dd>5 in by 7 in, 0.3 in thin; 7.4 oz</dd><dt>Screen</dt><dd>7 in, 300 ppi, with an adjustable warm light</dd><dt>Storage</dt><dd>16 GB</dd><dt>Works with</dt><dd>2.4 and 5 GHz Wi-Fi; waterproof (IPX8), fine by the pool or in the bath</dd></dl><p class="skip">Skip it if you love the feel of paper books.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

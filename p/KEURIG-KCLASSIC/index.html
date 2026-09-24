@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B018UQ5AMS?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it for the simplest possible morning: one pod, one button, a hot cup in about a minute, nothing to measure.</p><ul class="highlights"><li>Three cup sizes: 6, 8 or 10 oz (6 oz is the strongest)</li><li>48 oz tank lifts off the side to refill at the sink</li><li>Turns itself off after two hours idle</li></ul><dl class="specs"><dt>Size</dt><dd>13.3 in wide, 13 in tall, 9.8 in deep (17.6 in with the lid open); 9 lb</dd><dt>Fits</dt><dd>K-Cup pods; a travel mug up to 7.1 in tall</dd><dt>Includes</dt><dd>4 K-Cup pods, a water filter handle and 2 filters</dd></dl><p class="skip">Skip it if you want espresso, milk drinks or a full pot.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

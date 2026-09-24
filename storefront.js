@@ -9,6 +9,10 @@
   const params = new URLSearchParams(location.search);
   const preview = params.has('preview');
   const ROOT = window.__ROOT || ''; // '' on the home page, '../../' on product pages
+  const onHome = !ROOT;
+  document.body.classList.add(onHome ? 'is-home' : 'is-product');
+  // A product page's top item is the product the visitor tapped on Pinterest, not a featured hero (owner, Sept 24).
+  const fromPinterest = /pinterest/i.test(params.get('utm_source') || '') || /(^|\.)pinterest\./i.test((() => { try { return new URL(document.referrer).hostname; } catch (e) { return ''; } })());
   // Which Pin sent this visitor (utm_content A/B/C), so buy clicks can be compared per image style (decision 31).
   const pinVariant = (() => { try { const v = new URLSearchParams(location.search).get('utm_content') || ''; return /^[A-Za-z0-9_-]{1,20}$/.test(v) ? v : ''; } catch (e) { return ''; } })();
   const track = (name, p, placement) => { try { if (typeof gtag === 'function') gtag('event', name, { product_id: p.product_id, asin: p.asin || '', placement, pin_variant: pinVariant }); } catch (e) {} };
@@ -55,17 +59,22 @@
   function media(p, cls) {
     const el = document.createElement('div'); el.className = cls;
     if (p.card_image) {
-      const img = new Image(); img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img);
+      const img = new Image(); img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; img.draggable = false; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img);
     }
     else { const t = document.createElement('div'); t.className = 'tint'; if (p.tint) t.style.setProperty('--tint', p.tint); el.appendChild(t); }
     return el;
   }
-  // "Why we picked it" content: plain lines are the reason, lines starting "+ " are highlight bullets,
-  // and a line starting "Skip it if" is who should pass. Built with textContent only.
+  // "Why we picked it" content: plain lines are the reason, lines starting "+ " are highlight bullets, "Label: value"
+  // lines (Size, Fits, Includes ...) become the facts grid, and a line starting "Skip it if" is who should pass.
+  // Built with textContent only. build.mjs pre-renders the same structure for the product at the top of each page.
+  const SPEC_LABELS = new Set(['Size', 'Weight', 'Fits', 'Works with', 'Capacity', 'Includes', 'Tank', 'Power', 'Battery', 'Screen', 'Runtime', 'Care', 'Hopper', 'Pitcher', 'Bowl', 'Connects', 'Cord', 'Hose', 'Burrs', 'Colors', 'Formula', 'Skin', 'Brews', 'Speeds', 'Pressure', 'Cleanup', 'Oven', 'Sounds', 'Storage']);
   function fillDetail(el, text) {
     const lines = String(text || '').split(/\n+/).map(s => s.trim()).filter(Boolean);
-    const kids = []; let ul = null;
+    const kids = []; let ul = null, dl = null;
     for (const line of lines) {
+      const spec = line.match(/^([A-Z][A-Za-z ]{1,12}):\s+(.+)$/);
+      if (spec && SPEC_LABELS.has(spec[1])) { ul = null; if (!dl) { dl = document.createElement('dl'); dl.className = 'specs'; kids.push(dl); } const dt = document.createElement('dt'); dt.textContent = spec[1]; const dd = document.createElement('dd'); dd.textContent = spec[2]; dl.append(dt, dd); continue; }
+      dl = null;
       if (line.startsWith('+ ')) { if (!ul) { ul = document.createElement('ul'); ul.className = 'highlights'; kids.push(ul); } const li = document.createElement('li'); li.textContent = line.slice(2); ul.appendChild(li); continue; }
       ul = null; const p = document.createElement('p'); p.className = /^skip it if/i.test(line) ? 'skip' : 'reason'; p.textContent = line; kids.push(p);
     }
@@ -82,6 +91,7 @@
   const heroImg = $('hero-media').querySelector('img');
   if (!(heroImg && hero.card_image && heroImg.getAttribute('src').endsWith(hero.card_image))) $('hero-media').replaceWith(Object.assign(media(hero, 'hero-media'), { id: 'hero-media' }));
   $('hero-chip').replaceWith(Object.assign(chip(hero), { id: 'hero-chip' }));
+  if (!onHome && fromPinterest && !hero.example) { const c = $('hero-chip'); c.textContent = 'Your Pinterest pick'; c.classList.add('chip-pin'); }
   $('hero-title').textContent = hero.title;
   $('hero-why').textContent = hero.reason_to_buy ? `"${hero.reason_to_buy}"` : '';
   $('hero-checked').textContent = checkedLine(hero);
@@ -119,7 +129,6 @@
   // active with its name, reason and Buy button underneath; arrows, swipe, arrow keys or a tap on a side picture turn it,
   // looping through everything posted in that category. The home page has a wheel per category (the category bar jumps
   // to them); a product page has two: its own category, then Hot deals.
-  const onHome = !ROOT;
   const shelves = $('shelves');
   const categories = (data.reels || []).map(r => ({ ...r, items: products.filter(p => (p.reels || [p.category]).includes(r.id)) })).filter(r => r.items.length);
   let wheelCats = categories;
@@ -136,14 +145,15 @@
   }
 
   // Category bar: "All picks" plus one chip per category that has a product (every category, even on product pages).
-  // On the home page chips jump to their wheel (a shareable #hash); on product pages they go home to that wheel.
-  // The chip for the section you are looking at is highlighted.
+  // A chip jumps to its wheel when that wheel is on this page (a shareable #hash); otherwise it goes home to that wheel.
+  // The chip for the section you are looking at is highlighted, on every page.
   const nav = $('catnav');
   const sections = [...shelves.querySelectorAll('section.shelf')];
+  const here = (id) => sections.some(s => s.id === id);
   if (nav && categories.length) {
     const links = [['top', 'All picks'], ...categories.map(c => [c.id, c.label])].map(([id, label]) => {
       const a = document.createElement('a'); a.textContent = label; a.dataset.target = id;
-      a.href = id === 'top' ? (onHome ? '#top' : ROOT + './') : (onHome ? `#${id}` : `${ROOT}./#${id}`);
+      a.href = id === 'top' ? (onHome ? '#top' : ROOT + './') : (here(id) ? `#${id}` : `${ROOT}./#${id}`);
       if (onHome && id === 'top') a.addEventListener('click', (e) => { e.preventDefault(); history.pushState(null, '', location.pathname + location.search); window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); });
       return a;
     });
@@ -152,25 +162,42 @@
     const setNavH = () => document.documentElement.style.setProperty('--nav-h', `${header.offsetHeight + 8}px`);
     setNavH(); addEventListener('resize', setNavH, { passive: true });
     const setActive = (id) => {
-      for (const a of links) { const on = a.dataset.target === id; a.toggleAttribute('aria-current', on); if (on) nav.scrollTo({ left: a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2, behavior: reduceMotion ? 'auto' : 'smooth' }); }
+      for (const a of links) { const on = a.dataset.target === id; a.toggleAttribute('aria-current', on); if (on && nav.scrollWidth > nav.clientWidth + 1) nav.scrollTo({ left: a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2, behavior: reduceMotion ? 'auto' : 'smooth' }); }
     };
-    if (onHome) {
-      setActive('top');
-      // Scroll-spy: the shelf nearest the top of the screen owns the highlight; above the first shelf it is "All picks".
-      if ('IntersectionObserver' in window) {
-        const seen = new Map();
-        const spy = new IntersectionObserver((es) => {
-          for (const e of es) seen.set(e.target.id, e.isIntersecting);
-          const current = sections.find(s => seen.get(s.id));
-          setActive(current && current.getBoundingClientRect().top < innerHeight * 0.6 ? current.id : 'top');
-        }, { rootMargin: '-35% 0px -40% 0px' });
-        sections.forEach(s => spy.observe(s));
-      }
-      // Arriving with #kitchen (from a product page chip): shelves are built by script, so jump once they exist.
-      const want = decodeURIComponent(location.hash.slice(1));
-      if (want && sections.some(s => s.id === want)) requestAnimationFrame(() => { document.getElementById(want).scrollIntoView({ block: 'start' }); setActive(want); });
+    // Scroll-spy: the shelf nearest the top of the screen owns the highlight. Above the first shelf it is "All picks"
+    // on the home page and the product's own category on a product page.
+    const rest = onHome || !categories.some(c => c.id === hero.category) ? 'top' : hero.category;
+    setActive(rest);
+    if ('IntersectionObserver' in window) {
+      const seen = new Map();
+      const spy = new IntersectionObserver((es) => {
+        for (const e of es) seen.set(e.target.id, e.isIntersecting);
+        const current = sections.find(s => seen.get(s.id));
+        setActive(current && current.getBoundingClientRect().top < innerHeight * 0.6 ? current.id : rest);
+      }, { rootMargin: '-35% 0px -40% 0px' });
+      sections.forEach(s => spy.observe(s));
     }
+    // Arriving with #kitchen (from another page's chip): shelves are built by script, so jump once they exist.
+    const want = decodeURIComponent(location.hash.slice(1));
+    if (want && here(want)) requestAnimationFrame(() => { document.getElementById(want).scrollIntoView({ block: 'start' }); setActive(want); });
   } else if (nav) nav.hidden = true;
+
+  // Product pages end with every category as a tile, so the whole shop is one tap away from any Pin (owner, Sept 24:
+  // "navigation that takes you to a home area that shows all of the sections"). Tiles open that wheel on the home page.
+  const grid = $('catgrid');
+  if (grid && !onHome && categories.length) {
+    const tiles = $('catgrid-tiles');
+    for (const cat of categories) {
+      const a = document.createElement('a'); a.className = 'tile'; a.href = `${ROOT}./#${cat.id}`;
+      if (cat.id === hero.category) a.setAttribute('aria-current', 'true');
+      const pic = cat.items.find(p => p.product_id !== hero.product_id) || cat.items[0];
+      a.appendChild(media(pic, 'card-media'));
+      const b = document.createElement('b'); b.textContent = cat.label;
+      const s = document.createElement('span'); s.textContent = `${cat.items.length} ${cat.items.length === 1 ? 'pick' : 'picks'}`;
+      a.append(b, s); tiles.appendChild(a);
+    }
+    grid.hidden = false;
+  }
   // One wheel. With 3+ products the strip holds three copies of the list and the middle picture always sits in the middle
   // copy, so turning never runs out; after each turn it hops back to the same picture in the middle copy with motion off.
   // With 1-2 products the pictures just sit centred and a tap picks which one is described below.

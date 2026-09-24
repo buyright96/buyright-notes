@@ -40,9 +40,9 @@
           <a class="btn btn-primary" id="hero-cta" href="{{HERO_BUY_URL}}" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="{{HERO_GUIDE_URL}}" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more"{{MORE_OPEN}}>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail">{{HERO_DETAIL}}</div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="{{HERO_GUIDE_URL}}">Read our guide</a></p>
         </details>
@@ -55,6 +55,12 @@
 {{PIN_FIGURE}}
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="{{ROOT}}./">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

@@ -83,10 +83,26 @@ const storeTpl = rd('templates/store.html');
 const reelLabel = (id) => (data.reels || []).find(r => r.id === id)?.label || id;
 // data-pin-media: the Pinterest Save button offers the tall 2:3 Pin image instead of the 4:5 card.
 const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(pins[p.product_id].title)}"` : ''}>` : '';
+// "Why we picked it", pre-rendered so a product page shows its notes open with nothing moving when storefront.js runs.
+// Mirrors fillDetail in storefront.js: reason lines, "+ " highlights, "Label: value" facts, and the "Skip it if" line.
+const SPEC_LABELS = new Set(['Size', 'Weight', 'Fits', 'Works with', 'Capacity', 'Includes', 'Tank', 'Power', 'Battery', 'Screen', 'Runtime', 'Care', 'Hopper', 'Pitcher', 'Bowl', 'Connects', 'Cord', 'Hose', 'Burrs', 'Colors', 'Formula', 'Skin', 'Brews', 'Speeds', 'Pressure', 'Cleanup', 'Oven', 'Sounds', 'Storage']);
+function renderDetail(text) {
+  const out = []; let ul = false, dl = false;
+  const close = () => { if (ul) out.push('</ul>'); if (dl) out.push('</dl>'); ul = dl = false; };
+  for (const line of String(text || '').split(/\n+/).map(s => s.trim()).filter(Boolean)) {
+    const spec = line.match(/^([A-Z][A-Za-z ]{1,12}):\s+(.+)$/);
+    if (spec && SPEC_LABELS.has(spec[1])) { if (!dl) { close(); out.push('<dl class="specs">'); dl = true; } out.push(`<dt>${esc(spec[1])}</dt><dd>${esc(spec[2])}</dd>`); continue; }
+    if (line.startsWith('+ ')) { if (!ul) { close(); out.push('<ul class="highlights">'); ul = true; } out.push(`<li>${esc(line.slice(2))}</li>`); continue; }
+    close(); out.push(`<p class="${/^skip it if/i.test(line) ? 'skip' : 'reason'}">${esc(line)}</p>`);
+  }
+  close(); return out.join('');
+}
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   return storeTpl
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
+    .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
+    .replace('{{HERO_DETAIL}}', hero ? renderDetail(hero.detail) : '')
     .replace('<!--ANALYTICS-->', analytics)
     .replaceAll('{{ROOT}}', rootPrefix)
     .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))

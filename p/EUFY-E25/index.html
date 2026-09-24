@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B0FK2HPNCB?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it for hands-off floors: it vacuums and mops in one run, then empties, washes and dries itself at the dock.</p><ul class="highlights"><li>Roller mop rinsed with clean water as it works</li><li>Dock empties dust, dries the mop and refills water</li><li>Side arm reaches along baseboards and corners</li></ul><dl class="specs"><dt>Size</dt><dd>the dock is 18.2 in wide, 17.2 in tall and 14.6 in deep; 37.5 lb boxed</dd><dt>Runtime</dt><dd>up to 125 minutes vacuuming and mopping; the dust bag lasts about 75 days</dd><dt>Works with</dt><dd>the eufy app on 2.4 GHz Wi-Fi only; Alexa, Google Assistant and Siri</dd></dl><p class="skip">Skip it if you have no wall space for a tall dock. Dust bags and mop parts get replaced over time.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

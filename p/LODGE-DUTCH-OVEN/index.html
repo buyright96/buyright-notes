@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B000N501BK?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it as the affordable way into enameled cast iron for bread and cozy fall dinners.</p><ul class="highlights"><li>Oven-safe to 500°F, hot enough for crusty no-knead bread</li><li>Enamel means no rust worries; dishwasher safe, hand washing recommended</li><li>PFAS-free, per Lodge</li></ul><dl class="specs"><dt>Size</dt><dd>6 qt; about 10.75 in across, 13.5 in handle to handle, 7.3 in tall; 14.9 lb</dd><dt>Works with</dt><dd>any stovetop, and the oven to 500°F</dd><dt>Care</dt><dd>hand wash with warm soapy water and a nylon brush, per Lodge</dd></dl><p class="skip">Skip it if a heavy pot is hard for you to lift.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>

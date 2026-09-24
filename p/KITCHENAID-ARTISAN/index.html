@@ -59,9 +59,9 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
           <a class="btn btn-primary" id="hero-cta" href="https://www.amazon.com/dp/B0000635XA?tag=buyrightnotes-storefront-20" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
           <a class="btn btn-ghost" id="hero-guide" href="#" hidden>Read the guide</a>
         </div>
-        <details class="more" id="hero-more">
+        <details class="more" id="hero-more" open>
           <summary>Why we picked it</summary>
-          <div class="detail" id="hero-detail"></div>
+          <div class="detail" id="hero-detail"><p class="reason">We chose it for bakers who make big batches: the 5-quart bowl mixes about 9 dozen cookies at once.</p><ul class="highlights"><li>10 speeds, from a slow stir to whipping cream</li><li>Tilt-head design makes adding ingredients easy</li><li>Over 20 colors, so it can match your kitchen</li></ul><dl class="specs"><dt>Size</dt><dd>14.3 in wide, 14 in tall, 9.3 in deep; 22 lb</dd><dt>Includes</dt><dd>5-quart stainless bowl, flat beater, dough hook, 6-wire whip and pouring shield</dd><dt>Fits</dt><dd>every KitchenAid power-hub attachment (pasta roller, food grinder and more, sold separately), per KitchenAid</dd></dl><p class="skip">Skip it if you bake only a few times a year; a hand mixer will do.</p></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="#">Read our guide</a></p>
         </details>
@@ -77,6 +77,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
     </figure>
 
     <div id="shelves"></div>
+
+    <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h" hidden>
+      <h2 class="h2" id="catgrid-h">All our picks</h2>
+      <div class="tiles" id="catgrid-tiles"></div>
+      <a class="btn btn-ghost all" href="../.././">See everything on one page</a>
+    </nav>
   </main>
 
   <footer>
