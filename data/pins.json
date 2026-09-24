@@ -38,5 +38,30 @@
     "image": "assets/pins/eufy-e25-robot-vacuum-mop-in-use.jpg",
     "alt": "A eufy E25 robot vacuum glides across a sunny oak living room floor past a sofa where a cat naps, its tall eufy dock against the wall.",
     "title": "eufy E25 robot vacuum and mop: floors done while you are out"
+  },
+  "KITCHENAID-ARTISAN": {
+    "image": "assets/pins/kitchenaid-artisan-stand-mixer-in-use.jpg",
+    "alt": "Hands in a cream sweater pour flour into a pistachio KitchenAid Artisan stand mixer mixing pumpkin batter on a butcher-block counter with mini pumpkins, cinnamon sticks and eggs.",
+    "title": "KitchenAid Artisan stand mixer in pistachio: the fall baking upgrade"
+  },
+  "LODGE-DUTCH-OVEN": {
+    "image": "assets/pins/lodge-enameled-dutch-oven-in-use.jpg",
+    "alt": "Oven-mitted hands lift the lid off a red Lodge enameled Dutch oven on a wooden board, revealing a golden crusty loaf of homemade bread, with rosemary and a bowl of flour nearby.",
+    "title": "Lodge enameled Dutch oven: easy no-knead bread for cozy fall nights"
+  },
+  "KINDLE-PAPERWHITE": {
+    "image": "assets/pins/kindle-paperwhite-e-reader-in-use.jpg",
+    "alt": "Hands in a knit sweater hold a Kindle Paperwhite over a chunky knit blanket on a rainy-day window seat, with a warm lamp, a mug of tea and a stack of books.",
+    "title": "Kindle Paperwhite: the reading nook upgrade with no distractions"
+  },
+  "BEATS-STUDIO-PRO": {
+    "image": "assets/pins/beats-studio-pro-headphones-in-use.jpg",
+    "alt": "A person seen from behind wears black Beats Studio Pro headphones while working at a laptop on a sunny home-office desk with a latte and a plant.",
+    "title": "Beats Studio Pro headphones: a quieter work from home setup"
+  },
+  "HATCH-BABY": {
+    "image": "assets/pins/hatch-baby-sound-machine-in-use.jpg",
+    "alt": "A parent's finger presses the button on top of a glowing Hatch Baby sound machine and night light showing 7:00, on a nursery dresser beside a plush bunny and a white crib.",
+    "title": "Hatch Baby sound machine and night light: a new mom must have"
   }
 }

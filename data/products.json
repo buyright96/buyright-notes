@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-24T06:30:09.616Z"
+    "generated_at": "2026-09-24T14:04:20.306Z"
   },
   "reels": [
     {
@@ -29,6 +29,22 @@
     {
       "id": "coffee_bar",
       "label": "Coffee bar"
+    },
+    {
+      "id": "baking",
+      "label": "Baking"
+    },
+    {
+      "id": "reading",
+      "label": "Reading"
+    },
+    {
+      "id": "tech",
+      "label": "Tech"
+    },
+    {
+      "id": "baby",
+      "label": "Baby"
     },
     {
       "id": "home_decor",
@@ -205,6 +221,108 @@
       "amazon_url": "https://www.amazon.com/dp/B0FK2HPNCB?tag=buyrightnotes-storefront-20",
       "status": "LIVE",
       "last_offer_check": "2026-09-23"
+    },
+    {
+      "product_id": "KITCHENAID-ARTISAN",
+      "asin": "B0000635XA",
+      "title": "KitchenAid Artisan stand mixer, 5 qt",
+      "category": "baking",
+      "reels": [
+        "baking"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The mixer that makes fall baking easy: 10 speeds, a 5-quart bowl for big batches and a head that tilts back for adding ingredients.",
+      "detail": "We chose it for bakers who make big batches: the 5-quart bowl mixes about 9 dozen cookies at once.\n+ 10 speeds, from a slow stir to whipping cream\n+ Tilt-head design makes adding ingredients easy\n+ Over 20 colors, so it can match your kitchen\nSkip it if you bake only a few times a year; a hand mixer will do.",
+      "guide_url": "",
+      "guide_label": "",
+      "card_image": "assets/kitchenaid-artisan-stand-mixer.jpg",
+      "image_alt": "A pistachio-green KitchenAid Artisan tilt-head stand mixer with a stainless bowl on a cream quartz counter beside a glazed pumpkin loaf and mini pumpkins.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0000635XA?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "LODGE-DUTCH-OVEN",
+      "asin": "B000N501BK",
+      "title": "Lodge enameled Dutch oven, 6 qt",
+      "category": "baking",
+      "reels": [
+        "baking",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "One heavy pot for crusty no-knead bread, soups and stews: it holds heat evenly and is oven-safe to 500°F.",
+      "detail": "We chose it as the affordable way into enameled cast iron for bread and cozy fall dinners.\n+ Oven-safe to 500°F, hot enough for crusty no-knead bread\n+ Enamel means no rust worries; dishwasher safe, hand washing recommended\n+ PFAS-free, per Lodge\nSkip it if a heavy pot is hard for you to lift.",
+      "guide_url": "",
+      "guide_label": "",
+      "card_image": "assets/lodge-enameled-dutch-oven.jpg",
+      "image_alt": "A red Lodge enameled cast-iron Dutch oven with its lid on, on a rustic wooden table beside a crusty bread loaf, bowls of soup and small pumpkins.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B000N501BK?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "KINDLE-PAPERWHITE",
+      "asin": "B0CFPJYX7P",
+      "title": "Kindle Paperwhite 16 GB",
+      "category": "reading",
+      "reels": [
+        "reading"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "Reading without distractions: a glare-free screen that turns amber at night and a battery that lasts weeks.",
+      "detail": "We chose it for readers who want a book, not a tablet, at bedtime.\n+ 7-inch glare-free screen that shifts from white to amber for reading in the dark\n+ Up to 12 weeks on one USB-C charge\n+ No social media, notifications or distracting apps\nSkip it if you love the feel of paper books.",
+      "guide_url": "",
+      "guide_label": "",
+      "card_image": "assets/kindle-paperwhite-e-reader.jpg",
+      "image_alt": "A black Kindle Paperwhite on a wooden side table beside a cup of tea, a lit candle, reading glasses and a knit throw, with a blue armchair behind.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0CFPJYX7P?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "BEATS-STUDIO-PRO",
+      "asin": "B0C8PR4W22",
+      "title": "Beats Studio Pro headphones",
+      "category": "tech",
+      "reels": [
+        "tech",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "Quiet on demand: active noise cancelling for work and travel, with up to 40 hours of battery.",
+      "detail": "We chose them for home offices and commutes where focus matters.\n+ Active noise cancelling, plus Transparency mode to hear the room\n+ Up to 40 hours of battery; a 10-minute charge gives up to 4 hours\n+ One-touch pairing with Apple and Android\nSkip them if you want small earbuds for workouts.",
+      "guide_url": "",
+      "guide_label": "",
+      "card_image": "assets/beats-studio-pro-headphones.jpg",
+      "image_alt": "Black Beats Studio Pro over-ear headphones resting on a light oak desk beside a closed laptop, a latte cup, a succulent and a notebook.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0C8PR4W22?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "HATCH-BABY",
+      "asin": "B0F7C6XJ3P",
+      "title": "Hatch Baby sound machine and night light",
+      "category": "baby",
+      "reels": [
+        "baby"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A calmer bedtime routine: soft light and soothing sounds, started with one big button or from your phone.",
+      "detail": "We chose it for new parents building a bedtime routine from night one.\n+ Soothing sounds like pink noise and heartbeat, with a soft night light\n+ Big button on top to start or pause without reaching for your phone\n+ Includes 3 months of Hatch+ sleep guides; optional after that\nSkip it if you would rather not use an app.",
+      "guide_url": "",
+      "guide_label": "",
+      "card_image": "assets/hatch-baby-sound-machine.jpg",
+      "image_alt": "A Hatch Baby sound machine and night light in putty, glowing on a wooden nursery shelf with its clock showing 7:00, beside a plush bunny, a woven basket and books.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0F7C6XJ3P?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
     }
   ]
 }
