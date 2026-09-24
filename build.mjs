@@ -55,16 +55,31 @@ const analytics = cfg.ga4_measurement_id ? `<script async src="https://www.googl
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${cfg.ga4_measurement_id}',{send_page_view:true});</script>` : '<!-- analytics: no GA4 id in site.config.json -->';
 
 function jsonld(obj) { return `<script type="application/ld+json">${JSON.stringify(obj)}</script>`; }
-const productLd = (p, url) => ({ '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.reason_to_buy, image: p.card_image ? [abs(p.card_image)] : undefined, url, sku: p.asin || undefined });
+// The exact Pin B image each product is promoted with (01_WORKSPACE/tools/export_pin_media.mjs), shown on its page so
+// Pinterest's Pin-to-page match sees the same picture and words. Optional: pages build without it.
+const pins = fs.existsSync(path.join(root, 'data/pins.json')) ? JSON.parse(rd('data/pins.json')) : {};
+// Article, not Product: we cannot show prices, Pinterest product Rich Pins exclude affiliates, and product markup
+// would override the article Rich Pin (01_WORKSPACE skill references/pinterest-seo.md).
+const org = { '@type': 'Organization', name: cfg.name, url: base ? `${base}/` : undefined };
+const articleLd = (p, url, headline) => ({ '@context': 'https://schema.org', '@type': 'Article', headline, description: p.reason_to_buy, image: [p.card_image, pins[p.product_id]?.image].filter(Boolean).map(abs), url, author: org, publisher: org });
+const pinFigure = (p, rootPrefix) => {
+  const pin = p && pins[p.product_id];
+  return pin ? `    <figure class="inuse" id="inuse">
+      <img src="${esc(rootPrefix + pin.image)}" alt="${esc(pin.alt)}" width="1000" height="1500" loading="lazy" decoding="async" data-pin-description="${esc(pin.title)}">
+      <figcaption>How it looks at home</figcaption>
+    </figure>` : '';
+};
 
 // ---------- store pages ----------
 const storeTpl = rd('templates/store.html');
 // Hero text and photo are pre-rendered so nothing moves when storefront.js fills the page (no layout shift under the Buy button).
 const reelLabel = (id) => (data.reels || []).find(r => r.id === id)?.label || id;
-const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async">` : '';
+// data-pin-media: the Pinterest Save button offers the tall 2:3 Pin image instead of the 4:5 card.
+const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(pins[p.product_id].title)}"` : ''}>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   return storeTpl
-    .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'product' : 'website', extra: ld ? jsonld(ld) : '' }))
+    .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
+    .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('<!--ANALYTICS-->', analytics)
     .replaceAll('{{ROOT}}', rootPrefix)
     .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
@@ -83,7 +98,9 @@ const homeHero = [...buildable].reverse().find(p => p.hero_eligible) || buildabl
 written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: homeHero?.amazon_url, heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
-  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, hero: p, ld: productLd(p, base ? url : undefined) })));
+  // The page title repeats the Pin title when there is one, so the Pin and its landing page say the same thing.
+  const headline = pins[p.product_id]?.title || p.title;
+  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${headline} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, hero: p, ld: articleLd(p, base ? url : undefined, headline) })));
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------

@@ -103,6 +103,11 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 /* Disclosure sits right under the first affiliate button */
 .disclosure { margin: 0 var(--gutter); }
 
+/* Product pages: the same in-use photo the Pin shows, so a Pinterest visitor sees what they tapped */
+.inuse { margin: var(--sp-5) var(--gutter) 0; max-width: 520px; display: grid; gap: var(--sp-2); }
+.inuse img { width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--r-lg); background: var(--ink-800); }
+.inuse figcaption { font-size: var(--fs-sm); color: var(--text-3); }
+
 /* Reels */
 .shelf { padding-top: var(--sp-6); display: grid; gap: var(--sp-2); }
 .shelf-head { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter); gap: var(--sp-3); }

@@ -82,7 +82,8 @@
   $('hero-more').addEventListener('toggle', (e) => { if (e.target.open) track('open_why', hero, 'hero'); });
   const cta = $('hero-cta'); setBuy(cta, hero, 'hero');
   $('hero-guide').hidden = true; // storefront funnel is Pin -> storefront -> Amazon; no guide detour
-  document.title = `${hero.title} · ${site.name || 'BuyRight Notes'}`;
+  // Built pages already carry the right title (product pages repeat their Pin's title); only a ?p= swap needs a new one.
+  if (params.get('p')) document.title = `${hero.title} · ${site.name || 'BuyRight Notes'}`;
   $('disclosure').textContent = site.disclosure || 'As an Amazon Associate we earn from qualifying purchases.';
 
   // Sticky buy bar: shown whenever the hero Buy button is off-screen, above OR below, so a visitor always has a Buy button in view.

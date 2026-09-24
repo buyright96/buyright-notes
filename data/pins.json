@@ -1,0 +1,42 @@
+{
+  "BAMBINO-54": {
+    "image": "assets/pins/breville-bambino-espresso-machine-in-use.jpg",
+    "alt": "A hand holds a steel milk pitcher under the steam wand of a Breville Bambino espresso machine while a fresh espresso sits in a glass cup on the drip tray, basil and a cream cup nearby.",
+    "title": "Breville Bambino espresso machine: cafe lattes at home in a small kitchen"
+  },
+  "ENCORE-ESP": {
+    "image": "assets/pins/baratza-encore-esp-coffee-grinder-in-use.jpg",
+    "alt": "A hand lifts the black dosing cup full of fresh espresso grounds from a Baratza Encore ESP grinder on an oak counter at dawn, a white espresso cup beside it.",
+    "title": "Baratza Encore ESP: the grinder for a first home espresso setup"
+  },
+  "CASABREWS-51": {
+    "image": "assets/pins/casabrews-cm5418-espresso-machine-in-use.jpg",
+    "alt": "Espresso pours in two streams from a CASABREWS CM5418 espresso machine into a glass cup while a hand holds a milk pitcher on a white apartment counter with lemons behind.",
+    "title": "CASABREWS espresso machine: an easy first espresso setup at home"
+  },
+  "KEURIG-KCLASSIC": {
+    "image": "assets/pins/keurig-k-classic-single-serve-coffee-maker-in-use.jpg",
+    "alt": "Hands lifting a cream mug of fresh coffee from a black Keurig K-Classic on a wood counter by a sunny window, with basil and a jar of plain pods beside it.",
+    "title": "Keurig K-Classic: easy weekday coffee for a small kitchen"
+  },
+  "BISSELL-LITTLE-GREEN": {
+    "image": "assets/pins/bissell-little-green-mini-spot-cleaner-in-use.jpg",
+    "alt": "A hand guides the hose tool of a BISSELL Little Green Mini over a coffee spill on a beige sofa while a golden retriever rests on the rug.",
+    "title": "BISSELL Little Green Mini: the spot cleaner for pet messes and couch spills"
+  },
+  "NINJA-BL610": {
+    "image": "assets/pins/ninja-professional-bl610-blender-in-use.jpg",
+    "alt": "Hands pour a pink berry smoothie from a Ninja Professional blender pitcher into a tall glass on a bright kitchen counter, the Ninja base behind.",
+    "title": "Ninja Professional Blender: big-batch smoothies and frozen drinks for the whole family"
+  },
+  "LRP-HYALU-B5": {
+    "image": "assets/pins/la-roche-posay-hyalu-b5-serum-in-use.jpg",
+    "alt": "A hand releases one drop from a dropper above open fingertips, beside a La Roche-Posay Hyalu B5 serum bottle on a marble counter.",
+    "title": "La Roche-Posay Hyalu B5: a simple hydrating serum for your routine"
+  },
+  "EUFY-E25": {
+    "image": "assets/pins/eufy-e25-robot-vacuum-mop-in-use.jpg",
+    "alt": "A eufy E25 robot vacuum glides across a sunny oak living room floor past a sofa where a cat naps, its tall eufy dock against the wall.",
+    "title": "eufy E25 robot vacuum and mop: floors done while you are out"
+  }
+}
