@@ -95,11 +95,24 @@
   $('disclosure').textContent = site.disclosure || 'As an Amazon Associate we earn from qualifying purchases.';
 
   // Sticky buy bar: shown whenever the hero Buy button is off-screen, above OR below, so a visitor always has a Buy button in view.
+  // It steps aside while a wheel's own buttons pass through the strip of screen it covers (on a 375 px phone the wheel's
+  // Buy and "Why we picked it" sat half under it; caught by 01_WORKSPACE/tools/storefront_mobile_check.mjs).
   const bar = $('buybar'); $('buybar-name').textContent = hero.title; const bc = $('buybar-cta'); setBuy(bc, hero, 'sticky_bar'); bc.textContent = 'Buy on Amazon';
   const setBar = (show) => { bar.classList.toggle('show', show); bar.toggleAttribute('inert', !show); bar.setAttribute('aria-hidden', String(!show)); };
+  let watchUnderBar = () => {};
   if ('IntersectionObserver' in window) {
     setBar(false);
-    new IntersectionObserver(([e]) => setBar(!e.isIntersecting), { threshold: 0 }).observe(cta);
+    let heroOff = false, zone = null;
+    const under = new Set(), watched = [], sync = () => setBar(heroOff && !under.size);
+    new IntersectionObserver(([e]) => { heroOff = !e.isIntersecting; sync(); }, { threshold: 0 }).observe(cta);
+    const makeZone = () => { // the bar's strip, measured from the bar itself; rebuilt when the screen height changes
+      zone?.disconnect(); under.clear();
+      zone = new IntersectionObserver((es) => { for (const e of es) e.isIntersecting ? under.add(e.target) : under.delete(e.target); sync(); },
+        { rootMargin: `-${Math.max(0, innerHeight - bar.offsetHeight - 8)}px 0px 0px 0px` });
+      watched.forEach(el => zone.observe(el));
+    };
+    makeZone(); addEventListener('resize', () => requestAnimationFrame(makeZone));
+    watchUnderBar = (el) => { watched.push(el); zone.observe(el); };
   }
 
   // Wheels (owner, Sept 24): every category is a rotating wheel. Three pictures are always fully on screen, the middle one
@@ -190,7 +203,7 @@
     const actions = make('div', 'wheel-actions');
     const buy = make('a', 'btn btn-primary btn-sm'); buy.rel = 'sponsored noopener'; buy.target = '_blank';
     const note = make('button', 'btn btn-ghost btn-sm'); note.type = 'button'; note.textContent = 'Why we picked it';
-    actions.append(buy, note);
+    actions.append(buy, note); watchUnderBar(actions);
     const status = make('p', 'visually-hidden'); status.setAttribute('aria-live', 'polite');
     info.append(infoChip, title, why, actions, status);
     section.append(head, stage, info);
@@ -264,6 +277,7 @@
     track('view_note', p, 'sheet');
     const more = $('sheet-more'); more.hidden = !(p.guide_url && !p.example); $('sheet-more-link').href = p.guide_url || '#';
     sheet.showModal();
+    inner.scrollTop = 0; // always open at the photo and name, not where the last product's note was left scrolled
     $('sheet-close').focus({ preventScroll: true });
   }
   // Every close slides the sheet back down to the edge it came from, then closes the dialog.

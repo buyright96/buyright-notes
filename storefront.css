@@ -207,7 +207,10 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
   max-width: 760px; margin: 0 auto; max-height: 88dvh; overflow: auto; overscroll-behavior: contain;
   background: var(--ink-900); border-radius: var(--r-lg) var(--r-lg) 0 0;
   padding: 8px var(--gutter) calc(20px + env(safe-area-inset-bottom, 0px));
-  display: grid; gap: var(--sp-4);
+  /* max-content rows: when the sheet is taller than the screen, auto rows shrink to their minimum, and the photo
+     (overflow hidden, so its minimum is 0) spilled over the name and text below it. Now every row keeps its full height
+     and the sheet scrolls instead. Caught by 01_WORKSPACE/tools/storefront_mobile_check.mjs on a 375 px phone. */
+  display: grid; grid-auto-rows: max-content; gap: var(--sp-4);
   box-shadow: 0 -20px 60px -20px rgba(0,0,0,.8), inset 0 1px 0 var(--line-strong);
 }
 /* The grip is a real drag handle (drag down to close); the padding gives it a finger-sized target. */
@@ -215,6 +218,7 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
 .sheet-media { border-radius: var(--r-md); overflow: hidden; aspect-ratio: 4 / 3; background: var(--ink-800); position: relative; }
 .sheet-media img { width: 100%; height: 100%; object-fit: cover; }
 .sheet-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
+.sheet-inner .chip { justify-self: start; } /* hug the label, as under the wheels, instead of stretching the width */
 .sheet-inner h2 { font-size: var(--fs-xl); }
 .sheet-inner .why { font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 24, "SOFT" 40; font-size: 1.15rem; line-height: 1.35; margin: 0; }
 .sheet-inner .detail { color: var(--text-2); margin: 0; }
@@ -257,6 +261,12 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
 footer { padding: var(--sp-7) var(--gutter) 0; display: grid; gap: var(--sp-2); color: var(--text-3); font-size: var(--fs-xs); }
 footer nav { display: flex; gap: var(--sp-4); flex-wrap: wrap; }
 footer a { color: var(--text-2); text-decoration: none; }
+
+/* Touch screens: every tap target is at least 44px tall (Apple's minimum); mouse users keep the tighter sizes. */
+@media (pointer: coarse) {
+  .btn-sm, .catnav a, .top .brand { min-height: 44px; }
+  footer a { display: inline-flex; align-items: center; min-height: 44px; }
+}
 
 /* Preview banner (only when showing sample data) */
 .preview-note { margin: 0 var(--gutter); padding: 8px 12px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--sage) 14%, transparent); color: var(--sage); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
