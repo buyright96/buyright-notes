@@ -1,7 +1,7 @@
 {
   "_comment": "Storefront site settings. base_url has no trailing slash. Empty strings mean 'not set yet'.",
   "name": "BuyRight Notes",
-  "tagline": "Products we measured, checked, and would buy again.",
+  "tagline": "Research before you buy.",
   "base_url": "https://buyright96.github.io/buyright-notes",
   "blog_url": "https://buyrightnotes.blogspot.com/",
   "ga4_measurement_id": "G-YMLG0Q6ETM",

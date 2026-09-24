@@ -1,22 +1,22 @@
 ---
 title: About BuyRight Notes
-description: A small shop of products we measured, checked, and would buy again.
+description: A small shop of researched picks, each with who it is for, what to check first, and who should skip it.
 ---
 # About BuyRight Notes
 
-BuyRight Notes is a note from someone who measured. We pick products by fit, compatibility, and the cost of getting it wrong, then say who each one is for and who it isn't.
+BuyRight Notes is a short list of products we researched, not a catalog. Each pick says who it is for, why we chose it, the facts that matter, and who should skip it.
 
 ## Two places, one standard
 
-- **The shop** (this site): the short version. One picture, one honest line, one button to Amazon.
-- **The guides** ([buyrightnotes.blogspot.com](https://buyrightnotes.blogspot.com/)): the long version, with the measurements and trade-offs behind every pick.
+- **The shop** (this site): one picture, one honest line, the facts, one button to Amazon.
+- **The guides:** the long version, with the measurements and trade-offs behind a pick. They are moving from [our blog](https://buyrightnotes.blogspot.com/) into this site.
 
 ## What you will not find here
 
-We do not show Amazon's prices, star ratings, or badges unless Amazon serves them to us directly, because those change by the hour. We do not use Amazon's product photos. Every picture here is our own scene, and every line is our own opinion.
+No Amazon prices, star ratings or badges, because they change by the hour and Amazon does not serve them to us. No Amazon product photos: every picture is our own scene. No claims of hands-on testing unless a note says so; our picks are research-based.
 
 ## The affiliate part
 
 As an Amazon Associate, BuyRight Notes earns from qualifying purchases. Using our link does not change the price you pay. Amazon and product makers do not approve our picks.
 
-*Updated September 23, 2026.*
+*Updated September 24, 2026.*
