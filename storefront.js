@@ -94,36 +94,33 @@
     new IntersectionObserver(([e]) => setBar(!e.isIntersecting), { threshold: 0 }).observe(cta);
   }
 
-  // Reels: one per configured reel, filled at random from products tagged for it, hero excluded, 5-8 cards.
-  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  // Wheels (owner, Sept 24): every category is a rotating wheel. Three pictures are always fully on screen, the middle one
+  // active with its name, reason and Buy button underneath; arrows, swipe, arrow keys or a tap on a side picture turn it,
+  // looping through everything posted in that category. The home page has a wheel per category (the category bar jumps
+  // to them); a product page has two: its own category, then Hot deals.
+  const onHome = !ROOT;
   const shelves = $('shelves');
-  // The slot spin plays once, when a shelf is 30% on screen (not at load, when shelves sit below the fold).
-  const spinIO = 'IntersectionObserver' in window ? new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.replace('armed', 'spin'); spinIO.unobserve(e.target); } }, { threshold: 0.3 }) : null;
-  for (const reel of (data.reels || [])) {
-    const pool = products.filter(p => (p.reels || [p.category]).includes(reel.id) && p.product_id !== hero.product_id);
-    if (!pool.length) continue; // every category with a product gets a shelf, so the category bar never points at nothing
-    const section = document.createElement('section'); section.className = 'shelf'; section.id = reel.id; section.dataset.label = reel.label; section.setAttribute('aria-labelledby', `shelf-${reel.id}`);
-    const head = document.createElement('div'); head.className = 'shelf-head';
-    const h2 = document.createElement('h2'); h2.className = 'h2'; h2.id = `shelf-${reel.id}`; h2.textContent = reel.label;
-    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn btn-quiet btn-sm'; btn.textContent = 'Shuffle';
-    head.append(h2, btn); btn.hidden = pool.length < 2; // nothing to shuffle with one card
-    const track = document.createElement('div'); track.className = 'reel mini armed'; track.setAttribute('role', 'list');
-    const fill = () => { track.replaceChildren(...shuffle(pool.slice()).slice(0, 8).map(card)); track.scrollTo({ left: 0, behavior: 'auto' }); };
-    // Shuffle answers the visitor, so it uses a short 420ms settle instead of the full first-view spin.
-    btn.addEventListener('click', () => { track.classList.remove('armed', 'spin', 'reshuffle'); void track.offsetWidth; fill(); track.classList.add('spin', 'reshuffle'); });
-    fill();
-    if (spinIO) spinIO.observe(track); else track.classList.replace('armed', 'spin');
-    section.append(head, track);
+  const categories = (data.reels || []).map(r => ({ ...r, items: products.filter(p => (p.reels || [p.category]).includes(r.id)) })).filter(r => r.items.length);
+  let wheelCats = categories;
+  if (!onHome) {
+    const own = categories.find(r => r.id === hero.category && r.items.length > 1) || categories.find(r => r.id !== 'hot_deals' && r.items.length > 1);
+    wheelCats = [own, categories.find(r => r.id === 'hot_deals')].filter((r, i, a) => r && a.indexOf(r) === i);
+  }
+  // The first-view spin plays once, when a wheel is a third on screen (not at load, when wheels sit below the fold).
+  const spinIO = 'IntersectionObserver' in window ? new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { spinIO.unobserve(e.target); e.target._spin(); } }, { threshold: 0.35 }) : null;
+  for (const cat of wheelCats) {
+    const section = wheel(cat);
     shelves.appendChild(section);
+    if (spinIO) spinIO.observe(section.querySelector('.wheel')); else section.querySelector('.wheel')._spin();
   }
 
-  // Category bar: "All picks" plus one chip per shelf. On the home page chips jump to their shelf (a shareable #hash);
-  // on product pages they go home to that shelf. The chip for the section you are looking at is highlighted.
-  const onHome = !ROOT;
+  // Category bar: "All picks" plus one chip per category that has a product (every category, even on product pages).
+  // On the home page chips jump to their wheel (a shareable #hash); on product pages they go home to that wheel.
+  // The chip for the section you are looking at is highlighted.
   const nav = $('catnav');
   const sections = [...shelves.querySelectorAll('section.shelf')];
-  if (nav && sections.length) {
-    const links = [['top', 'All picks'], ...sections.map(s => [s.id, s.dataset.label])].map(([id, label]) => {
+  if (nav && categories.length) {
+    const links = [['top', 'All picks'], ...categories.map(c => [c.id, c.label])].map(([id, label]) => {
       const a = document.createElement('a'); a.textContent = label; a.dataset.target = id;
       a.href = id === 'top' ? (onHome ? '#top' : ROOT + './') : (onHome ? `#${id}` : `${ROOT}./#${id}`);
       if (onHome && id === 'top') a.addEventListener('click', (e) => { e.preventDefault(); history.pushState(null, '', location.pathname + location.search); window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); });
@@ -153,20 +150,94 @@
       if (want && sections.some(s => s.id === want)) requestAnimationFrame(() => { document.getElementById(want).scrollIntoView({ block: 'start' }); setActive(want); });
     }
   } else if (nav) nav.hidden = true;
-  // Card: the picture and title open the note; the buy button goes straight to Amazon. Never nested inside each other.
-  function card(p) {
-    const c = document.createElement('article'); c.className = 'card reel-card'; c.setAttribute('role', 'listitem');
-    const open = document.createElement('button'); open.type = 'button'; open.className = 'card-open'; open.setAttribute('aria-label', `${p.title}: see the note`);
-    open.appendChild(media(p, 'card-media'));
-    const body = document.createElement('div'); body.className = 'card-body';
-    body.appendChild(chip(p));
-    const h3 = document.createElement('h3'); h3.className = 'h3'; h3.textContent = p.title;
-    const why = document.createElement('p'); why.className = 'why'; why.textContent = p.reason_to_buy ? `"${p.reason_to_buy}"` : '';
-    body.append(h3, why); open.appendChild(body);
-    open.addEventListener('click', () => openSheet(p));
-    const buy = document.createElement('a'); buy.className = 'btn btn-primary btn-sm card-buy'; buy.rel = 'sponsored noopener'; buy.target = '_blank'; setBuy(buy, p);
-    c.append(open, buy);
-    return c;
+  // One wheel. With 3+ products the strip holds three copies of the list and the middle picture always sits in the middle
+  // copy, so turning never runs out; after each turn it hops back to the same picture in the middle copy with motion off.
+  // With 1-2 products the pictures just sit centred and a tap picks which one is described below.
+  function wheel(cat) {
+    const make = (tag, cls) => { const e = document.createElement(tag); if (cls) e.className = cls; return e; };
+    const items = cat.items, n = items.length, loop = n >= 3;
+    const section = make('section', 'shelf'); section.id = cat.id; section.dataset.label = cat.label; section.setAttribute('aria-labelledby', `shelf-${cat.id}`);
+    const head = make('div', 'shelf-head');
+    const h2 = make('h2', 'h2'); h2.id = `shelf-${cat.id}`; h2.textContent = cat.label;
+    const ctrls = make('div', 'wheel-ctrls'); ctrls.hidden = n < 2;
+    const arrow = (dir, label) => { const b = make('button', 'wheel-btn'); b.type = 'button'; b.setAttribute('aria-label', label); b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${dir < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; b.addEventListener('click', () => go(dir)); return b; };
+    const count = make('span', 'wheel-count'); count.setAttribute('aria-hidden', 'true');
+    ctrls.append(arrow(-1, `Previous ${cat.label} pick`), count, arrow(1, `Next ${cat.label} pick`));
+    head.append(h2, ctrls);
+
+    const stage = make('div', 'wheel armed' + (loop ? ' loop' : '')); stage.setAttribute('role', 'group'); stage.setAttribute('aria-roledescription', 'carousel'); stage.setAttribute('aria-labelledby', h2.id);
+    const strip = make('div', 'wheel-strip');
+    const copies = loop ? [...items, ...items, ...items] : items;
+    let swiped = false;
+    const slides = copies.map((p, i) => {
+      const b = make('button', 'wheel-item'); b.type = 'button'; b.appendChild(media(p, 'card-media'));
+      b.addEventListener('click', () => { if (swiped) { swiped = false; return; } const off = i - center; if (!off) openSheet(p); else if (loop) go(Math.sign(off)); else { center = i; render(); } });
+      return b;
+    });
+    strip.append(...slides); stage.appendChild(strip);
+
+    // Underneath: the middle product's name, reason and buttons. A status line tells screen readers which pick is showing.
+    const info = make('div', 'wheel-info');
+    const infoChip = make('span', 'chip'), title = make('h3', 'h3'), why = make('p', 'why');
+    const actions = make('div', 'wheel-actions');
+    const buy = make('a', 'btn btn-primary btn-sm'); buy.rel = 'sponsored noopener'; buy.target = '_blank';
+    const note = make('button', 'btn btn-ghost btn-sm'); note.type = 'button'; note.textContent = 'Why we picked it';
+    actions.append(buy, note);
+    const status = make('p', 'visually-hidden'); status.setAttribute('aria-live', 'polite');
+    info.append(infoChip, title, why, actions, status);
+    section.append(head, stage, info);
+
+    // Start on the first product that is not the one this page is about.
+    const first = Math.max(0, items.findIndex(p => p.product_id !== hero.product_id || onHome));
+    let center = loop ? n + first : first, settleT = 0, shown = null;
+    const setK = () => strip.style.setProperty('--k', String(center - 1));
+    function render(announce) {
+      slides.forEach((s, i) => {
+        const off = i - center, vis = loop ? Math.abs(off) <= 1 : true;
+        s.classList.toggle('active', off === 0); s.classList.toggle('left', off === -1); s.classList.toggle('right', off === 1);
+        s.tabIndex = vis ? 0 : -1; s.inert = !vis; s.setAttribute('aria-hidden', String(!vis));
+        s.setAttribute('aria-label', off === 0 ? `${copies[i].title}: why we picked it` : `Show ${copies[i].title}`);
+      });
+      const p = items[center % n];
+      count.textContent = `${(center % n) + 1} / ${n}`;
+      if (p === shown) return;
+      shown = p;
+      const here = !onHome && p.product_id === hero.product_id;
+      infoChip.textContent = here ? 'On this page' : reelLabel(p.category); infoChip.className = 'chip' + (here ? ' chip-here' : '');
+      title.textContent = p.title; why.textContent = p.reason_to_buy ? `"${p.reason_to_buy}"` : '';
+      buy.removeAttribute('aria-disabled'); buy.target = '_blank'; setBuy(buy, p, 'wheel'); // setBuy disables example rows
+      note.onclick = () => openSheet(p);
+      if (announce) status.textContent = `${p.title}, ${(center % n) + 1} of ${n}`;
+      if (!reduceMotion) { info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap'); }
+    }
+    // Hop to the same picture in the middle copy with motion off, so the next turn always has neighbours on both sides.
+    const recentre = () => { if (!loop || (center >= n && center < 2 * n)) return; center = ((center % n) + n) % n + n; stage.classList.add('no-anim'); setK(); render(); void strip.offsetWidth; stage.classList.remove('no-anim'); };
+    function go(d) {
+      if (n < 2) return;
+      const hadFocus = stage.contains(document.activeElement);
+      if (loop) { clearTimeout(settleT); strip.classList.remove('spinning'); recentre(); center += d; setK(); render(true); settleT = setTimeout(recentre, 420); }
+      else { center = (center + d + n) % n; render(true); }
+      if (hadFocus) slides[center].focus({ preventScroll: true });
+    }
+    stage.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); go(e.key === 'ArrowLeft' ? -1 : 1); } });
+    // Swipe: a mostly-sideways flick past 40px turns one step; vertical page scrolling is left alone (touch-action: pan-y).
+    if (window.PointerEvent && n > 1) {
+      let x0 = null, y0 = 0;
+      stage.addEventListener('pointerdown', (e) => { swiped = false; if (e.pointerType === 'mouse' && e.button !== 0) return; x0 = e.clientX; y0 = e.clientY; });
+      stage.addEventListener('pointerup', (e) => { if (x0 === null) return; const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null; if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) { swiped = true; go(dx < 0 ? 1 : -1); } });
+      stage.addEventListener('pointercancel', () => { x0 = null; });
+    }
+    // First view: the wheel spins once through the whole category and settles on its first pick (slot-reel feel, under 1s).
+    stage._spin = () => {
+      stage.classList.remove('armed');
+      if (!loop || reduceMotion) return;
+      const target = center; center = target - n;
+      stage.classList.add('no-anim'); setK(); render(); void strip.offsetWidth; stage.classList.remove('no-anim');
+      strip.classList.add('spinning'); center = target; setK(); render();
+      settleT = setTimeout(() => strip.classList.remove('spinning'), 1000);
+    };
+    setK(); render();
+    return section;
   }
 
   // Detail sheet

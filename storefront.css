@@ -108,48 +108,71 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 .inuse img { width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--r-lg); background: var(--ink-800); }
 .inuse figcaption { font-size: var(--fs-sm); color: var(--text-3); }
 
-/* Reels */
+/* Category wheels: three pictures always fully on screen (never cut at the edge), the middle one active and lit,
+   the side ones smaller and turned slightly inward like a wheel. The strip moves by one picture per turn:
+   translate = --k pictures of (width + gap), where a picture is (100% - 2 gaps) / 3 of the wheel. */
 .shelf { padding-top: var(--sp-6); display: grid; gap: var(--sp-2); }
 .shelf-head { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter); gap: var(--sp-3); }
 .shelf-head h2 { font-size: var(--fs-xl); }
-.reel-card { display: grid; background: var(--card); }
-.card-open { -webkit-tap-highlight-color: transparent; appearance: none; cursor: pointer; text-align: left; border: 0; padding: 0; color: inherit; font: inherit; background: transparent; display: block; width: 100%; }
-.card-open:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: -3px; border-radius: var(--r-md); }
-.card-buy { margin: 0 var(--sp-3) var(--sp-3); }
-/* Press feedback on the card picture, which opens the note. */
-.card-open .card-media { transition: opacity 160ms var(--ease-out); }
-.card-open:active .card-media { opacity: .82; transition-duration: 80ms; }
+.wheel-ctrls { display: flex; align-items: center; gap: 2px; flex: none; }
+.wheel-ctrls[hidden] { display: none; }
+.wheel-btn {
+  width: 44px; height: 44px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  color: var(--text); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line);
+  -webkit-tap-highlight-color: transparent; transition: transform 160ms var(--ease-out), box-shadow 160ms ease;
+}
+.wheel-btn svg { width: 18px; height: 18px; }
+.wheel-btn:active { transform: scale(.94); transition-duration: 80ms; }
+.wheel-btn:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .wheel-btn:hover { box-shadow: inset 0 0 0 1.5px var(--accent); } }
+.wheel-count { min-width: 3.4em; text-align: center; font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+.wheel { --gap: 12px; position: relative; overflow: hidden; margin: 0 var(--gutter); padding: 14px 0 12px; touch-action: pan-y; }
+.wheel-strip { display: flex; gap: var(--gap); width: 100%; }
+.wheel.loop .wheel-strip { transform: translateX(calc((100% + var(--gap)) / -3 * var(--k, 0))); transition: transform 420ms var(--ease-out); }
+/* The first-view spin: the whole category flies past once and settles with the brand's slot overshoot. */
+.wheel.loop .wheel-strip.spinning { transition-duration: 950ms; transition-timing-function: var(--ease-settle); }
+.wheel:not(.loop) .wheel-strip { justify-content: center; }
+.wheel.no-anim .wheel-strip, .wheel.no-anim .wheel-item { transition: none !important; }
+.wheel-item {
+  flex: 0 0 calc((100% - 2 * var(--gap)) / 3); position: relative; padding: 0; border: 0; background: var(--card);
+  border-radius: var(--r-md); overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  opacity: .55; transform: perspective(900px) rotateY(0deg) scale(.88);
+  transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out), box-shadow 420ms var(--ease-out);
+}
+/* Same function list in every state (so each picture glides between states); outer edges turn away, like a drum. */
+.wheel-item.left { transform: perspective(900px) rotateY(-14deg) scale(.88); }
+.wheel-item.right { transform: perspective(900px) rotateY(14deg) scale(.88); }
+.wheel-item.active { opacity: 1; transform: perspective(900px) rotateY(0deg) scale(1); box-shadow: 0 0 0 2px var(--accent), var(--glow-ember); }
+.wheel-item .card-media { position: relative; }
+.wheel-item .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wheel-item .card-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
+.wheel-item:active .card-media { opacity: .85; }
+.wheel-item:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: -3px; }
+/* Waiting below the fold: pictures hidden until the wheel's first spin. */
+@media (prefers-reduced-motion: no-preference) {
+  .wheel.armed .wheel-item { opacity: 0; }
+}
+
+/* The middle pick, described under the wheel. Fixed line counts so turning never moves the page below. */
+.wheel-info { margin: var(--sp-2) var(--gutter) 0; display: grid; gap: 8px; justify-items: start; }
+.wheel-info .h3 { font-size: 1.15rem; line-height: 1.25; min-height: 2.5em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.wheel-info .why { font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 18, "SOFT" 40; font-size: 0.98rem; line-height: 1.35; color: var(--text-2); margin: 0; min-height: 2.7em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.wheel-actions { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-2); width: 100%; margin-top: 2px; }
+.wheel-actions a[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.chip-here { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .wheel-info.swap > * { animation: wheel-in 240ms var(--ease-out) both; }
+  .wheel-info.swap > :nth-child(2) { animation-delay: 30ms; }
+  .wheel-info.swap > :nth-child(n+3) { animation-delay: 60ms; }
+}
+@keyframes wheel-in { from { opacity: 0; transform: translateY(6px); } }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
 .more summary { -webkit-tap-highlight-color: transparent; }
-.card-buy[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 .sheet-more { font-size: var(--fs-xs); color: var(--text-3); text-align: center; margin: 0; }
 .sheet-more a { color: var(--text-2); }
-.reel-card .card-media { position: relative; }
-.reel-card .card-media img { width: 100%; height: 100%; object-fit: cover; }
-.reel-card .card-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
-.reel-card .card-body { gap: 6px; }
-.reel-card h3 { font-size: 1.05rem; }
-.reel-card .why { font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 18, "SOFT" 40; font-size: 0.95rem; line-height: 1.35; color: var(--text-2); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.reel-card .go { font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--accent); margin-top: 4px; }
-.reel-card:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; }
 .chip-example { color: var(--sage); }
-
-/* Slot settle animation, once per reel */
-.reel .reel-card { transform-origin: 50% 100%; }
-@media (prefers-reduced-motion: no-preference) {
-  /* Armed reels wait off-state until the shelf is 30% on screen, then spin once. */
-  .reel.armed .reel-card { opacity: 0; transform: translateY(32px) scale(.96); }
-  .reel.spin .reel-card { animation: settle var(--dur-3) var(--ease-settle) backwards; }
-  .reel.spin .reel-card:nth-child(2) { animation-delay: 70ms; }
-  .reel.spin .reel-card:nth-child(3) { animation-delay: 140ms; }
-  .reel.spin .reel-card:nth-child(4) { animation-delay: 210ms; }
-  .reel.spin .reel-card:nth-child(n+5) { animation-delay: 280ms; }
-  /* Shuffle is the visitor asking: answer fast. */
-  .reel.spin.reshuffle .reel-card { animation-duration: 420ms; }
-  .reel.spin.reshuffle .reel-card:nth-child(2) { animation-delay: 40ms; }
-  .reel.spin.reshuffle .reel-card:nth-child(3) { animation-delay: 80ms; }
-  .reel.spin.reshuffle .reel-card:nth-child(n+4) { animation-delay: 120ms; }
-}
-@keyframes settle { 0% { transform: translateY(32px) scale(.96); opacity: 0; } 40% { opacity: 1; } 100% { transform: none; opacity: 1; } }
 
 /* Sticky buy bar: hidden until the hero button leaves the screen */
 .buybar {
@@ -240,5 +263,6 @@ footer a { color: var(--text-2); text-decoration: none; }
   .hero { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--sp-6); padding-top: var(--sp-7); }
   .hero-media { aspect-ratio: 4 / 5; }
   .hero-text { display: grid; gap: var(--sp-4); }
-  .reel > * { flex-basis: 300px; }
+  .wheel { --gap: 18px; }
+  .wheel-info { max-width: 560px; }
 }
