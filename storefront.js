@@ -123,6 +123,7 @@
     };
     makeZone(); addEventListener('resize', () => requestAnimationFrame(makeZone));
     watchUnderBar = (el) => { watched.push(el); zone.observe(el); };
+    watchUnderBar($('hero-more')); // the open notes on a product page: no line of them sits under the bar while you read
   }
 
   // Wheels (owner, Sept 24): every category is a rotating wheel. Three pictures are always fully on screen, the middle one
