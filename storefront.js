@@ -41,7 +41,10 @@
   function fmtDate(s) { const d = new Date(s + 'T00:00:00'); return isNaN(d) ? s : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
   function media(p, cls) {
     const el = document.createElement('div'); el.className = cls;
-    if (p.card_image) { const img = new Image(); img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img); }
+    if (p.card_image) {
+      const img = new Image(); img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img);
+      const note = document.createElement('span'); note.className = 'image-note'; note.textContent = 'Illustrative image · check exact item on Amazon'; el.appendChild(note);
+    }
     else { const t = document.createElement('div'); t.className = 'tint'; if (p.tint) t.style.setProperty('--tint', p.tint); el.appendChild(t); }
     return el;
   }

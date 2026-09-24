@@ -59,7 +59,7 @@ const productLd = (p, url) => ({ '@context': 'https://schema.org', '@type': 'Pro
 
 // ---------- store pages ----------
 const storeTpl = rd('templates/store.html');
-function storePage({ rootPrefix, heroId, title, description, url, image, ld }) {
+function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#' }) {
   return storeTpl
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'product' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('<!--ANALYTICS-->', analytics)
@@ -67,13 +67,16 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld }) {
     .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
     .replace('{{HERO_ID}}', heroId || '')
     .replace('{{HERO_TITLE}}', esc(title))
-    .replace('{{HERO_WHY}}', '');
+    .replace('{{HERO_WHY}}', '')
+    .replaceAll('{{HERO_BUY_URL}}', esc(heroBuyUrl || '#'))
+    .replaceAll('{{HERO_GUIDE_URL}}', esc(heroGuideUrl || '#'));
 }
 const homeDesc = cfg.tagline || site.disclosure || '';
-written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
+const homeHero = buildable.find(p => p.hero_eligible) || buildable[0];
+written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: homeHero?.amazon_url, heroGuideUrl: homeHero?.guide_url, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
-  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, ld: productLd(p, base ? url : undefined) })));
+  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, ld: productLd(p, base ? url : undefined) })));
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------
