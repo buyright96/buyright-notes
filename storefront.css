@@ -18,7 +18,44 @@ body { min-height: 100%; }
 .top .brand em { font-style: italic; font-weight: 400; color: var(--text-2); }
 .top .spacer { flex: 1; }
 .top .guides { font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text-2); text-decoration: none; padding: 10px 12px; border-radius: var(--r-pill); }
-.top .guides:hover { color: var(--text); background: var(--surface); }
+@media (hover: hover) and (pointer: fine) { .top .guides:hover { color: var(--text); background: var(--surface); } }
+
+/* Category bar: a swipeable row of chips inside the sticky header. The current section is highlighted
+   (bone text, ember outline); the solid ember fill stays reserved for Buy buttons. */
+.top { flex-wrap: wrap; row-gap: 6px; padding-bottom: 8px; }
+.catnav {
+  flex: 1 0 100%; display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain;
+  margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.catnav::-webkit-scrollbar { display: none; }
+.catnav:empty { display: none; }
+.catnav a {
+  flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
+  border-radius: var(--r-pill); text-decoration: none; white-space: nowrap;
+  font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text-2);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-1) ease, box-shadow var(--dur-1) ease, transform 200ms var(--ease-out);
+}
+.catnav a:active { transform: scale(0.97); transition-duration: 100ms; }
+.catnav a[aria-current] { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.catnav a:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .catnav a:hover { color: var(--text); } }
+
+/* Jumps land below the sticky header instead of under it. */
+.shelf { scroll-margin-top: var(--nav-h, 120px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* Back to all picks: Pinterest visitors land on a product page with no history, so the way back is explicit. */
+.backlink {
+  justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin: -8px 0 -4px;
+  font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text-2); text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.backlink:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: 6px; }
+@media (hover: hover) and (pointer: fine) { .backlink:hover { color: var(--text); } }
+@media (min-width: 720px) { .backlink { grid-column: 1 / -1; } }
 
 /* Hero */
 .hero { padding: var(--sp-5) var(--gutter) var(--sp-6); display: grid; gap: var(--sp-4); }
@@ -28,14 +65,6 @@ body { min-height: 100%; }
   box-shadow: var(--glow-ember);
 }
 .hero-media img { width: 100%; height: 100%; object-fit: cover; }
-.image-note {
-  position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2;
-  width: max-content; max-width: calc(100% - 20px); padding: 6px 9px;
-  border: 1px solid color-mix(in srgb, var(--paper) 28%, transparent);
-  border-radius: 999px; background: color-mix(in srgb, var(--ink-950) 78%, transparent);
-  color: var(--paper); font: 600 11px/1.25 "Bricolage Grotesque", sans-serif;
-  letter-spacing: .01em; backdrop-filter: blur(8px);
-}
 /* One restrained Apple-style touch: the hero photo eases back very slightly as you scroll away. Off without support or with reduced motion. */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -60,7 +89,13 @@ body { min-height: 100%; }
 .more summary::after { content: ""; width: 9px; height: 9px; border-right: 1.5px solid var(--text-3); border-bottom: 1.5px solid var(--text-3); transform: rotate(45deg); transition: transform var(--dur-1) var(--ease-out); margin-right: 4px; }
 .more[open] summary::after { transform: rotate(-135deg); }
 .more[open] summary { color: var(--text); }
-.more .detail { color: var(--text-2); margin: 0 0 var(--sp-2); }
+.more .detail, .sheet-inner .detail { display: grid; gap: 10px; color: var(--text-2); margin: 0 0 var(--sp-2); }
+.detail p { margin: 0; }
+.detail .reason { color: var(--text); }
+.detail .highlights { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.detail .highlights li { position: relative; padding-left: 22px; line-height: 1.4; }
+.detail .highlights li::before { content: ""; position: absolute; left: 2px; top: .5em; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, transparent); }
+.detail .skip { font-size: var(--fs-sm); color: var(--text-3); padding-top: 2px; }
 .more .checked { margin: 0 0 var(--sp-2); }
 .more .sheet-more { text-align: left; }
 summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: 6px; }
@@ -73,9 +108,13 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 .shelf-head { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter); gap: var(--sp-3); }
 .shelf-head h2 { font-size: var(--fs-xl); }
 .reel-card { display: grid; background: var(--card); }
-.card-open { appearance: none; cursor: pointer; text-align: left; border: 0; padding: 0; color: inherit; font: inherit; background: transparent; display: block; width: 100%; }
+.card-open { -webkit-tap-highlight-color: transparent; appearance: none; cursor: pointer; text-align: left; border: 0; padding: 0; color: inherit; font: inherit; background: transparent; display: block; width: 100%; }
 .card-open:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: -3px; border-radius: var(--r-md); }
 .card-buy { margin: 0 var(--sp-3) var(--sp-3); }
+/* Press feedback on the card picture, which opens the note. */
+.card-open .card-media { transition: opacity 160ms var(--ease-out); }
+.card-open:active .card-media { opacity: .82; transition-duration: 80ms; }
+.more summary { -webkit-tap-highlight-color: transparent; }
 .card-buy[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 .sheet-more { font-size: var(--fs-xs); color: var(--text-3); text-align: center; margin: 0; }
 .sheet-more a { color: var(--text-2); }
@@ -92,22 +131,30 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 /* Slot settle animation, once per reel */
 .reel .reel-card { transform-origin: 50% 100%; }
 @media (prefers-reduced-motion: no-preference) {
-  .reel.spin .reel-card { animation: settle var(--dur-3) var(--ease-settle) both; }
+  /* Armed reels wait off-state until the shelf is 30% on screen, then spin once. */
+  .reel.armed .reel-card { opacity: 0; transform: translateY(32px) scale(.96); }
+  .reel.spin .reel-card { animation: settle var(--dur-3) var(--ease-settle) backwards; }
   .reel.spin .reel-card:nth-child(2) { animation-delay: 70ms; }
   .reel.spin .reel-card:nth-child(3) { animation-delay: 140ms; }
   .reel.spin .reel-card:nth-child(4) { animation-delay: 210ms; }
   .reel.spin .reel-card:nth-child(n+5) { animation-delay: 280ms; }
+  /* Shuffle is the visitor asking: answer fast. */
+  .reel.spin.reshuffle .reel-card { animation-duration: 420ms; }
+  .reel.spin.reshuffle .reel-card:nth-child(2) { animation-delay: 40ms; }
+  .reel.spin.reshuffle .reel-card:nth-child(3) { animation-delay: 80ms; }
+  .reel.spin.reshuffle .reel-card:nth-child(n+4) { animation-delay: 120ms; }
 }
-@keyframes settle { 0% { transform: translateY(46px) scale(.96); opacity: 0; } 55% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes settle { 0% { transform: translateY(32px) scale(.96); opacity: 0; } 40% { opacity: 1; } 100% { transform: none; opacity: 1; } }
 
 /* Sticky buy bar: hidden until the hero button leaves the screen */
 .buybar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
   display: flex; justify-content: center;
   padding: 10px var(--gutter) calc(12px + env(safe-area-inset-bottom, 0px));
-  transform: translateY(110%); transition: transform var(--dur-2) var(--ease-out);
+  transform: translateY(110%); transition: transform 240ms var(--ease-out);
   pointer-events: none;
 }
+.buybar:not(.show) { transition-duration: 180ms; }
 .buybar.show { transform: none; pointer-events: auto; }
 .buybar .inner {
   width: 100%; max-width: 720px;
@@ -127,13 +174,14 @@ dialog.sheet {
 }
 dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .sheet-inner {
-  max-width: 760px; margin: 0 auto; max-height: 88dvh; overflow: auto;
+  max-width: 760px; margin: 0 auto; max-height: 88dvh; overflow: auto; overscroll-behavior: contain;
   background: var(--ink-900); border-radius: var(--r-lg) var(--r-lg) 0 0;
   padding: 8px var(--gutter) calc(20px + env(safe-area-inset-bottom, 0px));
   display: grid; gap: var(--sp-4);
   box-shadow: 0 -20px 60px -20px rgba(0,0,0,.8), inset 0 1px 0 var(--line-strong);
 }
-.sheet-inner .grip { width: 44px; height: 5px; border-radius: 3px; background: var(--line-strong); margin: 4px auto 0; }
+/* The grip is a real drag handle (drag down to close); the padding gives it a finger-sized target. */
+.sheet-inner .grip { width: 44px; height: 5px; border-radius: 3px; background: var(--line-strong); margin: 0 auto; padding: 0; box-sizing: content-box; border: 12px solid transparent; background-clip: padding-box; touch-action: none; cursor: grab; }
 .sheet-media { border-radius: var(--r-md); overflow: hidden; aspect-ratio: 4 / 3; background: var(--ink-800); position: relative; }
 .sheet-media img { width: 100%; height: 100%; object-fit: cover; }
 .sheet-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
@@ -142,10 +190,38 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
 .sheet-inner .detail { color: var(--text-2); margin: 0; }
 .sheet-inner .actions { display: grid; gap: var(--sp-2); }
 .sheet-inner .close { justify-self: end; }
+/* The sheet comes from the bottom edge and goes back there; the panel stays solid, only the backdrop fades. */
 @media (prefers-reduced-motion: no-preference) {
-  dialog.sheet[open] .sheet-inner { animation: sheet-up var(--dur-2) var(--ease-out) both; }
+  dialog.sheet[open] .sheet-inner { animation: sheet-up 420ms var(--ease-drawer) both; }
+  dialog.sheet[open]::backdrop { animation: fade-in 300ms var(--ease-out) both; }
+  dialog.sheet.closing .sheet-inner { animation: sheet-down 240ms var(--ease-drawer) both; }
+  dialog.sheet.closing::backdrop { animation: fade-out 200ms ease-out both; }
 }
-@keyframes sheet-up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { dialog.sheet[open] .sheet-inner { animation: fade-in 150ms ease-out both; } }
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes sheet-down { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+
+/* "Why we picked it" opens smoothly where the browser supports it; it sits below the Buy button, so it never moves it. */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  @media (prefers-reduced-motion: no-preference) {
+    details.more::details-content { height: 0; overflow: clip; transition: height 240ms var(--ease-out), content-visibility 240ms allow-discrete; }
+    details.more[open]::details-content { height: auto; }
+  }
+}
+
+/* Touch devices: lighter blurs for smoother scrolling. */
+@media (pointer: coarse) {
+  .top, .buybar .inner { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+}
+
+/* Reduced motion: the buy bar fades in place instead of sliding; press feedback stays. */
+@media (prefers-reduced-motion: reduce) {
+  .buybar { transform: none; opacity: 0; transition: opacity 200ms ease-out !important; }
+  .buybar.show { opacity: 1; }
+}
 
 /* Footer */
 footer { padding: var(--sp-7) var(--gutter) 0; display: grid; gap: var(--sp-2); color: var(--text-3); font-size: var(--fs-xs); }

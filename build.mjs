@@ -59,24 +59,31 @@ const productLd = (p, url) => ({ '@context': 'https://schema.org', '@type': 'Pro
 
 // ---------- store pages ----------
 const storeTpl = rd('templates/store.html');
-function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#' }) {
+// Hero text and photo are pre-rendered so nothing moves when storefront.js fills the page (no layout shift under the Buy button).
+const reelLabel = (id) => (data.reels || []).find(r => r.id === id)?.label || id;
+const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async">` : '';
+function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   return storeTpl
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'product' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('<!--ANALYTICS-->', analytics)
     .replaceAll('{{ROOT}}', rootPrefix)
     .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
-    .replace('{{HERO_ID}}', heroId || '')
-    .replace('{{HERO_TITLE}}', esc(title))
-    .replace('{{HERO_WHY}}', '')
+    .replace('{{HERO_ID}}', heroId || (hero ? hero.product_id : ''))
+    .replace('{{BACK_HIDDEN}}', heroId ? '' : ' hidden')
+    .replace('{{HERO_TITLE}}', esc(hero ? hero.title : title))
+    .replace('{{HERO_WHY}}', hero && hero.reason_to_buy ? esc(`"${hero.reason_to_buy}"`) : '')
+    .replace('{{HERO_CHIP}}', hero ? esc(reelLabel(hero.category)) : '')
+    .replace('{{HERO_MEDIA}}', heroMedia(hero, rootPrefix))
     .replaceAll('{{HERO_BUY_URL}}', esc(heroBuyUrl || '#'))
     .replaceAll('{{HERO_GUIDE_URL}}', esc(heroGuideUrl || '#'));
 }
 const homeDesc = cfg.tagline || site.disclosure || '';
-const homeHero = buildable.find(p => p.hero_eligible) || buildable[0];
-written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: homeHero?.amazon_url, heroGuideUrl: homeHero?.guide_url, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
+// Home features the newest pick (the last hero-eligible row), so it changes every time a product launches.
+const homeHero = [...buildable].reverse().find(p => p.hero_eligible) || buildable[buildable.length - 1];
+written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: homeHero?.amazon_url, heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
-  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, ld: productLd(p, base ? url : undefined) })));
+  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, hero: p, ld: productLd(p, base ? url : undefined) })));
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------

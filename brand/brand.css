@@ -72,9 +72,10 @@
   --lamp: radial-gradient(60% 45% at 50% 0%, rgba(240, 164, 88, 0.22), rgba(240, 164, 88, 0) 70%);
 
   /* Motion */
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* bottom sheet in/out */
   --ease-settle: cubic-bezier(0.3, 1.35, 0.4, 1); /* slot-machine overshoot */
-  --dur-1: 160ms; --dur-2: 320ms; --dur-3: 720ms;
+  --dur-1: 160ms; --dur-2: 240ms; --dur-3: 720ms;
 }
 
 /* Light theme (paper) for graphics or a future daytime toggle */
@@ -143,14 +144,19 @@ a { color: inherit; }
   border-radius: var(--r-pill);
   font: 600 var(--fs-md)/1 var(--font-ui);
   letter-spacing: -0.005em;
-  transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), background var(--dur-1);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 200ms var(--ease-out), background var(--dur-1) ease;
 }
-.btn:active { transform: scale(0.97); }
+/* Press is quicker than release, so the tap feels immediate. */
+.btn:active { transform: scale(0.97); transition-duration: 100ms; }
 .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: var(--glow-ember); }
-.btn-primary:hover { background: var(--accent-hi); }
 .btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
-.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
 .btn-quiet { background: var(--card); color: var(--text); }
+/* Hover only for real mouse pointers: on phones a tap would leave the button stuck in its hover colour. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--accent-hi); }
+  .btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+}
 .btn-sm { min-height: 40px; padding: 0 var(--sp-4); font-size: var(--fs-sm); }
 .btn:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; }
 
@@ -190,7 +196,7 @@ a { color: inherit; }
 
 /* Grain overlay: one per page, on body::after */
 .grain::after {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 25; /* under the buy bar, so the Buy button is never tinted */
   opacity: 0.07; mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
@@ -220,6 +226,11 @@ a { color: inherit; }
 /* A reel inside a grid or flex parent must be allowed to shrink, or its cards widen the page. */
 .reel, .reel-wrap { min-width: 0; max-width: 100%; }
 .reel > * { flex: 0 0 min(72vw, 300px); scroll-snap-align: start; }
+
+/* Touch devices: no full-screen blend layer (costly on every scroll frame on mid and low-end phones). */
+@media (pointer: coarse) {
+  .grain::after { mix-blend-mode: normal; opacity: .035; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }

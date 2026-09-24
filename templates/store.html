@@ -22,15 +22,17 @@
       <span>BuyRight <em>Notes</em></span>
     </a>
     <span class="spacer"></span>
+    <nav class="catnav" id="catnav" aria-label="Browse picks"></nav>
   </header>
 
   <p class="preview-note" id="preview-note" hidden>Preview with sample products</p>
 
   <main>
-    <section class="hero reveal" id="hero" aria-labelledby="hero-title">
-      <div class="hero-media" id="hero-media"></div>
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <a class="backlink" id="backlink" href="{{ROOT}}./"{{BACK_HIDDEN}}><span aria-hidden="true">&larr;</span> All picks</a>
+      <div class="hero-media" id="hero-media">{{HERO_MEDIA}}</div>
       <div class="hero-text">
-        <span class="chip" id="hero-chip"></span>
+        <span class="chip" id="hero-chip">{{HERO_CHIP}}</span>
         <h1 class="h1" id="hero-title">{{HERO_TITLE}}</h1>
         <p class="why" id="hero-why">{{HERO_WHY}}</p>
         <div class="slots" aria-hidden="true"><span class="slot-price"></span><span class="slot-rating"></span><span class="slot-badge"></span></div>
@@ -40,7 +42,7 @@
         </div>
         <details class="more" id="hero-more">
           <summary>Why we picked it</summary>
-          <p class="detail" id="hero-detail"></p>
+          <div class="detail" id="hero-detail"></div>
           <p class="checked" id="hero-checked"></p>
           <p class="sheet-more" id="hero-guide-line" hidden>Want the long version? <a id="hero-guide-link" href="{{HERO_GUIDE_URL}}">Read our guide</a></p>
         </details>
@@ -81,11 +83,12 @@
     <span class="chip" id="sheet-chip"></span>
     <h2 class="h2" id="sheet-title"></h2>
     <p class="why" id="sheet-why"></p>
-    <p class="detail" id="sheet-detail"></p>
+    <div class="detail" id="sheet-detail"></div>
     <p class="checked small" id="sheet-checked"></p>
     <div class="actions">
       <a class="btn btn-primary" id="sheet-cta" href="#" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
       <a class="btn btn-ghost" id="sheet-guide" href="#" hidden>Read the guide</a>
+      <a class="btn btn-ghost" id="sheet-page" href="#">See the full page</a>
       <button class="btn btn-quiet btn-sm close" type="button" id="sheet-close">Close</button>
     </div>
     <p class="sheet-more" id="sheet-more" hidden>Want the long version? <a id="sheet-more-link" href="#">Read our guide</a></p>
