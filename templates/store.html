@@ -16,15 +16,7 @@
 <body class="grain">
 <div class="lampfield" aria-hidden="true"></div>
 <div class="page">
-  <header class="top">
-    <a class="brand" href="{{ROOT}}./" aria-label="BuyRight Notes home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8H40L56 24V42a14 14 0 0 1-14 14H22A14 14 0 0 1 8 42V22A14 14 0 0 1 22 8Z" fill="#27201b" stroke="#f0a458" stroke-opacity=".55" stroke-width="2"/><path d="M40 8v10a6 6 0 0 0 6 6h10Z" fill="#c9782e"/><path d="M19 34l11 11 23-25" fill="none" stroke="#ffc68a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>BuyRight <em>Notes</em></span>
-    </a>
-    <span class="spacer"></span>
-    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>
-  </header>
-{{PREVIEW_NOTE}}{{HOME_INTRO}}
+{{HEADER}}{{PREVIEW_NOTE}}{{HOME_INTRO}}
   <main>
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <a class="backlink" id="backlink" href="{{ROOT}}./"{{BACK_HIDDEN}}><span aria-hidden="true">&larr;</span> All picks</a>
@@ -53,6 +45,7 @@
 {{PIN_FIGURE}}
 
     <div id="shelves">{{SHELVES}}</div>
+{{GUIDES_ROW}}
 
     <nav class="catgrid" id="catgrid" aria-labelledby="catgrid-h"{{CATGRID_HIDDEN}}>
       <h2 class="h2" id="catgrid-h">All our picks</h2>
@@ -61,18 +54,7 @@
     </nav>
   </main>
 
-  <footer>
-    <nav>
-      <a href="{{ROOT}}about/">About</a>
-      <a href="{{ROOT}}how-we-pick/">How we pick</a>
-      <a href="{{ROOT}}privacy/">Privacy</a>
-      <a href="{{ROOT}}terms/">Terms</a>
-      <a href="{{ROOT}}contact/">Contact</a>
-      <a href="{{BLOG_URL}}">The guides</a>
-    </nav>
-    <span>Prices and availability change. We link you to Amazon to see today's.</span>
-  </footer>
-</div>
+{{FOOTER}}</div>
 
 <div class="buybar" id="buybar" aria-hidden="true">
   <div class="inner">

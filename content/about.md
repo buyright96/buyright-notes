@@ -9,7 +9,7 @@ BuyRight Notes is a short list of products we researched, not a catalog. Each pi
 ## Two places, one standard
 
 - **The shop** (this site): one picture, one honest line, the facts, one button to Amazon.
-- **The guides:** the long version, with the measurements and trade-offs behind a pick. They are moving from [our blog](https://buyrightnotes.blogspot.com/) into this site.
+- **The guides:** the long version, with the measurements and trade-offs behind a pick. They live at [Guides](../guides/); the older copies on our blog stay up and point here.
 
 ## What you will not find here
 

@@ -11,13 +11,25 @@
 <link rel="stylesheet" href="{{ROOT}}brand/brand.css">
 <link rel="stylesheet" href="{{ROOT}}storefront.css">
 <style>
-  .prose { max-width: 680px; margin: 0 auto; padding: var(--sp-6) var(--gutter) var(--sp-8); display: grid; gap: var(--sp-4); }
+  .prose { max-width: 680px; margin: 0 auto; padding: var(--sp-6) var(--gutter) var(--sp-8); display: grid; gap: var(--sp-4); font-size: var(--fs-md); line-height: var(--lh-body); }
   .prose h1 { font-size: var(--fs-2xl); }
   .prose h2 { font-size: var(--fs-xl); margin-top: var(--sp-4); }
   .prose p, .prose li { color: var(--text-2); }
   .prose a { color: var(--text); }
   .prose ul, .prose ol { padding-left: 1.2em; margin: 0; display: grid; gap: 6px; }
   .prose .updated { font-size: var(--fs-xs); color: var(--text-3); }
+  .prose .byline { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: var(--fs-sm); color: var(--text-3); }
+  .prose .byline b { color: var(--text-2); font-weight: 600; }
+  .prose .disclosure { margin: 0; }
+  .prose h3 { font-size: var(--fs-lg); margin-top: var(--sp-2); }
+  .prose .backlink { display: inline-flex; gap: 6px; align-items: center; font-size: var(--fs-sm); color: var(--text-2); text-decoration: none; min-height: 44px; }
+  .prose .backlink:hover { color: var(--text); }
+  .collection { display: grid; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+  .collection li { display: grid; gap: 4px; padding: var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .collection a { display: block; padding: 6px 0; min-height: 44px; font: 600 var(--fs-lg)/1.25 var(--font-display); color: var(--text); text-decoration: none; }
+  .collection a:hover { color: var(--accent-hi); }
+  .collection p { margin: 0; font-size: var(--fs-sm); }
+  .collection small { font-size: var(--fs-xs); color: var(--text-3); }
   .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
 </style>
 <!--ANALYTICS-->
@@ -25,28 +37,9 @@
 <body class="grain">
 <div class="lampfield" aria-hidden="true"></div>
 <div class="page">
-  <header class="top">
-    <a class="brand" href="{{ROOT}}./" aria-label="BuyRight Notes home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8H40L56 24V42a14 14 0 0 1-14 14H22A14 14 0 0 1 8 42V22A14 14 0 0 1 22 8Z" fill="#27201b" stroke="#f0a458" stroke-opacity=".55" stroke-width="2"/><path d="M40 8v10a6 6 0 0 0 6 6h10Z" fill="#c9782e"/><path d="M19 34l11 11 23-25" fill="none" stroke="#ffc68a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>BuyRight <em>Notes</em></span>
-    </a>
-    <span class="spacer"></span>
-    <a class="guides" href="{{ROOT}}">Shop</a>
-  </header>
-  <main class="prose">
+{{HEADER}}  <main class="prose">
 {{CONTENT}}
   </main>
-  <footer>
-    <nav>
-      <a href="{{ROOT}}about/">About</a>
-      <a href="{{ROOT}}how-we-pick/">How we pick</a>
-      <a href="{{ROOT}}privacy/">Privacy</a>
-      <a href="{{ROOT}}terms/">Terms</a>
-      <a href="{{ROOT}}contact/">Contact</a>
-      <a href="{{BLOG_URL}}">The guides</a>
-    </nav>
-    <span>As an Amazon Associate, BuyRight Notes earns from qualifying purchases.</span>
-  </footer>
-</div>
+{{FOOTER}}</div>
 </body>
 </html>

@@ -348,3 +348,17 @@ footer a { color: var(--text-2); text-decoration: none; }
   .shelf { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); }
   .buybar .inner { max-width: 840px; }
 }
+
+/* Guides row on the home page (text tiles; the guides have no photos yet) and the two-link nav on text pages. */
+.guides-row { margin: var(--sp-6) var(--gutter) 0; display: grid; gap: var(--sp-3); }
+.guides-row .row-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.guide-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--sp-3); }
+.guide-tile { display: grid; gap: 6px; align-content: start; min-height: 96px; padding: var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); text-decoration: none; color: var(--text); transition: box-shadow 200ms var(--ease-out); }
+.guide-tile b { font: 600 var(--fs-md)/1.25 var(--font-display); }
+.guide-tile span { font-size: var(--fs-xs); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--text-3); }
+.guide-tile:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.guide-tile:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+.pagenav { display: flex; gap: 4px; }
+.pagenav a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: var(--r-pill); color: var(--text-2); text-decoration: none; font: 600 var(--fs-sm) var(--font-ui); }
+.pagenav a[aria-current="page"] { background: var(--card); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.pagenav a:hover { color: var(--text); }

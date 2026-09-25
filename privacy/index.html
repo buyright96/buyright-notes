@@ -25,13 +25,25 @@
 <link rel="stylesheet" href="../brand/brand.css">
 <link rel="stylesheet" href="../storefront.css">
 <style>
-  .prose { max-width: 680px; margin: 0 auto; padding: var(--sp-6) var(--gutter) var(--sp-8); display: grid; gap: var(--sp-4); }
+  .prose { max-width: 680px; margin: 0 auto; padding: var(--sp-6) var(--gutter) var(--sp-8); display: grid; gap: var(--sp-4); font-size: var(--fs-md); line-height: var(--lh-body); }
   .prose h1 { font-size: var(--fs-2xl); }
   .prose h2 { font-size: var(--fs-xl); margin-top: var(--sp-4); }
   .prose p, .prose li { color: var(--text-2); }
   .prose a { color: var(--text); }
   .prose ul, .prose ol { padding-left: 1.2em; margin: 0; display: grid; gap: 6px; }
   .prose .updated { font-size: var(--fs-xs); color: var(--text-3); }
+  .prose .byline { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: var(--fs-sm); color: var(--text-3); }
+  .prose .byline b { color: var(--text-2); font-weight: 600; }
+  .prose .disclosure { margin: 0; }
+  .prose h3 { font-size: var(--fs-lg); margin-top: var(--sp-2); }
+  .prose .backlink { display: inline-flex; gap: 6px; align-items: center; font-size: var(--fs-sm); color: var(--text-2); text-decoration: none; min-height: 44px; }
+  .prose .backlink:hover { color: var(--text); }
+  .collection { display: grid; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+  .collection li { display: grid; gap: 4px; padding: var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .collection a { display: block; padding: 6px 0; min-height: 44px; font: 600 var(--fs-lg)/1.25 var(--font-display); color: var(--text); text-decoration: none; }
+  .collection a:hover { color: var(--accent-hi); }
+  .collection p { margin: 0; font-size: var(--fs-sm); }
+  .collection small { font-size: var(--fs-xs); color: var(--text-3); }
   .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMLG0Q6ETM"></script>
@@ -49,7 +61,7 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
       <span>BuyRight <em>Notes</em></span>
     </a>
     <span class="spacer"></span>
-    <a class="guides" href="../">Shop</a>
+    <nav class="pagenav" aria-label="Site"><a href="../">Shop</a><a href="../guides/">Guides</a></nav>
   </header>
   <main class="prose">
 <h1 class="h1">Privacy policy</h1>
@@ -79,14 +91,14 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
   </main>
   <footer>
     <nav>
+      <a href="../guides/">Guides</a>
       <a href="../about/">About</a>
       <a href="../how-we-pick/">How we pick</a>
       <a href="../privacy/">Privacy</a>
       <a href="../terms/">Terms</a>
       <a href="../contact/">Contact</a>
-      <a href="https://buyrightnotes.blogspot.com/">The guides</a>
     </nav>
-    <span>As an Amazon Associate, BuyRight Notes earns from qualifying purchases.</span>
+    <span>Prices and availability change. We link you to Amazon to see today's.</span>
   </footer>
 </div>
 </body>

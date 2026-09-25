@@ -125,9 +125,39 @@ const staticShelves = (hero, isHome, rootPrefix) => pageCats(hero, isHome).map(c
   <ul class="picks">${c.items.map(p => `<li><a href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b>${p.reason_to_buy ? `<span>${esc(p.reason_to_buy)}</span>` : ''}</a></li>`).join('')}</ul>
 </section>`).join('\n');
 const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.items.find(p => p.product_id !== hero.product_id) || c.items[0]; return `<a class="tile" href="${rootPrefix}./#${c.id}"${c.id === hero.category ? ' aria-current="true"' : ''}><span class="card-media">${pic.card_image ? `<img src="${esc(rootPrefix + pic.card_image)}" alt="${esc(pic.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(c.label)}</b><span>${c.items.length} ${c.items.length === 1 ? 'pick' : 'picks'}</span></a>`; }).join('');
+const pageTpl = rd('templates/page.html');
+// ---------- shared header and footer (templates/partials), so a nav change is one edit for every page ----------
+const partials = { header: rd('templates/partials/header.html'), footer: rd('templates/partials/footer.html') };
+const shopNav = (rootPrefix, current) => `    <nav class="pagenav" aria-label="Site"><a href="${rootPrefix || './'}"${current === 'shop' ? ' aria-current="page"' : ''}>Shop</a><a href="${rootPrefix}guides/"${current === 'guides' ? ' aria-current="page"' : ''}>Guides</a></nav>`;
+const frame = (html, { rootPrefix, nav, footerLine }) => html
+  .replace('{{HEADER}}', partials.header.replace('{{NAV}}', nav))
+  .replace('{{FOOTER}}', partials.footer.replace('{{FOOTER_LINE}}', footerLine))
+  .replaceAll('{{ROOT}}', rootPrefix);
+// ---------- articles: content/<collection>/<slug>.md with front matter -> <collection>/<slug>/index.html ----------
+function frontMatter(raw) {
+  raw = raw.replace(/\r\n/g, '\n'); // files saved on Windows keep working
+  const fm = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const front = Object.fromEntries((fm ? fm[1] : '').split('\n').map(l => l.split(/:\s(.*)/)).filter(a => a[0]).map(([k, v]) => [k.trim(), (v || '').trim()]));
+  return { front, body: fm ? fm[2] : raw };
+}
+const collections = {};
+for (const coll of fs.existsSync(path.join(root, 'content')) ? fs.readdirSync(path.join(root, 'content')).filter(d => fs.statSync(path.join(root, 'content', d)).isDirectory()) : []) {
+  collections[coll] = fs.readdirSync(path.join(root, 'content', coll)).filter(f => f.endsWith('.md')).map(f => {
+    const { front, body } = frontMatter(rd(`content/${coll}/${f}`));
+    return { slug: f.replace(/\.md$/, ''), coll, front, body };
+  }).sort((a, b) => (b.front.date || '').localeCompare(a.front.date || '') || a.front.title.localeCompare(b.front.title));
+}
+const guides = collections.guides || [];
+
+const FOOTER_LINE = "Prices and availability change. We link you to Amazon to see today's.";
+// Home page row of guides: the newest four, as text tiles, with a link to the whole collection.
+const guidesRow = (rootPrefix) => guides.length ? `    <section class="guides-row" aria-labelledby="guides-h">
+      <div class="row-head"><h2 class="h2" id="guides-h">Guides</h2><a class="btn btn-ghost btn-sm" href="${rootPrefix}guides/">All guides</a></div>
+      <div class="guide-tiles">${guides.slice(0, 4).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
+    </section>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   const isHome = !heroId;
-  return storeTpl
+  return frame(storeTpl, { rootPrefix, nav: '    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>', footerLine: FOOTER_LINE })
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
@@ -140,8 +170,7 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
     .replace('{{PREVIEW_NOTE}}', dataFile.endsWith('sample.json') ? '\n  <p class="preview-note" id="preview-note">Preview with sample products</p>\n' : '')
     .replace('{{HOME_INTRO}}', isHome ? `\n  <p class="intro">Research before you buy. Every pick here says who it is for, what to check first, and who should skip it.</p>\n` : '')
     .replace('<!--ANALYTICS-->', analytics)
-    .replaceAll('{{ROOT}}', rootPrefix)
-    .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
+    .replace('{{GUIDES_ROW}}', isHome ? guidesRow(rootPrefix) : '')
     .replace('{{HERO_ID}}', heroId || (hero ? hero.product_id : ''))
     .replace('{{BACK_HIDDEN}}', heroId ? '' : ' hidden')
     .replace('{{HERO_TITLE}}', esc(hero ? hero.title : title))
@@ -163,7 +192,6 @@ for (const p of buildable) {
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------
-const pageTpl = rd('templates/page.html');
 function md(src) {
   const inline = (s) => esc(s).replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
   const out = []; let list = null;
@@ -190,24 +218,43 @@ for (const slug of ['about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
   const front = Object.fromEntries((fm ? fm[1] : '').split('\n').map(l => l.split(/:\s(.*)/)).filter(a => a[0]).map(([k, v]) => [k.trim(), (v || '').trim()]));
   const body = fm ? fm[2] : raw;
   const url = abs(`${slug}/`);
-  written.push(wr(`${slug}/index.html`, pageTpl
+  written.push(wr(`${slug}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '' }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replaceAll('{{ROOT}}', '../')
-    .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
-    .replace('{{CONTENT}}', md(body))));
+    .replace('{{CONTENT}}', md(body)), { rootPrefix: '../', nav: shopNav('../', ''), footerLine: FOOTER_LINE })));
+}
+
+// ---------- article pages and their collection index ----------
+const DISCLOSURE_LINE = site.disclosure || 'As an Amazon Associate we earn from qualifying purchases.';
+for (const [coll, items] of Object.entries(collections)) {
+  for (const it of items) {
+    const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
+    const hasAmazon = /amazon\.com/.test(it.body);
+    const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
+    const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + md(it.body).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
+    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', datePublished: it.front.date || undefined, author: { '@type': 'Organization', name: cfg.name }, publisher: { '@type': 'Organization', name: cfg.name }, mainEntityOfPage: base ? url : undefined };
+    written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
+      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? url : '', type: 'article', extra: jsonld(ld) }))
+      .replace('<!--ANALYTICS-->', analytics)
+      .replace('{{CONTENT}}', content), { rootPrefix, nav: shopNav(rootPrefix, coll), footerLine: FOOTER_LINE })));
+  }
+  const label = coll[0].toUpperCase() + coll.slice(1);
+  const groups = [...new Set(items.map(i => i.front.cluster || ''))];
+  const list = groups.map(g => `${g ? `<h2 class="h2">${esc(g)}</h2>` : ''}<ul class="collection">${items.filter(i => (i.front.cluster || '') === g).map(i => `<li><a href="${i.slug}/">${esc(i.front.title)}</a><p>${esc(i.front.description || '')}</p>${i.front.date ? `<small>${esc(i.front.date)}</small>` : ''}</li>`).join('')}</ul>`).join('\n');
+  written.push(wr(`${coll}/index.html`, frame(pageTpl
+    .replace('<!--META-->', meta({ title: `${label} · ${cfg.name}`, description: `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '' }))
+    .replace('<!--ANALYTICS-->', analytics)
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>\n${list}`), { rootPrefix: '../', nav: shopNav('../', coll), footerLine: FOOTER_LINE })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------
-written.push(wr('404.html', pageTpl
+written.push(wr('404.html', frame(pageTpl
   .replace('<!--META-->', meta({ title: `Not found · ${cfg.name}`, description: 'That page is not on the shelf.' }) + '\n<meta name="robots" content="noindex">')
-  .replace('<!--ANALYTICS-->', analytics)
-  .replaceAll('{{ROOT}}', '/')
-  .replaceAll('{{BLOG_URL}}', esc(site.blog_url || '#'))
+  .replace('<!--ANALYTICS-->', analytics), { rootPrefix: '/', nav: shopNav('/', ''), footerLine: FOOTER_LINE })
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
-const urls = [`${base}/`, ...buildable.map(p => `${base}/p/${p.product_id}/`), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => `${base}/${s}/`)];
+const urls = [`${base}/`, ...buildable.map(p => `${base}/p/${p.product_id}/`), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => `${base}/${s}/`), ...Object.entries(collections).flatMap(([c, items]) => [`${base}/${c}/`, ...items.map(i => `${base}/${c}/${i.slug}/`)])];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u)}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod></url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));
