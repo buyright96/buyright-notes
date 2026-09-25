@@ -1,6 +1,6 @@
 ---
 title: Espresso Machine Counter Space: Measure Before You Buy
-description: Measure width, depth, height, water-tank access, and the space needed to lift a portafilter before choosing a machine. Leave room behind and above for cords,...
+description: Counter space for an espresso machine: the width, depth, height and lift clearances to measure before ordering.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso

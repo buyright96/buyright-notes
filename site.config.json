@@ -17,5 +17,16 @@
     "CHEMEX-8CUP",
     "ELEMIS-CLEANSING-BALM",
     "HATCH-RESTORE-3"
-  ]
+  ],
+  "home_title": "BuyRight Notes · Researched picks for a cozy home",
+  "home_description": "Short, researched notes on home products: who each pick is for, what to check first, and who should skip it, with one link to Amazon.",
+  "collection_titles": {
+    "guides": "Home espresso guides · BuyRight Notes"
+  },
+  "collection_descriptions": {
+    "guides": "Ten plain-language guides to a first espresso setup: counter fit, water-tank access, 51 vs 54 vs 58 mm accessories, grinders, beans and cleaning."
+  },
+  "collection_share_images": {
+    "guides": "assets/fit-guide-three-specs.jpg"
+  }
 }

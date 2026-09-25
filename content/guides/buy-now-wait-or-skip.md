@@ -1,6 +1,6 @@
 ---
 title: Should You Buy an Espresso Machine Now? A Buy, Wait, or Skip Checklist
-description: Before checkout, write the problem the product must solve and the one constraint that could make it unusable. Buy now when the need is immediate and fit and ...
+description: A short buy, wait or skip checklist for an espresso machine: the one measurement and the one constraint to settle first.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso

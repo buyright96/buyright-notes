@@ -1,6 +1,6 @@
 ---
 title: Buying Your First Espresso Beans: Roast Date, Bag Size, and Flavor
-description: The best first bag of coffee is not necessarily the highest-rated one. It is the bag that fits your machine, how often you drink coffee, and the flavors you ...
+description: How to choose a first bag of espresso beans by roast date, bag size and flavor direction, and how to store it.
 date: 2026-09-16
 collection: guides
 cluster: Home espresso

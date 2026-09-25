@@ -193,10 +193,11 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
     .replaceAll('{{HERO_BUY_URL}}', esc(heroBuyUrl || '#'))
     .replaceAll('{{HERO_GUIDE_URL}}', esc(heroGuideUrl || '#'));
 }
-const homeDesc = cfg.tagline || site.disclosure || '';
+const homeDesc = cfg.home_description || cfg.tagline || site.disclosure || '';
+const homeTitle = cfg.home_title || cfg.name;
 // Home features the newest pick (the last hero-eligible row), so it changes every time a product launches.
 const homeHero = [...buildable].reverse().find(p => p.hero_eligible) || buildable[buildable.length - 1];
-written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: buyUrl(homeHero), heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
+written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: homeTitle, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: buyUrl(homeHero), heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
   // The page title repeats the Pin title when there is one, so the Pin and its landing page say the same thing.
@@ -227,9 +228,7 @@ const contactBlock = cfg.contact_email
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
 for (const slug of ['about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
   const raw = rd(`content/${slug}.md`).replace('{{CONTACT_BLOCK}}', contactBlock);
-  const fm = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  const front = Object.fromEntries((fm ? fm[1] : '').split('\n').map(l => l.split(/:\s(.*)/)).filter(a => a[0]).map(([k, v]) => [k.trim(), (v || '').trim()]));
-  const body = fm ? fm[2] : raw;
+  const { front, body } = frontMatter(raw);
   const url = abs(`${slug}/`);
   written.push(wr(`${slug}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '' }))
@@ -247,7 +246,7 @@ for (const [coll, items] of Object.entries(collections)) {
     const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + md(it.body).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
     const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', datePublished: it.front.date || undefined, author: { '@type': 'Organization', name: cfg.name }, publisher: { '@type': 'Organization', name: cfg.name }, mainEntityOfPage: base ? url : undefined };
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
-      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? url : '', type: 'article', extra: jsonld(ld) }))
+      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? url : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: jsonld(ld) }))
       .replace('<!--ANALYTICS-->', analytics)
       .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: coll })));
   }
@@ -255,7 +254,7 @@ for (const [coll, items] of Object.entries(collections)) {
   const groups = [...new Set(items.map(i => i.front.cluster || ''))];
   const list = groups.map(g => `${g ? `<h2 class="h2">${esc(g)}</h2>` : ''}<ul class="collection">${items.filter(i => (i.front.cluster || '') === g).map(i => `<li><a href="${i.slug}/">${esc(i.front.title)}</a><p>${esc(i.front.description || '')}</p>${i.front.date ? `<small>${esc(i.front.date)}</small>` : ''}</li>`).join('')}</ul>`).join('\n');
   written.push(wr(`${coll}/index.html`, frame(pageTpl
-    .replace('<!--META-->', meta({ title: `${label} · ${cfg.name}`, description: `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '' }))
+    .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
     .replace('<!--ANALYTICS-->', analytics)
     .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
@@ -267,7 +266,8 @@ written.push(wr('404.html', frame(pageTpl
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
-const urls = [`${base}/`, ...buildable.map(p => `${base}/p/${p.product_id}/`), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => `${base}/${s}/`), ...Object.entries(collections).flatMap(([c, items]) => [`${base}/${c}/`, ...items.map(i => `${base}/${c}/${i.slug}/`)])];
-written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u)}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod></url>`).join('\n')}\n</urlset>\n`));
+const today = new Date().toISOString().slice(0, 10);
+const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => ({ loc: `${base}/${s}/` })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
+written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u.loc)}</loc>${/^\d{4}-\d{2}-\d{2}$/.test(u.lastmod || '') ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));

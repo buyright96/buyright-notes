@@ -1,6 +1,6 @@
 ---
 title: Whole Bean or Pre-Ground Coffee for Espresso? Start Here
-description: Buying your first espresso machine can make coffee shopping feel weirdly high-stakes. It is not. Start with one question: can you control the grind, or do yo...
+description: Whole bean or pre-ground for espresso: when pre-ground works, when it does not, and what a grinder changes.
 date: 2026-09-16
 collection: guides
 cluster: Home espresso

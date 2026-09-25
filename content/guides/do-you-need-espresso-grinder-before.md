@@ -1,14 +1,12 @@
 ---
 title: Do You Need an Espresso Grinder Before Buying a Machine?
-description: Disclosure: This post contains affiliate links. As an Amazon Associate I earn from qualifying purchases.
+description: Whether a grinder should come before the machine, what "espresso range" means, and when a stepped burr grinder is the right first buy.
 date: 2026-09-16
 collection: guides
 cluster: Home espresso
 source: https://buyrightnotes.blogspot.com/2026/09/do-you-need-espresso-grinder-before.html
 ---
 # Do You Need an Espresso Grinder Before Buying a Machine?
-
-Disclosure: This post contains affiliate links. As an Amazon Associate I earn from qualifying purchases.
 
 
 Short answer: not always—but the grinder becomes much more important when you want to use a non-pressurized espresso basket and control the result yourself.

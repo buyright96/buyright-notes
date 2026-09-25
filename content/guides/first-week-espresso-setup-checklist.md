@@ -1,6 +1,6 @@
 ---
 title: First-Week Espresso Setup Checklist: What to Verify Before Your Machine Arrives
-description: Most expensive espresso mistakes happen before the first shot: a machine is ordered without space for the water tank, accessories are bought for the wrong po...
+description: What to verify before a new espresso machine arrives: water, grinder, accessories, counter fit and the first-week routine.
 date: 2026-09-16
 collection: guides
 cluster: Home espresso

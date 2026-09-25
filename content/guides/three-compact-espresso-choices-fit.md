@@ -1,14 +1,12 @@
 ---
 title: Three Compact Espresso Choices: Fit Before You Buy
-description: Disclosure: This post contains affiliate links. As an Amazon Associate I earn from qualifying purchases.
+description: Three compact espresso machines compared by counter fit, water-tank access and portafilter size, from published specs.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso
 source: https://buyrightnotes.blogspot.com/2026/09/three-compact-espresso-choices-fit.html
 ---
 # Three Compact Espresso Choices: Fit Before You Buy
-
-Disclosure: This post contains affiliate links. As an Amazon Associate I earn from qualifying purchases.
 
 
 A compact espresso setup only works if the machine, grinder, and surrounding space fit your real counter. These recommendations use documented specifications, not hands-on testing.

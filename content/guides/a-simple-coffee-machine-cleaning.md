@@ -1,6 +1,6 @@
 ---
 title: A Simple Coffee Machine Cleaning Schedule That Starts With the Manual
-description: Good coffee equipment lasts longer when cleaning is part of the normal routine, not a rescue project. The safest schedule begins with the manufacturer manual...
+description: A cleaning schedule for a home coffee machine that starts with the manual: daily, weekly and monthly steps.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso

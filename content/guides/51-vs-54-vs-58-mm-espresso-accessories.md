@@ -1,6 +1,6 @@
 ---
 title: 51 vs. 54 vs. 58 mm Espresso Accessories: Stop Buying the Wrong Size
-description: Espresso accessories are not universal. A listing that says “fits most machines” is not enough. The number in millimeters usually names a diameter, but fit c...
+description: Portafilter sizes explained: how to find your machine's basket size before buying a tamper, funnel or screen.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso

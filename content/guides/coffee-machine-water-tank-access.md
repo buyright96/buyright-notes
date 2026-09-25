@@ -1,6 +1,6 @@
 ---
 title: Coffee Machine Water-Tank Access: Measure This Before You Buy
-description: A coffee machine can fit your counter and still be frustrating every morning if you cannot refill the water tank without dragging it out.
+description: Measure water-tank access before buying a coffee machine: rear-fill, top-fill and side-tank layouts and where each fits.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso
