@@ -6,27 +6,27 @@
 
 :root {
   /* Surfaces, darkest to lightest */
-  --ink-950: #14100d;
-  --ink-900: #1c1714;
-  --ink-800: #27201b;
-  --ink-700: #352c25;
-  --ink-600: #4a3e34;
+  --ink-950: #171117;
+  --ink-900: #1f171f;
+  --ink-800: #2a2029;
+  --ink-700: #382c36;
+  --ink-600: #4e404b;
 
   /* Text */
-  --bone: #f3e7d6;
-  --bone-2: #cdbba6;
-  --bone-3: #9c8c79; /* faint text; 4.9:1 on cards, 5.5:1 on surfaces (was #8f7f6d, 4.1:1 on cards) */
+  --bone: #f4eae2;
+  --bone-2: #cfc0b8;
+  --bone-3: #a0918a; /* faint text; 4.9:1 on cards, 5.5:1 on surfaces (was #8f7f6d, 4.1:1 on cards) */
 
   /* Accent: ember (the lamp) */
-  --ember: #f0a458;
-  --ember-2: #ffc68a;
-  --ember-deep: #c9782e;
-  --ember-ink: #2a1a08;
+  --ember: #f1ac72;
+  --ember-2: #ffcb9c;
+  --ember-deep: #c98247;
+  --ember-ink: #2b190a;
 
   /* Supporting warmth */
-  --blush: #f3b8a0;
-  --clay: #c96a4a;
-  --sage: #a7bfa0;
+  --blush: #f2bcae;
+  --clay: #cd6f5a;
+  --sage: #adbca4;
 
   /* Light paper (blog graphics, print, light lockup) */
   --paper: #f6eee3;
@@ -37,8 +37,8 @@
   --bg: var(--ink-950);
   --surface: var(--ink-900);
   --card: var(--ink-800);
-  --line: rgba(243, 231, 214, 0.1);
-  --line-strong: rgba(243, 231, 214, 0.18);
+  --line: rgba(244, 234, 226, 0.1);
+  --line-strong: rgba(244, 234, 226, 0.18);
   --text: var(--bone);
   --text-2: var(--bone-2);
   --text-3: var(--bone-3);
@@ -67,9 +67,9 @@
   --r-sm: 12px; --r-md: 20px; --r-lg: 28px; --r-pill: 999px;
 
   /* Depth: glow, not drop shadow */
-  --glow-ember: 0 0 0 1px rgba(255, 198, 138, 0.08), 0 24px 64px -24px rgba(240, 164, 88, 0.45);
+  --glow-ember: 0 0 0 1px rgba(255, 203, 156, 0.08), 0 24px 64px -24px rgba(241, 172, 114, 0.45);
   --glow-soft: 0 0 0 1px rgba(243, 231, 214, 0.06), 0 30px 60px -30px rgba(0, 0, 0, 0.7);
-  --lamp: radial-gradient(60% 45% at 50% 0%, rgba(240, 164, 88, 0.22), rgba(240, 164, 88, 0) 70%);
+  --lamp: radial-gradient(60% 45% at 50% 0%, rgba(241, 172, 114, 0.2), rgba(241, 172, 114, 0) 70%);
 
   /* Motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

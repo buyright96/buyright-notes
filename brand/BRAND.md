@@ -4,7 +4,7 @@ Open `index.html` on a phone to see everything below in place. Tokens live in `b
 
 ## Idea
 
-A note left by someone who measured. The mood is a lamplit room at night: deep night-brown surfaces, like dark wood in a lamplit room, bone-colored words, one ember light on the thing you should tap. Calm, warm, certain. Apple's restraint with a softer voice.
+A note left by someone who measured. The mood is a lamplit room at night: deep plum-night surfaces, like a dark room lit by one lamp, warm bone words, one rose-amber lamp light on the thing you should tap (palette "Plum night", chosen September 24, 2026). Calm, warm, certain. Apple's restraint with a softer voice.
 
 ## Logo
 
