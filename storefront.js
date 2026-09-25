@@ -306,18 +306,23 @@
     const page = $('sheet-page'); page.href = `${ROOT}p/${p.product_id}/`; page.hidden = !!p.example || window.__HERO === p.product_id && !onHome;
     track('view_note', p, 'sheet');
     const more = $('sheet-more'); more.hidden = !(p.guide_url && !p.example); $('sheet-more-link').href = p.guide_url || '#';
+    // Always open at the photo and name. iPhone Safari scrolls a dialog to whatever gets focus, and showModal focuses the
+    // first button (Buy, near the bottom), so focus goes to the title at the top and the scroll is reset again once the
+    // sheet is on screen (owner's screen recording, 2026-09-24: the note opened on its bottom buttons).
+    inner.scrollTop = 0;
     sheet.showModal();
-    inner.scrollTop = 0; // always open at the photo and name, not where the last product's note was left scrolled
-    $('sheet-close').focus({ preventScroll: true });
+    $('sheet-title').focus({ preventScroll: true });
+    inner.scrollTop = 0;
+    requestAnimationFrame(() => { inner.scrollTop = 0; requestAnimationFrame(() => { inner.scrollTop = 0; }); });
   }
   // Every close slides the sheet back down to the edge it came from, then closes the dialog.
   const inner = sheet.querySelector('.sheet-inner');
   function closeSheet() {
     if (!sheet.open || sheet.classList.contains('closing')) return;
     inner.style.transform = '';
-    if (reduceMotion) { sheet.close(); return; }
+    if (reduceMotion) { inner.scrollTop = 0; sheet.close(); return; }
     sheet.classList.add('closing');
-    const done = () => { clearTimeout(t); inner.removeEventListener('animationend', done); sheet.classList.remove('closing'); sheet.close(); };
+    const done = () => { clearTimeout(t); inner.removeEventListener('animationend', done); sheet.classList.remove('closing'); inner.scrollTop = 0; sheet.close(); };
     const t = setTimeout(done, 300);
     inner.addEventListener('animationend', done);
   }
@@ -339,7 +344,7 @@
       if (!dragging) return; dragging = false;
       const dy = lastY - startY;
       inner.style.transition = 'transform 300ms var(--ease-drawer)';
-      if (dy > inner.offsetHeight * 0.3 || vel > 0.11) { inner.style.transform = 'translateY(100%)'; setTimeout(() => { inner.style.transition = ''; inner.style.transform = ''; sheet.close(); }, 300); }
+      if (dy > inner.offsetHeight * 0.3 || vel > 0.11) { inner.style.transform = 'translateY(100%)'; setTimeout(() => { inner.style.transition = ''; inner.style.transform = ''; inner.scrollTop = 0; sheet.close(); }, 300); }
       else { inner.style.transform = ''; setTimeout(() => { inner.style.transition = ''; }, 300); }
     };
     grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end);

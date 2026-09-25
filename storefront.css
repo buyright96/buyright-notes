@@ -223,6 +223,7 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
 .sheet-media .tint { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 25%, var(--tint, #4a3728), var(--ink-800) 75%); }
 .sheet-inner .chip { justify-self: start; } /* hug the label, as under the wheels, instead of stretching the width */
 .sheet-inner h2 { font-size: var(--fs-xl); }
+#sheet-title:focus { outline: none; } /* focused only to anchor the sheet at the top; the buttons keep their focus ring */
 .sheet-inner .why { font-family: var(--font-display); font-style: italic; font-variation-settings: "opsz" 24, "SOFT" 40; font-size: 1.15rem; line-height: 1.35; margin: 0; }
 .sheet-inner .detail { color: var(--text-2); margin: 0; }
 .sheet-inner .actions { display: grid; gap: var(--sp-2); }
