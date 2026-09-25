@@ -16,12 +16,20 @@ const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').r
 const cfg = JSON.parse(rd('site.config.json'));
 const useSample = process.argv.includes('--sample');
 let dataFile = 'data/products.json';
-if (useSample || !fs.existsSync(path.join(root, dataFile))) { dataFile = 'data/products.sample.json'; if (!useSample) console.warn('warning: data/products.json missing, building from the sample'); }
+// A real build never falls back to the sample (Codex review 2026-09-24): a missing export is a failed build, not a preview.
+if (useSample) dataFile = 'data/products.sample.json';
+else if (!fs.existsSync(path.join(root, dataFile))) throw Error('data/products.json is missing: run 01_WORKSPACE/tools/export_storefront.mjs first, or pass --sample for a preview build');
 const data = JSON.parse(rd(dataFile));
 const site = Object.assign({}, data.site || {}, { blog_url: cfg.blog_url || data.site?.blog_url });
 const base = (cfg.base_url || '').replace(/\/$/, '');
 const abs = (p) => base ? `${base}/${p.replace(/^\//, '')}` : p;
 const live = (data.products || []).filter(p => !p.example && p.status === 'LIVE');
+// Same link policy as storefront.js buyHref: the tagged Amazon link only while site.affiliate_links_enabled is true,
+// otherwise the guide (or the product's own page), so the raw HTML never carries a tagged link in a disabled state or before JS runs.
+const buyUrl = (p) => p ? ((site.affiliate_links_enabled === true && p.amazon_url) ? p.amazon_url : (p.guide_url || abs(`p/${p.product_id}/`))) : '';
+// Pinterest Save descriptions: the Pin title plus the disclosure, so a Pin saved from our page is disclosed like every Pin we publish.
+const DISCLOSURE = 'We earn a commission if you buy through our links.';
+const saveDescription = (pin) => `${pin.title} ${DISCLOSURE}`;
 const buildable = dataFile.endsWith('sample.json') ? (data.products || []).filter(p => !p.example) : live;
 const written = [];
 // Generated product pages are rebuilt from scratch so retired products disappear.
@@ -72,7 +80,7 @@ const articleLd = (p, url, headline) => ({ '@context': 'https://schema.org', '@t
 const pinFigure = (p, rootPrefix) => {
   const pin = p && pins[p.product_id];
   return pin ? `    <figure class="inuse" id="inuse">
-      <img src="${esc(rootPrefix + pin.image)}" alt="${esc(pin.alt)}" width="1000" height="1500" loading="lazy" decoding="async" data-pin-description="${esc(pin.title)}">
+      <img src="${esc(rootPrefix + pin.image)}" alt="${esc(pin.alt)}" width="1000" height="1500" loading="lazy" decoding="async" data-pin-description="${esc(saveDescription(pin))}">
       <figcaption>How it looks at home</figcaption>
     </figure>` : '';
 };
@@ -82,7 +90,7 @@ const storeTpl = rd('templates/store.html');
 // Hero text and photo are pre-rendered so nothing moves when storefront.js fills the page (no layout shift under the Buy button).
 const reelLabel = (id) => (data.reels || []).find(r => r.id === id)?.label || id;
 // data-pin-media: the Pinterest Save button offers the tall 2:3 Pin image instead of the 4:5 card.
-const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(pins[p.product_id].title)}"` : ''}>` : '';
+const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(saveDescription(pins[p.product_id]))}"` : ''}>` : '';
 // "Why we picked it", pre-rendered so a product page shows its notes open with nothing moving when storefront.js runs.
 // Mirrors fillDetail in storefront.js: reason lines, "+ " highlights, "Label: value" facts, and the "Skip it if" line.
 const SPEC_LABELS = new Set(['Size', 'Weight', 'Fits', 'Works with', 'Capacity', 'Includes', 'Tank', 'Power', 'Battery', 'Screen', 'Runtime', 'Care', 'Hopper', 'Pitcher', 'Bowl', 'Connects', 'Cord', 'Hose', 'Burrs', 'Colors', 'Formula', 'Skin', 'Brews', 'Speeds', 'Pressure', 'Cleanup', 'Oven', 'Sounds', 'Storage']);
@@ -146,12 +154,12 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
 const homeDesc = cfg.tagline || site.disclosure || '';
 // Home features the newest pick (the last hero-eligible row), so it changes every time a product launches.
 const homeHero = [...buildable].reverse().find(p => p.hero_eligible) || buildable[buildable.length - 1];
-written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: homeHero?.amazon_url, heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
+written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: cfg.name, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: buyUrl(homeHero), heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
   // The page title repeats the Pin title when there is one, so the Pin and its landing page say the same thing.
   const headline = pins[p.product_id]?.title || p.title;
-  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${headline} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: p.amazon_url, heroGuideUrl: p.guide_url, hero: p, ld: articleLd(p, base ? url : undefined, headline) })));
+  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${headline} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: buyUrl(p), heroGuideUrl: p.guide_url, hero: p, ld: articleLd(p, base ? url : undefined, headline) })));
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------

@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-24T23:14:11.050Z"
+    "generated_at": "2026-09-25T01:23:36.046Z"
   },
   "reels": [
     {
@@ -53,6 +53,18 @@
     {
       "id": "gaming",
       "label": "Gaming"
+    },
+    {
+      "id": "hosting",
+      "label": "Hosting"
+    },
+    {
+      "id": "pets",
+      "label": "Pets"
+    },
+    {
+      "id": "wellness",
+      "label": "Wellness"
     }
   ],
   "products": [
@@ -321,6 +333,218 @@
       "image_alt": "A Hatch Baby sound machine and night light in putty, glowing on a wooden nursery shelf with its clock showing 7:00, beside a plush bunny, a woven basket and books.",
       "tracking_id": "buyrightnotes-storefront-20",
       "amazon_url": "https://www.amazon.com/dp/B0F7C6XJ3P?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "COSORI-TURBOBLAZE",
+      "asin": "B0C33CHG99",
+      "title": "Cosori TurboBlaze air fryer, 6 qt",
+      "category": "kitchen",
+      "reels": [
+        "kitchen",
+        "hosting",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A 6-quart air fryer for family dinners and party trays: 9 functions, 90 to 450°F, and a quieter fan than most.",
+      "detail": "We chose it for weeknight dinners and holiday snack trays that need to come out crisp without heating the oven.\n+ Square 6 qt basket fits a whole chicken or two trays of appetizers\n+ 5 fan speeds and 90 to 450°F, so it also dehydrates and reheats\n+ Under 53 dB on the highest fan speed, per Cosori\nSize: 14.4 x 11.8 x 11.9 in\nWeight: 13.2 lb\nPower: 1725 W\nIncludes: crisper plate, recipe book\nCare: PFAS-free ceramic nonstick basket and crisper plate\nSkip it if you cook for one or two: a 4 qt model takes less counter space.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/cosori-turboblaze-air-fryer.jpg",
+      "image_alt": "A dark gray Cosori TurboBlaze air fryer on a kitchen counter at night, basket open with roasted vegetables, warm lamp light and a stack of plates beside it.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0C33CHG99?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "NINJA-CREAMI",
+      "asin": "B08QXB9BH5",
+      "title": "Ninja CREAMi NC301 ice cream maker",
+      "category": "kitchen",
+      "reels": [
+        "kitchen",
+        "hosting"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "Homemade ice cream, sorbet and milkshakes from a pint you froze overnight: 7 programs and ingredients you choose.",
+      "detail": "We chose it for dessert nights and holiday hosting: freeze a pint base for 24 hours, then it spins into ice cream in minutes.\n+ 7 one-touch programs: ice cream, gelato, sorbet, milkshake, smoothie bowl, lite ice cream, mix-in\n+ Re-spin for a softer texture; Mix-In folds in chips, nuts or cookies\n+ Pints, lids and paddle are top-rack dishwasher safe\nSize: 12.1 x 6.5 x 16 in\nCapacity: 16 oz pints, 2 included\nIncludes: 2 pints with lids, Creamerizer paddle, outer bowl\nSkip it if you want ice cream tonight: every batch needs a 24-hour freeze first.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/ninja-creami-ice-cream-maker.jpg",
+      "image_alt": "A Ninja CREAMi ice cream maker on a kitchen counter at night with a pint of homemade ice cream, two bowls and a scoop, under warm lamp light.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B08QXB9BH5?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "SMIRLY-CHARCUTERIE",
+      "asin": "B07S4D3LGF",
+      "title": "SMIRLY bamboo charcuterie board set",
+      "category": "hosting",
+      "reels": [
+        "hosting",
+        "kitchen"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A complete cheese-board set for the host: bamboo board with drawers, knives, bowls and slate labels, boxed for gifting.",
+      "detail": "We chose it as the hostess gift that gets used: everything for a cheese board arrives in one decorative box.\n+ 3 slide-out drawers hold the knives and serving pieces\n+ 4 bowls, a fruit tray, 2 slate labels and chalk markers included\n+ Bamboo resists water and scratches, per SMIRLY; hand wash\nSize: 15.7 x 13.3 x 2.6 in\nWeight: about 10 lb\nIncludes: board, fruit tray, 4 bowls, cheese knives, 2 slate labels, 2 chalk markers\nSkip it if you host rarely: it is a large board that needs cupboard space. SMIRLY is an Amazon marketplace brand, not a store name you will know.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/smirly-bamboo-charcuterie-board-set.jpg",
+      "image_alt": "A SMIRLY bamboo charcuterie board set on a dining table at night, laid with cheese, grapes and crackers, drawers open, candles and a garland behind it.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B07S4D3LGF?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "CHEMEX-8CUP",
+      "asin": "B000I1WP7W",
+      "title": "Chemex 8-cup pour-over coffeemaker",
+      "category": "coffee_bar",
+      "reels": [
+        "coffee_bar",
+        "hosting"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The glass pour-over for people who like the ritual: 40 oz, borosilicate glass, wood collar, a gift that looks the part.",
+      "detail": "We chose it for the coffee lover who already grinds fresh: it makes a clean, bright pot and looks good on the counter.\n+ Brews up to 40 oz (Chemex counts 5 oz as a cup)\n+ Non-porous borosilicate glass holds no odors; the collar marks a full brew\n+ Coffee can be covered and refrigerated in the carafe, per Chemex\nSize: 9.6 x 6.4 in (listing dimensions)\nCapacity: 40 oz, 8 Chemex cups\nWorks with: Chemex bonded filters FP-1, FC-100, FS-100, FSU-100 (not included)\nSkip it if you want a set-and-forget pot: pour-over takes a kettle, a grinder and about 5 minutes of attention.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/chemex-8-cup-pour-over-coffeemaker.jpg",
+      "image_alt": "A Chemex 8-cup glass pour-over coffeemaker with a wood collar on a wood counter at night, a kettle pouring, two mugs and a small wrapped gift beside it.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B000I1WP7W?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "SUMMER-FRIDAYS-LIP",
+      "asin": "B09FYHDW6P",
+      "title": "Summer Fridays Lip Butter Balm",
+      "category": "beauty",
+      "reels": [
+        "beauty",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The overnight lip mask that doubles as a daytime balm: shea and murumuru butters, vegan waxes, subtle vanilla, no tackiness.",
+      "detail": "We chose it as the stocking stuffer that is still in use in March: a mask at night, a shine by day.\n+ Shea and murumuru seed butters for moisture; vegan waxes for a soft shine\n+ Sheer tint; Vanilla is the classic scent\n+ 0.5 oz tube, purse size\nSize: 0.5 oz\nFormula: 100% vegan and cruelty-free, per Summer Fridays\nSkin: lips; bedtime mask or daytime balm\nSkip it if you want a matte lip or a plain unscented balm.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/summer-fridays-lip-butter-balm.jpg",
+      "image_alt": "A Summer Fridays Lip Butter Balm tube on a bedside table at night beside a lamp, a glass of water and a folded blanket.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B09FYHDW6P?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "ELEMIS-CLEANSING-BALM",
+      "asin": "B08MJZYW8P",
+      "title": "ELEMIS Pro-Collagen Cleansing Balm, 100 g",
+      "category": "beauty",
+      "reels": [
+        "beauty",
+        "wellness"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A cleansing balm that takes off makeup and sunscreen in one step and rinses with a damp cloth: the classic beauty gift.",
+      "detail": "We chose it for the first step of a nighttime routine: it melts makeup and sunscreen without stripping.\n+ Warm a pea-sized amount, massage 60 seconds, remove with a damp cloth\n+ Doubles as a weekly mask, per ELEMIS\n+ Mineral-oil-free, with elderberry, starflower and Optimega oils\nSize: 100 g jar (3.5 oz)\nFormula: lavender, chamomile and eucalyptus scent\nSkin: all types; patch test if fragrance bothers you\nSkip it if you want fragrance-free: it is scented.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/elemis-pro-collagen-cleansing-balm.jpg",
+      "image_alt": "An ELEMIS Pro-Collagen Cleansing Balm jar on a bathroom counter at night beside a folded muslin cloth, a small plant and warm lamp light.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B08MJZYW8P?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "KINDLE-PAPERWHITE-COVER",
+      "asin": "B0CM7X424T",
+      "title": "Kindle Paperwhite fabric cover (2024)",
+      "category": "reading",
+      "reels": [
+        "reading",
+        "tech"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The official fabric cover for the 2024 Paperwhite and Colorsoft: wakes and sleeps the Kindle, folds back for one-handed reading.",
+      "detail": "We chose it as the add-on for the Paperwhite on our list: it protects the screen and keeps the reader light.\n+ Opens and closes like a book to wake or sleep the Kindle\n+ Folds flat behind for one-handed reading; stays on for charging\n+ Water-safe fabric; magnets keep it closed\nFits: Kindle Paperwhite and Paperwhite Signature Edition (2024 release only), Kindle Colorsoft and Colorsoft Signature Edition\nWeight: about 5 oz\nSkip it if your Paperwhite is from 2021 or earlier: this cover does not fit it.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/kindle-paperwhite-fabric-cover.jpg",
+      "image_alt": "A Kindle Paperwhite in a fabric cover, folded open on a reading chair at night with a throw blanket, a mug and a lamp.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0CM7X424T?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "FURMINATOR-LARGE",
+      "asin": "B07MZDTG76",
+      "title": "FURminator deShedding tool, large dogs",
+      "category": "pets",
+      "reels": [
+        "pets",
+        "clean_home"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The undercoat tool for long-haired dogs over 50 lb: reaches loose undercoat without cutting the topcoat, then ejects it with a button.",
+      "detail": "We chose it for pet parents who vacuum every day: less loose undercoat on the dog means less on the couch.\n+ Stainless steel edge reaches through the topcoat to loose undercoat\n+ FURejector button releases the collected hair\n+ Ergonomic handle for longer sessions\nFits: dogs over 50 lb with long hair; other sizes and short-hair editions exist\nSize: 6.5 x 2 x 8.75 in\nWeight: 9 oz\nSkip it if your dog is under 50 lb or short-haired: pick the matching FURminator size instead.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/furminator-deshedding-tool-large-dog.jpg",
+      "image_alt": "A FURminator deShedding tool on a living room rug at night beside a sleeping golden retriever, a lamp and a clean couch.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B07MZDTG76?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "ESCALI-PRIMO",
+      "asin": "B0007GAWRS",
+      "title": "Escali Primo digital kitchen scale",
+      "category": "baking",
+      "reels": [
+        "baking",
+        "kitchen"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The two-button kitchen scale bakers keep for years: 11 lb capacity, 1 g readings and a sealed panel that wipes clean.",
+      "detail": "We chose it for bread and cookie bakers who measure by weight: simple, accurate to the gram and easy to clean.\n+ Two buttons: tare and unit (g, oz, lb:oz)\n+ Sealed control panel guards against spills\n+ Auto-off after 4 minutes idle; lifetime warranty, per Escali\nCapacity: 11 lb (5,000 g) in 1 g steps\nSize: 8.5 x 6 x 1.5 in\nWeight: about 15 oz\nColors: several\nSkip it if you weigh in tenths of a gram (coffee dosing, small-batch candy): choose a 0.1 g scale.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/escali-primo-digital-kitchen-scale.jpg",
+      "image_alt": "An Escali Primo digital kitchen scale on a floured counter at night with a bowl of dough, a loaf and a warm lamp.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0007GAWRS?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "HATCH-RESTORE-3",
+      "asin": "B0DLLSCVZW",
+      "title": "Hatch Restore 3 sunrise alarm clock",
+      "category": "wellness",
+      "reels": [
+        "wellness",
+        "tech",
+        "baby"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A bedside routine in one device: sound machine, reading light, dimmable clock and a sunrise alarm that wakes you gently.",
+      "detail": "We chose it for tired new parents and light sleepers: a wind-down routine at night and a sunrise instead of a buzzer.\n+ 80+ sleep sounds, per Hatch, and a dimmable clock face\n+ Sunrise alarm brightens gradually before it sounds\n+ 30-day Hatch+ trial for new subscribers; core features work without it\nSize: 7.2 x 1.5 x 5.7 in\nSounds: white noise, rain and wind-down content in the app\nSkip it if you would rather not use an app: setup and most routines run through the Hatch app.",
+      "guide_url": "",
+      "guide_label": "Read the guide",
+      "card_image": "assets/hatch-restore-3-sunrise-alarm-clock.jpg",
+      "image_alt": "A Hatch Restore 3 glowing soft amber on a nightstand at night beside a bed, a book and a glass of water.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0DLLSCVZW?tag=buyrightnotes-storefront-20",
       "status": "LIVE",
       "last_offer_check": "2026-09-24"
     }
