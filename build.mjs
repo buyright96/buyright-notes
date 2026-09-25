@@ -226,12 +226,12 @@ function md(src) {
 const contactBlock = cfg.contact_email
   ? `**Email:** [${cfg.contact_email}](mailto:${cfg.contact_email})`
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
-for (const slug of ['about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
+for (const slug of ['home-espresso', 'about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
   const raw = rd(`content/${slug}.md`).replace('{{CONTACT_BLOCK}}', contactBlock);
   const { front, body } = frontMatter(raw);
   const url = abs(`${slug}/`);
   written.push(wr(`${slug}/index.html`, frame(pageTpl
-    .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '' }))
+    .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '', image: front.image || undefined }))
     .replace('<!--ANALYTICS-->', analytics)
     .replace('{{CONTENT}}', md(body)), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE })));
 }
@@ -256,7 +256,7 @@ for (const [coll, items] of Object.entries(collections)) {
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>${coll === 'guides' ? '<p><a class="backlink" href="../home-espresso/"><span aria-hidden="true">&rarr;</span> Start here: Home espresso, start to finish</a></p>' : ''}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------
@@ -267,7 +267,7 @@ written.push(wr('404.html', frame(pageTpl
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
 const today = new Date().toISOString().slice(0, 10);
-const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...['about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => ({ loc: `${base}/${s}/` })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
+const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...['home-espresso', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => ({ loc: `${base}/${s}/`, lastmod: s === 'home-espresso' ? today : undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u.loc)}</loc>${/^\d{4}-\d{2}-\d{2}$/.test(u.lastmod || '') ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));
