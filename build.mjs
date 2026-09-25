@@ -128,9 +128,11 @@ const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.it
 const pageTpl = rd('templates/page.html');
 // ---------- shared header and footer (templates/partials), so a nav change is one edit for every page ----------
 const partials = { header: rd('templates/partials/header.html'), footer: rd('templates/partials/footer.html') };
-const shopNav = (rootPrefix, current) => `    <nav class="pagenav" aria-label="Site"><a href="${rootPrefix || './'}"${current === 'shop' ? ' aria-current="page"' : ''}>Shop</a><a href="${rootPrefix}guides/"${current === 'guides' ? ' aria-current="page"' : ''}>Guides</a></nav>`;
-const frame = (html, { rootPrefix, nav, footerLine }) => html
-  .replace('{{HEADER}}', partials.header.replace('{{NAV}}', nav))
+// Site nav: the same two links on every page; `current` marks where the reader is. Add a page here and it appears everywhere.
+const siteNav = (rootPrefix, current) => `    <nav class="sitenav" aria-label="Site"><a href="${rootPrefix || './'}"${current === 'shop' ? ' aria-current="page"' : ''}>Shop</a><a href="${rootPrefix}guides/"${current === 'guides' ? ' aria-current="page"' : ''}>Guides</a></nav>`;
+const shopNav = () => '';
+const frame = (html, { rootPrefix, nav, footerLine, current = '' }) => html
+  .replace('{{HEADER}}', partials.header.replace('{{SITENAV}}', siteNav(rootPrefix, current)).replace('{{NAV}}', nav))
   .replace('{{FOOTER}}', partials.footer.replace('{{FOOTER_LINE}}', footerLine))
   .replaceAll('{{ROOT}}', rootPrefix);
 // ---------- articles: content/<collection>/<slug>.md with front matter -> <collection>/<slug>/index.html ----------
@@ -149,6 +151,16 @@ for (const coll of fs.existsSync(path.join(root, 'content')) ? fs.readdirSync(pa
 }
 const guides = collections.guides || [];
 
+// Featured picks: the owner's list in site.config.json ("featured": [product ids]); unknown or retired ids are skipped.
+const featuredRow = (rootPrefix) => {
+  const picks = (cfg.featured || []).map(id => buildable.find(p => p.product_id === id)).filter(Boolean);
+  if (!picks.length) return '';
+  const label = id => (categories.find(c => c.id === id) || {}).label || '';
+  return `    <section class="featured" aria-labelledby="featured-h">
+      <div class="row-head"><h2 class="h2" id="featured-h">Featured picks</h2><span class="row-note">Chosen by us this week</span></div>
+      <div class="tiles">${picks.map(p => `<a class="tile" href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b><span>${esc(label(p.category))}</span></a>`).join('')}</div>
+    </section>`;
+};
 const FOOTER_LINE = "Prices and availability change. We link you to Amazon to see today's.";
 // Home page row of guides: the newest four, as text tiles, with a link to the whole collection.
 const guidesRow = (rootPrefix) => guides.length ? `    <section class="guides-row" aria-labelledby="guides-h">
@@ -157,7 +169,8 @@ const guidesRow = (rootPrefix) => guides.length ? `    <section class="guides-ro
     </section>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   const isHome = !heroId;
-  return frame(storeTpl, { rootPrefix, nav: '    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>', footerLine: FOOTER_LINE })
+  return frame(storeTpl, { rootPrefix, nav: '    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>', footerLine: FOOTER_LINE, current: 'shop' })
+    .replace('{{FEATURED}}', isHome ? featuredRow(rootPrefix) : '')
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
@@ -221,7 +234,7 @@ for (const slug of ['about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
   written.push(wr(`${slug}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '' }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', md(body)), { rootPrefix: '../', nav: shopNav('../', ''), footerLine: FOOTER_LINE })));
+    .replace('{{CONTENT}}', md(body)), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE })));
 }
 
 // ---------- article pages and their collection index ----------
@@ -236,7 +249,7 @@ for (const [coll, items] of Object.entries(collections)) {
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
       .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? url : '', type: 'article', extra: jsonld(ld) }))
       .replace('<!--ANALYTICS-->', analytics)
-      .replace('{{CONTENT}}', content), { rootPrefix, nav: shopNav(rootPrefix, coll), footerLine: FOOTER_LINE })));
+      .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: coll })));
   }
   const label = coll[0].toUpperCase() + coll.slice(1);
   const groups = [...new Set(items.map(i => i.front.cluster || ''))];
@@ -244,13 +257,13 @@ for (const [coll, items] of Object.entries(collections)) {
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: `${label} · ${cfg.name}`, description: `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '' }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>\n${list}`), { rootPrefix: '../', nav: shopNav('../', coll), footerLine: FOOTER_LINE })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------
 written.push(wr('404.html', frame(pageTpl
   .replace('<!--META-->', meta({ title: `Not found · ${cfg.name}`, description: 'That page is not on the shelf.' }) + '\n<meta name="robots" content="noindex">')
-  .replace('<!--ANALYTICS-->', analytics), { rootPrefix: '/', nav: shopNav('/', ''), footerLine: FOOTER_LINE })
+  .replace('<!--ANALYTICS-->', analytics), { rootPrefix: '/', nav: '', footerLine: FOOTER_LINE })
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));

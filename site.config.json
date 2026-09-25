@@ -10,5 +10,12 @@
   "bing_site_verification": "",
   "contact_email": "shopfixlet@gmail.com",
   "theme_color": "#14100d",
-  "default_share_image": "assets/kindle-paperwhite-e-reader.jpg"
+  "default_share_image": "assets/kindle-paperwhite-e-reader.jpg",
+  "_featured_comment": "Featured picks on the home page, in order, by product_id. Edit freely; unknown ids are skipped.",
+  "featured": [
+    "COSORI-TURBOBLAZE",
+    "CHEMEX-8CUP",
+    "ELEMIS-CLEANSING-BALM",
+    "HATCH-RESTORE-3"
+  ]
 }

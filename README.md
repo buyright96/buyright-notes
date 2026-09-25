@@ -17,5 +17,7 @@ A static site, built by Claude, outside 01_WORKSPACE so Claude and Codex can wor
 - **Templates:** `templates/store.html` (home and product pages), `templates/page.html` (text pages, guides, 404). Header and footer are shared partials in `templates/partials/`; edit once, every page follows.
 - **Text pages:** `content/<slug>.md` (About, How we pick, Privacy, Terms, Contact).
 - **Collections:** any folder under `content/` is a collection. `content/guides/<slug>.md` with front matter (`title`, `description`, `date`, `collection`, `cluster`, `source`) becomes `/guides/<slug>/`, gets listed at `/guides/`, in the sitemap, and the newest four appear in the Guides row on the home page. A blog is the same thing: `content/blog/<slug>.md` -> `/blog/`.
+- **Site nav:** `siteNav()` in build.mjs lists the header links (Shop, Guides). Add a page there and it appears on every page.
+- **Featured picks (home):** `featured` in `site.config.json`, a list of product ids in the order you want; rebuild to apply.
 - **Products:** `data/products.json` from `01_WORKSPACE/tools/export_storefront.mjs`; never edited by hand.
 - **Check before pushing:** `node 01_WORKSPACE/tools/storefront_mobile_check.mjs`.
