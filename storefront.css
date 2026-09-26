@@ -411,3 +411,10 @@ footer a { color: var(--text-2); text-decoration: none; }
 .guide-card p { margin: 0; color: var(--text-2); }
 .guide-card .actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .guide-card .actions a { text-decoration: none; }
+.pf-tool .pf-pick { display: grid; gap: var(--sp-2); }
+.pf-tool select.pf-input { background-image: linear-gradient(45deg, transparent 50%, var(--text-3) 50%), linear-gradient(135deg, var(--text-3) 50%, transparent 50%); background-position: calc(100% - 22px) 55%, calc(100% - 16px) 55%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 44px; cursor: pointer; }
+.pf-tool select.pf-input:disabled { color: var(--text-3); cursor: default; }
+.pf-tool .pf-row2 { margin: 0; font-size: var(--fs-sm); color: var(--text-2); }
+.pf-tool .pf-row2 b { color: var(--text); }
+.pf-tool .pf-row2 a, .pf-tool .pf-flag a { color: var(--accent-hi); }
+@media (min-width: 720px) { .pf-tool .pf-pick { grid-template-columns: 1fr 1fr; } }

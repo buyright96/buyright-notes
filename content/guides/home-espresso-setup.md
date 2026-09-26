@@ -12,7 +12,7 @@ tool_label: Look up your machine
 ---
 # Home espresso, start to finish
 
-Own a machine already? Look it up. Still shopping? Start at "Will it fit".
+Own a machine already, or have one in mind? Pick it below and the answers follow. Still shopping? Start at "Will it fit".
 
 {{PORTAFILTER_TOOL_HERO}}
 
@@ -59,7 +59,7 @@ Our pick: **Baratza Encore ESP** ([our note](../../p/ENCORE-ESP/)). A dedicated 
 
 ## Accessories: 51, 54, 57 or 58 mm
 
-Espresso accessories are not universal. The millimeter number is the basket diameter, and fit can still depend on basket depth, tabs and machine generation. Type your machine into the finder at the top of this page, then shop by exact model first and size second.
+Espresso accessories are not universal. The millimeter number is the basket diameter, and fit can still depend on basket depth, tabs and machine generation. Pick your machine in the finder at the top of this page, then shop by exact model first and size second.
 
 - **51 mm:** compact consumer machines, including the CASABREWS CM5418 and the De'Longhi Dedica line.
 - **54 mm:** most Breville and Sage home machines, including the Bambino.

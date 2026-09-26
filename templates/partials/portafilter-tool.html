@@ -1,70 +1,78 @@
 <section class="pf-tool" id="pfTool" aria-labelledby="look-up-your-machine">
-  <h2 class="h2" id="look-up-your-machine">What size does my espresso machine take?</h2>
-  <label class="visually-hidden" for="pfSearch">Your espresso machine</label>
-  <input class="pf-input" type="search" id="pfSearch" placeholder="Bambino, Dedica, Gaggia…" autocomplete="off" autocapitalize="off" spellcheck="false">
-  <div class="pf-results" id="pfResults" role="list"></div>
+  <h2 class="h2" id="look-up-your-machine">What does my espresso machine need?</h2>
+  <div class="pf-pick">
+    <label class="visually-hidden" for="pfBrand">Brand</label>
+    <select class="pf-input" id="pfBrand"><option value="">Pick the brand</option></select>
+    <label class="visually-hidden" for="pfModel">Model</label>
+    <select class="pf-input" id="pfModel" disabled><option value="">Then the model</option></select>
+  </div>
   <div id="pfDetail" aria-live="polite"></div>
 </section>
 <script>
 (function(){
+  // One row per machine. s = portafilter diameter (mm), g = built-in grinder, k = baskets in the box
+  // (P pressurized, N non-pressurized, B both), t = water tank (rear = removable from the back, top = lift the lid,
+  // none = manual lever), pick = our note on the storefront. Sizes verified against manufacturer pages 2026-09-21.
   var M=[
-    {b:"Breville / Sage",m:"Bambino (BES450)",s:54},
-    {b:"Breville / Sage",m:"Bambino Plus (BES500)",s:54},
-    {b:"Breville / Sage",m:"Barista Express (BES870)",s:54},
-    {b:"Breville / Sage",m:"Barista Express Impress (BES876)",s:54},
-    {b:"Breville / Sage",m:"Barista Pro (BES878)",s:54},
-    {b:"Breville / Sage",m:"Barista Touch (BES880)",s:54},
-    {b:"Breville / Sage",m:"Infuser (BES840)",s:54},
-    {b:"Breville / Sage",m:"Duo-Temp Pro (BES810)",s:54},
-    {b:"Breville / Sage",m:"Dual Boiler (BES920)",s:58},
-    {b:"Breville / Sage",m:"Oracle (BES980)",s:58},
-    {b:"Breville / Sage",m:"Oracle Touch (BES990)",s:58},
-    {b:"De'Longhi",m:"Dedica EC685",s:51},
-    {b:"De'Longhi",m:"Dedica Arte EC885",s:51},
-    {b:"De'Longhi",m:"Stilosa EC260",s:51},
-    {b:"De'Longhi",m:"La Specialista Arte EC9155",s:51},
-    {b:"CASABREWS",m:"CM5418",s:51},
-    {b:"Gaggia",m:"Classic Pro",s:58},
-    {b:"Gaggia",m:"Classic Evo Pro",s:58},
-    {b:"Rancilio",m:"Silvia",s:58},
-    {b:"Rancilio",m:"Silvia Pro X",s:58},
-    {b:"Profitec",m:"Pro 500 / Pro 600",s:58},
-    {b:"ECM",m:"Classika / Synchronika",s:58},
-    {b:"Rocket",m:"Appartamento / Mozzafiato",s:58},
-    {b:"Lelit",m:"Anna PL41 (LELIT57 group)",s:57},
-    {b:"Lelit",m:"Mara X (E61 group)",s:58},
-    {b:"Flair",m:"Flair 58",s:58}
+    {b:"Breville / Sage",m:"Bambino (BES450)",s:54,g:false,k:"B",t:"rear",pick:"../../p/BAMBINO-54/"},
+    {b:"Breville / Sage",m:"Bambino Plus (BES500)",s:54,g:false,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Barista Express (BES870)",s:54,g:true,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Barista Express Impress (BES876)",s:54,g:true,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Barista Pro (BES878)",s:54,g:true,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Barista Touch (BES880)",s:54,g:true,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Infuser (BES840)",s:54,g:false,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Duo-Temp Pro (BES810)",s:54,g:false,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Dual Boiler (BES920)",s:58,g:false,k:"B",t:"rear"},
+    {b:"Breville / Sage",m:"Oracle (BES980)",s:58,g:true,k:"N",t:"rear"},
+    {b:"Breville / Sage",m:"Oracle Touch (BES990)",s:58,g:true,k:"N",t:"rear"},
+    {b:"CASABREWS",m:"CM5418",s:51,g:false,k:"P",t:"rear",pick:"../../p/CASABREWS-51/"},
+    {b:"De'Longhi",m:"Dedica EC685",s:51,g:false,k:"P",t:"rear"},
+    {b:"De'Longhi",m:"Dedica Arte EC885",s:51,g:false,k:"P",t:"rear"},
+    {b:"De'Longhi",m:"Stilosa EC260",s:51,g:false,k:"P",t:"rear"},
+    {b:"De'Longhi",m:"La Specialista Arte EC9155",s:51,g:true,k:"B",t:"rear"},
+    {b:"ECM",m:"Classika",s:58,g:false,k:"N",t:"top"},
+    {b:"ECM",m:"Synchronika",s:58,g:false,k:"N",t:"top"},
+    {b:"Flair",m:"Flair 58",s:58,g:false,k:"N",t:"none"},
+    {b:"Gaggia",m:"Classic Pro",s:58,g:false,k:"P",t:"top"},
+    {b:"Gaggia",m:"Classic Evo Pro",s:58,g:false,k:"P",t:"top"},
+    {b:"Lelit",m:"Anna PL41 (LELIT57 group)",s:57,g:false,k:"P",t:"top"},
+    {b:"Lelit",m:"Mara X (E61 group)",s:58,g:false,k:"N",t:"top"},
+    {b:"Profitec",m:"Pro 500",s:58,g:false,k:"N",t:"top"},
+    {b:"Profitec",m:"Pro 600",s:58,g:false,k:"N",t:"top"},
+    {b:"Rancilio",m:"Silvia",s:58,g:false,k:"N",t:"top"},
+    {b:"Rancilio",m:"Silvia Pro X",s:58,g:false,k:"N",t:"top"},
+    {b:"Rocket",m:"Appartamento",s:58,g:false,k:"N",t:"top"},
+    {b:"Rocket",m:"Mozzafiato",s:58,g:false,k:"N",t:"top"}
   ];
   var FIT={
-    51:{who:"Compact and entry-level machines",yes:["51 mm tampers","51 mm bottomless portafilters made for your exact model","51 mm puck screens and dosing funnels"],no:["54 mm or 58 mm accessories will not fit","Most 'universal' tampers are 58 mm","Some retailer spec sheets list the De'Longhi Dedica basket rim as 53 mm; De'Longhi's own accessories for it are sold as 51 mm, so shop by 51 mm and your exact model"]},
-    54:{who:"Most Breville and Sage home machines",yes:["54 mm tampers","54 mm dosing funnels and puck screens","Precision baskets sold specifically for Breville 54 mm"],no:["58 mm tampers will not seat correctly","51 mm tampers leave an untamped ring"]},
-    57:{who:"Lelit's own 57 mm group (Anna PL41 and its siblings)",yes:["57 mm tampers and baskets made for LELIT57 machines","Lelit's own LELIT57 barista tools","Accessories whose listing names the Anna PL41 by model"],no:["58 mm tampers and baskets will not seat correctly; one millimetre matters here","54 mm and 51 mm accessories will not fit"]},
-    58:{who:"Prosumer and commercial-style group heads",yes:["58 mm tampers, the most widely stocked size","58 mm bottomless portafilters matched to your group","58 mm distribution tools and puck screens"],no:["51 mm and 54 mm accessories will not fit","Check 58 mm vs 58.5 mm for some baskets"]}
+    51:{who:"compact and entry-level machines",yes:"51 mm tampers, baskets, funnels and puck screens made for your exact model",no:"54 and 58 mm parts, and most 'universal' tampers (they are 58 mm)"},
+    54:{who:"most Breville and Sage home machines",yes:"54 mm tampers, dosing funnels, puck screens and precision baskets sold for Breville 54 mm",no:"58 mm tampers (will not seat) and 51 mm tampers (leave an untamped ring)"},
+    57:{who:"Lelit's own 57 mm group",yes:"57 mm tampers and baskets made for LELIT57 machines, or parts whose listing names the Anna PL41",no:"58 mm parts; one millimetre matters here"},
+    58:{who:"prosumer and commercial-style groups",yes:"58 mm tampers (the most stocked size), bottomless portafilters matched to your group, distribution tools and puck screens",no:"51 and 54 mm parts; check 58 vs 58.5 mm on some baskets"}
   };
-  var tool=document.getElementById("pfTool"),inp=tool.querySelector("#pfSearch"),res=tool.querySelector("#pfResults"),det=tool.querySelector("#pfDetail");
+  var brand=document.getElementById("pfBrand"),model=document.getElementById("pfModel"),det=document.getElementById("pfDetail");
   function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-  function clear(el){while(el.firstChild)el.removeChild(el.firstChild)}
+  function opt(sel,text,val){var o=document.createElement("option");o.value=val;o.textContent=text;sel.appendChild(o);}
+  var brands=[];M.forEach(function(x){if(brands.indexOf(x.b)<0)brands.push(x.b);});brands.forEach(function(b){opt(brand,b,b);});
+  brand.addEventListener("change",function(){
+    model.innerHTML="";opt(model,"Then the model","");det.innerHTML="";
+    M.forEach(function(x,i){if(x.b===brand.value)opt(model,x.m,String(i));});
+    model.disabled=!brand.value;if(brand.value)model.focus();
+  });
+  model.addEventListener("change",function(){if(model.value==="")return det.innerHTML="";show(+model.value);});
   function show(i){
-    var x=M[i],f=FIT[x.s];
-    clear(res);clear(det);
-    var h='<div class="pf-card"><h3 class="h3">'+esc(x.b)+" "+esc(x.m)+'</h3><div class="pf-big">'+x.s+' mm</div><p class="pf-who">'+esc(f.who)+'</p><strong class="pf-k">What fits</strong><ul class="pf-list">';
-    for(var a=0;a<f.yes.length;a++)h+="<li>"+esc(f.yes[a])+"</li>";
-    h+='</ul><strong class="pf-k">What will not fit</strong><ul class="pf-list">';
-    for(var b=0;b<f.no.length;b++)h+="<li>"+esc(f.no[b])+"</li>";
-    h+='</ul><p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model; basket depth, ridges and machine generation can still differ. &ldquo;Fits most machines&rdquo; is not a yes.</p></div><button class="pf-back" type="button" id="pfBack">Check another machine</button>';
+    var x=M[i],f=FIT[x.s],h='<div class="pf-card"><h3 class="h3">'+esc(x.b)+" "+esc(x.m)+'</h3>';
+    h+='<p class="pf-row2"><b>'+x.s+' mm</b> portafilter, like '+esc(f.who)+'. Buy '+esc(f.yes)+'. Skip '+esc(f.no)+'. <a href="#accessories-51-54-57-or-58-mm">Accessory sizes</a></p>';
+    if(x.g)h+='<p class="pf-row2"><b>Grinder:</b> built in, so you can skip buying one. <a href="#the-grinder-decides-more-than-the-machine">Why the grinder matters anyway</a></p>';
+    else if(x.k==="P")h+='<p class="pf-row2"><b>Grinder:</b> none built in. It ships with a pressurized basket, so you can start on pre-ground espresso and add a grinder when you want fresh beans; our pick is the <a href="../../p/ENCORE-ESP/">Baratza Encore ESP</a>. <a href="#whole-bean-or-pre-ground">Whole bean or pre-ground</a></p>';
+    else if(x.k==="B")h+='<p class="pf-row2"><b>Grinder:</b> none built in. It ships with both basket types: pressurized to start on pre-ground, non-pressurized once you have an espresso grinder; our pick is the <a href="../../p/ENCORE-ESP/">Baratza Encore ESP</a>. <a href="#the-grinder-decides-more-than-the-machine">The grinder decides</a></p>';
+    else h+='<p class="pf-row2"><b>Grinder:</b> none built in, and the basket is non-pressurized, so an espresso-capable grinder comes first; our pick is the <a href="../../p/ENCORE-ESP/">Baratza Encore ESP</a>. <a href="#the-grinder-decides-more-than-the-machine">The grinder decides</a></p>';
+    if(x.t==="rear")h+='<p class="pf-row2"><b>Water tank:</b> lifts out at the back, so leave a gap behind the machine or plan to reach over it. <a href="#will-an-espresso-machine-fit-my-kitchen">Will it fit</a></p>';
+    else if(x.t==="top")h+='<p class="pf-row2"><b>Water tank:</b> fills from the top, so check the height under your cabinets with the lid open. <a href="#will-an-espresso-machine-fit-my-kitchen">Will it fit</a></p>';
+    else h+='<p class="pf-row2"><b>Water:</b> manual lever, no tank; you pour hot water for each shot. <a href="#will-an-espresso-machine-fit-my-kitchen">Will it fit</a></p>';
+    if(x.pick)h+='<p class="pf-row2"><a href="'+x.pick+'">Our note on this machine</a></p>';
+    h+='<p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model; basket depth, ridges and machine generation can still differ. Grinder, basket and tank facts come from the maker\'s spec sheet for the current version; check yours if it is older. Then read <a href="#your-first-bag-of-beans">your first bag</a> and <a href="#the-cleaning-routine">the cleaning routine</a>.</p></div>';
     det.innerHTML=h;
-    det.querySelector("#pfBack").addEventListener("click",function(){inp.value="";clear(det);inp.focus();});
-    det.querySelector(".pf-card").focus&&det.querySelector(".pf-card").setAttribute("tabindex","-1");
   }
-  function render(q){
-    clear(det);clear(res);
-    q=q.trim().toLowerCase();
-    if(!q)return;
-    var hits=[];
-    for(var i=0;i<M.length;i++){var t=(M[i].b+" "+M[i].m).toLowerCase();if(t.indexOf(q)>-1||String(M[i].s).indexOf(q)===0)hits.push(i);}
-    if(!hits.length){res.innerHTML='<p class="pf-none">No match. Try the model number (<strong>BES870</strong>, <strong>EC685</strong>) or just the brand. Not listed? The size is stamped on the portafilter or in the manual.</p>';return;}
-    for(var k=0;k<hits.length&&k<8;k++){(function(idx){var x=M[idx],btn=document.createElement("button");btn.type="button";btn.className="pf-row";btn.setAttribute("role","listitem");btn.innerHTML='<span class="pf-name">'+esc(x.m)+'<span class="pf-brand">'+esc(x.b)+'</span></span><span class="pf-size">'+x.s+' mm</span>';btn.addEventListener("click",function(){show(idx)});res.appendChild(btn);})(hits[k]);}
-  }
-  inp.addEventListener("input",function(){render(inp.value)});
 })();
 </script>
