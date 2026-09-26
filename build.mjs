@@ -163,9 +163,9 @@ const featuredRow = (rootPrefix) => {
 };
 const FOOTER_LINE = "Prices and availability change. We link you to Amazon to see today's.";
 // Home page row of guides: the newest four, as text tiles, with a link to the whole collection.
-const guidesRow = (rootPrefix) => guides.length ? `    <section class="guides-row" aria-labelledby="guides-h">
+const guidesRow = (rootPrefix) => guides.filter(g => !g.front.merged_into).length ? `    <section class="guides-row" aria-labelledby="guides-h">
       <div class="row-head"><h2 class="h2" id="guides-h">Guides</h2><a class="btn btn-ghost btn-sm" href="${rootPrefix}guides/">All guides</a></div>
-      <div class="guide-tiles">${guides.slice(0, 4).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
+      <div class="guide-tiles">${guides.filter(g => !g.front.merged_into).slice(0, 4).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
     </section>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   const isHome = !heroId;
@@ -226,14 +226,18 @@ function md(src) {
 const contactBlock = cfg.contact_email
   ? `**Email:** [${cfg.contact_email}](mailto:${cfg.contact_email})`
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
-for (const slug of ['home-espresso', 'about', 'how-we-pick', 'privacy', 'terms', 'contact']) {
+// Tools that a markdown page can drop in by token, on their own line; the partial replaces the paragraph the renderer wraps it in.
+const TOOLS = { '{{PORTAFILTER_TOOL}}': rd('templates/partials/portafilter-tool.html').trim() };
+const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html);
+const TEXT_PAGES = ['home-espresso', 'portafilter-size-finder', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'];
+for (const slug of TEXT_PAGES) {
   const raw = rd(`content/${slug}.md`).replace('{{CONTACT_BLOCK}}', contactBlock);
   const { front, body } = frontMatter(raw);
   const url = abs(`${slug}/`);
   written.push(wr(`${slug}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '', image: front.image || undefined }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', md(body)), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE })));
+    .replace('{{CONTENT}}', tools(md(body))), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE })));
 }
 
 // ---------- article pages and their collection index ----------
@@ -243,16 +247,17 @@ for (const [coll, items] of Object.entries(collections)) {
     const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
     const hasAmazon = /amazon\.com/.test(it.body);
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
-    const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + md(it.body).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
+    const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
     const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', datePublished: it.front.date || undefined, author: { '@type': 'Organization', name: cfg.name }, publisher: { '@type': 'Organization', name: cfg.name }, mainEntityOfPage: base ? url : undefined };
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
-      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? url : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: jsonld(ld) }))
+      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? (it.front.merged_into ? abs(`${coll}/${it.front.merged_into}/`) : url) : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: jsonld(ld) + (it.front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : '') }))
       .replace('<!--ANALYTICS-->', analytics)
       .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: coll })));
   }
   const label = coll[0].toUpperCase() + coll.slice(1);
-  const groups = [...new Set(items.map(i => i.front.cluster || ''))];
-  const list = groups.map(g => `${g ? `<h2 class="h2">${esc(g)}</h2>` : ''}<ul class="collection">${items.filter(i => (i.front.cluster || '') === g).map(i => `<li><a href="${i.slug}/">${esc(i.front.title)}</a><p>${esc(i.front.description || '')}</p>${i.front.date ? `<small>${esc(i.front.date)}</small>` : ''}</li>`).join('')}</ul>`).join('\n');
+  const listed = items.filter(i => !i.front.merged_into);
+  const groups = [...new Set(listed.map(i => i.front.cluster || ''))];
+  const list = groups.map(g => `${g ? `<h2 class="h2">${esc(g)}</h2>` : ''}<ul class="collection">${listed.filter(i => (i.front.cluster || '') === g).map(i => `<li><a href="${i.slug}/">${esc(i.front.title)}</a><p>${esc(i.front.description || '')}</p>${i.front.date ? `<small>${esc(i.front.date)}</small>` : ''}</li>`).join('')}</ul>`).join('\n');
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
     .replace('<!--ANALYTICS-->', analytics)
@@ -267,7 +272,7 @@ written.push(wr('404.html', frame(pageTpl
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
 const today = new Date().toISOString().slice(0, 10);
-const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...['home-espresso', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'].map(s => ({ loc: `${base}/${s}/`, lastmod: s === 'home-espresso' ? today : undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
+const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...TEXT_PAGES.map(s => ({ loc: `${base}/${s}/`, lastmod: ['home-espresso', 'portafilter-size-finder'].includes(s) ? today : undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.filter(i => !i.front.merged_into).map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.filter(i => !i.front.merged_into).map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u.loc)}</loc>${/^\d{4}-\d{2}-\d{2}$/.test(u.lastmod || '') ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));

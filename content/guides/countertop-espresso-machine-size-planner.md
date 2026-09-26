@@ -1,13 +1,12 @@
 ---
 title: Espresso Machine Counter Space: Measure Before You Buy
-description: Counter space for an espresso machine: the width, depth, height and lift clearances to measure before ordering.
+description: This guide is now part of Will an espresso machine fit my kitchen?.
 date: 2026-09-15
 collection: guides
 cluster: Home espresso
+merged_into: will-an-espresso-machine-fit-my-kitchen
 source: https://buyrightnotes.blogspot.com/2026/09/countertop-espresso-machine-size-planner.html
 ---
 # Espresso Machine Counter Space: Measure Before You Buy
 
-Measure width, depth, height, water-tank access, and the space needed to lift a portafilter before choosing a machine. Leave room behind and above for cords, ventilation, and filling. Confirm the tank and drip tray can be removed without moving the machine. Recheck the manufacturer’s current dimensional drawing before ordering.
-
-[When your measurements are ready, compare compact options by counter fit and water-tank access.](../three-compact-espresso-choices-fit/)
+This guide is now part of **[Will an espresso machine fit my kitchen?](../will-an-espresso-machine-fit-my-kitchen/)**, one shorter page that covers it start to finish.

@@ -1,45 +1,34 @@
 ---
 title: Home espresso, start to finish
-description: The buying path for a first home espresso setup: measure the counter, pick a compact machine, get the grinder right, match accessories, choose beans, then keep it clean. Ten guides and four picks.
+description: A first home espresso setup in three short guides: whether a machine fits your kitchen, which compact machine and grinder to buy, and what to have ready for the first week, with our four picks.
 image: assets/fit-guide-three-specs.jpg
 ---
 # Home espresso, start to finish
 
-Most first espresso setups go wrong before the machine arrives: it does not fit the counter, the tank cannot be reached, the accessories are the wrong size, or the grinder cannot go fine enough. This page puts our ten guides in the order the decisions actually happen, with the picks we made along the way.
+Three short guides, in the order the decisions happen, and the four picks we made along the way.
 
-## 1. Measure before you shop
+## 1. Will it fit?
 
-- [Espresso machine counter space: measure before you buy](../guides/countertop-espresso-machine-size-planner/): width, depth, height and the lift clearances.
-- [Coffee machine water-tank access](../guides/coffee-machine-water-tank-access/): rear-fill, top-fill and side-tank layouts, and where each one works.
-- [Should you buy an espresso machine now?](../guides/buy-now-wait-or-skip/): the one measurement and the one constraint to settle first.
+[Will an espresso machine fit my kitchen?](../guides/will-an-espresso-machine-fit-my-kitchen/): five measurements, what the tank position means, and a buy / wait / skip checklist.
 
-## 2. Pick a compact machine
+## 2. Which setup?
 
-- [Three compact espresso choices: fit before you buy](../guides/three-compact-espresso-choices-fit/): the same three machines compared by counter fit, tank access and portafilter size.
-- Our picks: [Breville Bambino, 54 mm](../p/BAMBINO-54/) for a small kitchen that wants cafe-style drinks, and [CASABREWS CM5418, 51 mm](../p/CASABREWS-51/) as the starter machine, with one catch on accessory size.
+[Which compact espresso setup should I buy?](../guides/which-compact-espresso-setup-should-i-buy/): two machines compared by fit and basket size, why the grinder decides more than the machine, and when pre-ground is fine.
 
-## 3. Get the grinder right
+- [Breville Bambino, 54 mm](../p/BAMBINO-54/): the small-kitchen pick for cafe-style drinks.
+- [CASABREWS CM5418, 51 mm](../p/CASABREWS-51/): the starter machine, with one catch on accessory size.
+- [Baratza Encore ESP](../p/ENCORE-ESP/): the grinder with a real espresso range.
 
-- [Do you need an espresso grinder before buying a machine?](../guides/do-you-need-espresso-grinder-before/): what "espresso range" means and when a stepped burr grinder is the right first buy.
-- [Whole bean or pre-ground coffee for espresso?](../guides/whole-bean-or-pre-ground-coffee-for/): when pre-ground works, when it does not.
-- Our pick: [Baratza Encore ESP](../p/ENCORE-ESP/), quiet enough for an early house and fine enough for espresso.
+## 3. The first week
 
-## 4. Match the accessories
+[First week with an espresso machine](../guides/first-week-with-an-espresso-machine/): accessory sizes, a small first bag of beans, a short tool list, and the cleaning routine.
 
-- [51 vs. 54 vs. 58 mm espresso accessories](../guides/51-vs-54-vs-58-mm-espresso-accessories/): find your basket size before buying a tamper, funnel or screen.
+- [Look up your machine](../portafilter-size-finder/): type the model, get its portafilter size and what fits.
 
-## 5. Choose beans
-
-- [Buying your first espresso beans](../guides/buying-your-first-espresso-beans-roast/): roast date, bag size and flavor direction, and how to store them.
-- If you would rather skip the machine: [Chemex 8-cup pour-over](../p/CHEMEX-8CUP/) makes a clean pot from the same fresh grind.
-
-## 6. First week and upkeep
-
-- [First-week espresso setup checklist](../guides/first-week-espresso-setup-checklist/): what to verify before the machine arrives and the first-week routine.
-- [A simple coffee machine cleaning schedule](../guides/a-simple-coffee-machine-cleaning/): daily, weekly and monthly steps that start with the manual.
+- No machine? [Chemex 8-cup pour-over](../p/CHEMEX-8CUP/) makes a clean pot from the same fresh grind.
 
 ## How we work
 
 Every guide is written from published specifications and manuals, not hands-on testing, and every pick page says who it is for, what to check, and who should skip it. As an Amazon Associate, BuyRight Notes earns from qualifying purchases; using our links does not change the price you pay.
 
-*Updated September 25, 2026.*
+*Updated September 26, 2026.*

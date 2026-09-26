@@ -1,0 +1,73 @@
+<section class="pf-tool" id="pfTool" aria-labelledby="pf-h">
+  <h2 class="h2" id="pf-h">Look up your machine</h2>
+  <p class="pf-sub">Type your espresso machine to see its portafilter size and which accessories fit. Sizes are starting points; confirm against your exact model number before buying.</p>
+  <label class="pf-label" for="pfSearch">Your espresso machine</label>
+  <input class="pf-input" type="search" id="pfSearch" placeholder="e.g. Bambino, Dedica, Gaggia Classic" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <p class="pf-hint">The full model number is on the base or back of the machine, not just the brand.</p>
+  <div class="pf-results" id="pfResults" role="list"></div>
+  <div id="pfDetail" aria-live="polite"></div>
+  <p class="pf-foot">Diameter is a starting point, not a fit guarantee: basket depth, ridges, locking tabs and machine generation still differ. Sizes checked against manufacturer pages in September 2026; this tool has no affiliate links.</p>
+</section>
+<script>
+(function(){
+  var M=[
+    {b:"Breville / Sage",m:"Bambino (BES450)",s:54},
+    {b:"Breville / Sage",m:"Bambino Plus (BES500)",s:54},
+    {b:"Breville / Sage",m:"Barista Express (BES870)",s:54},
+    {b:"Breville / Sage",m:"Barista Express Impress (BES876)",s:54},
+    {b:"Breville / Sage",m:"Barista Pro (BES878)",s:54},
+    {b:"Breville / Sage",m:"Barista Touch (BES880)",s:54},
+    {b:"Breville / Sage",m:"Infuser (BES840)",s:54},
+    {b:"Breville / Sage",m:"Duo-Temp Pro (BES810)",s:54},
+    {b:"Breville / Sage",m:"Dual Boiler (BES920)",s:58},
+    {b:"Breville / Sage",m:"Oracle (BES980)",s:58},
+    {b:"Breville / Sage",m:"Oracle Touch (BES990)",s:58},
+    {b:"De'Longhi",m:"Dedica EC685",s:51},
+    {b:"De'Longhi",m:"Dedica Arte EC885",s:51},
+    {b:"De'Longhi",m:"Stilosa EC260",s:51},
+    {b:"De'Longhi",m:"La Specialista Arte EC9155",s:51},
+    {b:"CASABREWS",m:"CM5418",s:51},
+    {b:"Gaggia",m:"Classic Pro",s:58},
+    {b:"Gaggia",m:"Classic Evo Pro",s:58},
+    {b:"Rancilio",m:"Silvia",s:58},
+    {b:"Rancilio",m:"Silvia Pro X",s:58},
+    {b:"Profitec",m:"Pro 500 / Pro 600",s:58},
+    {b:"ECM",m:"Classika / Synchronika",s:58},
+    {b:"Rocket",m:"Appartamento / Mozzafiato",s:58},
+    {b:"Lelit",m:"Anna PL41 (LELIT57 group)",s:57},
+    {b:"Lelit",m:"Mara X (E61 group)",s:58},
+    {b:"Flair",m:"Flair 58",s:58}
+  ];
+  var FIT={
+    51:{who:"Compact and entry-level machines",yes:["51 mm tampers","51 mm bottomless portafilters made for your exact model","51 mm puck screens and dosing funnels"],no:["54 mm or 58 mm accessories will not fit","Most 'universal' tampers are 58 mm","Some retailer spec sheets list the De'Longhi Dedica basket rim as 53 mm; De'Longhi's own accessories for it are sold as 51 mm, so shop by 51 mm and your exact model"]},
+    54:{who:"Most Breville and Sage home machines",yes:["54 mm tampers","54 mm dosing funnels and puck screens","Precision baskets sold specifically for Breville 54 mm"],no:["58 mm tampers will not seat correctly","51 mm tampers leave an untamped ring"]},
+    57:{who:"Lelit's own 57 mm group (Anna PL41 and its siblings)",yes:["57 mm tampers and baskets made for LELIT57 machines","Lelit's own LELIT57 barista tools","Accessories whose listing names the Anna PL41 by model"],no:["58 mm tampers and baskets will not seat correctly; one millimetre matters here","54 mm and 51 mm accessories will not fit"]},
+    58:{who:"Prosumer and commercial-style group heads",yes:["58 mm tampers, the most widely stocked size","58 mm bottomless portafilters matched to your group","58 mm distribution tools and puck screens"],no:["51 mm and 54 mm accessories will not fit","Check 58 mm vs 58.5 mm for some baskets"]}
+  };
+  var tool=document.getElementById("pfTool"),inp=tool.querySelector("#pfSearch"),res=tool.querySelector("#pfResults"),det=tool.querySelector("#pfDetail");
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+  function clear(el){while(el.firstChild)el.removeChild(el.firstChild)}
+  function show(i){
+    var x=M[i],f=FIT[x.s];
+    clear(res);clear(det);
+    var h='<div class="pf-card"><h3 class="h3">'+esc(x.b)+" "+esc(x.m)+'</h3><div class="pf-big">'+x.s+' mm</div><p class="pf-who">'+esc(f.who)+'</p><strong class="pf-k">What fits</strong><ul class="pf-list">';
+    for(var a=0;a<f.yes.length;a++)h+="<li>"+esc(f.yes[a])+"</li>";
+    h+='</ul><strong class="pf-k">What will not fit</strong><ul class="pf-list">';
+    for(var b=0;b<f.no.length;b++)h+="<li>"+esc(f.no[b])+"</li>";
+    h+='</ul><p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model. A listing that only says &ldquo;fits most machines&rdquo; is missing information, not reassurance.</p></div><button class="pf-back" type="button" id="pfBack">Check another machine</button>';
+    det.innerHTML=h;
+    det.querySelector("#pfBack").addEventListener("click",function(){inp.value="";clear(det);inp.focus();});
+    det.querySelector(".pf-card").focus&&det.querySelector(".pf-card").setAttribute("tabindex","-1");
+  }
+  function render(q){
+    clear(det);clear(res);
+    q=q.trim().toLowerCase();
+    if(!q)return;
+    var hits=[];
+    for(var i=0;i<M.length;i++){var t=(M[i].b+" "+M[i].m).toLowerCase();if(t.indexOf(q)>-1||String(M[i].s).indexOf(q)===0)hits.push(i);}
+    if(!hits.length){res.innerHTML='<p class="pf-none">No match yet. Try the model number (for example <strong>BES870</strong> or <strong>EC685</strong>) or just the brand. If your machine is not listed, look for the diameter stamped on the portafilter itself.</p>';return;}
+    for(var k=0;k<hits.length&&k<8;k++){(function(idx){var x=M[idx],btn=document.createElement("button");btn.type="button";btn.className="pf-row";btn.setAttribute("role","listitem");btn.innerHTML='<span class="pf-name">'+esc(x.m)+'<span class="pf-brand">'+esc(x.b)+'</span></span><span class="pf-size">'+x.s+' mm</span>';btn.addEventListener("click",function(){show(idx)});res.appendChild(btn);})(hits[k]);}
+  }
+  inp.addEventListener("input",function(){render(inp.value)});
+})();
+</script>

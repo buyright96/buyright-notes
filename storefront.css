@@ -371,3 +371,28 @@ footer a { color: var(--text-2); text-decoration: none; }
 .featured .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3); }
 .featured .tile .card-media { aspect-ratio: 4 / 5; }
 @media (min-width: 720px) { .featured .tiles { grid-template-columns: repeat(4, 1fr); } }
+
+/* Portafilter size finder (templates/partials/portafilter-tool.html), dropped into markdown pages by {{PORTAFILTER_TOOL}}. */
+.pf-tool { display: grid; gap: var(--sp-3); padding: var(--sp-5) var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.pf-tool .pf-sub, .pf-tool .pf-hint, .pf-tool .pf-foot, .pf-tool .pf-none, .pf-tool .pf-who { margin: 0; }
+.pf-tool .pf-sub { color: var(--text-2); }
+.pf-tool .pf-hint, .pf-tool .pf-foot { font-size: var(--fs-sm); color: var(--text-3); }
+.pf-tool .pf-foot { padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+.pf-tool .pf-label { font: 600 var(--fs-sm)/1.3 var(--font-ui); color: var(--text); }
+.pf-tool .pf-input { width: 100%; min-height: 48px; padding: 10px 14px; font: 400 var(--fs-md)/1.3 var(--font-ui); color: var(--text); background: var(--card); border: 1px solid var(--line-strong); border-radius: var(--r-sm); -webkit-appearance: none; appearance: none; }
+.pf-tool .pf-input:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pf-tool .pf-results { display: grid; gap: var(--sp-2); }
+.pf-tool .pf-row { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); width: 100%; min-height: 48px; padding: 10px 14px; font: inherit; color: var(--text); text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; }
+.pf-tool .pf-row:hover, .pf-tool .pf-row:focus-visible { border-color: var(--accent); outline: none; }
+.pf-tool .pf-name { font-weight: 600; font-size: var(--fs-sm); }
+.pf-tool .pf-brand { display: block; margin-top: 2px; font-weight: 400; font-size: var(--fs-xs); color: var(--text-3); }
+.pf-tool .pf-size { font: 700 var(--fs-md)/1 var(--font-display); color: var(--accent); white-space: nowrap; }
+.pf-tool .pf-card { display: grid; gap: var(--sp-2); padding: var(--sp-4); background: var(--card); border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px var(--line); }
+.pf-tool .pf-card h3 { margin: 0; }
+.pf-tool .pf-big { font: 600 var(--fs-3xl)/1 var(--font-display); color: var(--accent); }
+.pf-tool .pf-who { font-size: var(--fs-sm); color: var(--text-3); }
+.pf-tool .pf-k { margin-top: var(--sp-2); font-size: var(--fs-sm); color: var(--text); }
+.pf-tool .pf-list { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: var(--fs-sm); color: var(--text-2); }
+.pf-tool .pf-flag { margin: var(--sp-2) 0 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
+.pf-tool .pf-flag strong { color: var(--text); }
+.pf-tool .pf-back { justify-self: start; min-height: 44px; padding: 0 var(--sp-2); font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--accent-hi); background: none; border: 0; cursor: pointer; text-decoration: underline; }
