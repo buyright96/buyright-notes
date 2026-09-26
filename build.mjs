@@ -202,7 +202,7 @@ for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
   // The page title repeats the Pin title when there is one, so the Pin and its landing page say the same thing.
   const headline = pins[p.product_id]?.title || p.title;
-  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${headline} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: buyUrl(p), heroGuideUrl: p.guide_url, hero: p, ld: articleLd(p, base ? url : undefined, headline) })));
+  written.push(wr(`p/${p.product_id}/index.html`, storePage({ rootPrefix: '../../', heroId: p.product_id, title: `${p.title} · ${cfg.name}`, description: p.reason_to_buy || homeDesc, url: base ? url : '', image: p.card_image, heroBuyUrl: buyUrl(p), heroGuideUrl: p.guide_url, hero: p, ld: articleLd(p, base ? url : undefined, headline) })));
 }
 
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------

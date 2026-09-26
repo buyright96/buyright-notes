@@ -1,6 +1,6 @@
 ---
-title: Home espresso setup guide: will it fit, what to buy, and your first week
-description: One page for a first home espresso setup: look up your machine's portafilter size, measure the counter, pick a compact machine and grinder, choose beans, buy accessories that fit, and clean it right. Written from manufacturer specs, not hype.
+title: Home espresso setup guide: fit, machine, grinder, first week
+description: One page for a first home espresso setup: look up your machine, measure the counter, pick a compact machine and grinder, buy accessories that fit, clean it right.
 date: 2026-09-26
 collection: guides
 cluster: Home espresso

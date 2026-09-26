@@ -1,6 +1,6 @@
 ---
-title: Fall baking setup: stand mixer, Dutch oven bread, a scale, and what to skip
-description: What a home baker needs for a fall of cookies, pumpkin bread and no-knead loaves: when a stand mixer beats a hand mixer, why an enameled Dutch oven makes crusty bread, why a 1 g scale matters, and the buys that can wait.
+title: Fall baking setup: stand mixer, Dutch oven and scale
+description: When a stand mixer beats a hand mixer, why an enameled Dutch oven makes crusty no-knead bread, why a 1 g scale fixes recipes, and which buys can wait.
 date: 2026-09-26
 collection: guides
 cluster: Fall baking

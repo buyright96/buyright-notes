@@ -1,6 +1,6 @@
 ---
-title: A reading nook that helps you sleep: e-reader, cover, and a sunrise alarm
-description: How to set up a bedside reading corner that winds you down instead of waking you up: a glare-free e-reader with a warm light, the cover that fits it, and a sunrise alarm with sleep sounds. Which Kindle cover fits which model, and who should skip each piece.
+title: A reading nook that helps you sleep: Kindle, cover, sunrise alarm
+description: A bedside corner that winds you down: a glare-free e-reader with a warm light, the cover that fits your Kindle model, and a sunrise alarm with sleep sounds.
 date: 2026-09-26
 collection: guides
 cluster: Reading nook
