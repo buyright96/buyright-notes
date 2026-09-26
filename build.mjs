@@ -259,11 +259,12 @@ for (const [coll, items] of Object.entries(collections)) {
   const label = coll[0].toUpperCase() + coll.slice(1);
   const listed = items.filter(i => !i.front.merged_into);
   const groups = [...new Set(listed.map(i => i.front.cluster || ''))];
-  const list = groups.map(g => `${g ? `<h2 class="h2">${esc(g)}</h2>` : ''}<ul class="collection">${listed.filter(i => (i.front.cluster || '') === g).map(i => `<li><a href="${i.slug}/">${esc(i.front.title)}</a><p>${esc(i.front.description || '')}</p>${i.front.date ? `<small>${esc(i.front.date)}</small>` : ''}</li>`).join('')}</ul>`).join('\n');
+  const card = (i) => `<article class="guide-card"><h2><a href="${i.slug}/">${esc(i.front.card_title || i.front.title)}</a></h2><p>${esc(i.front.card_line || i.front.description || '')}</p><p class="actions"><a class="btn btn-primary btn-sm" href="${i.slug}/">Read the guide</a>${i.front.tool_anchor ? `<a class="btn btn-ghost btn-sm" href="${i.slug}/#${i.front.tool_anchor}">${esc(i.front.tool_label || 'Open the tool')}</a>` : ''}</p></article>`;
+  const list = groups.map(g => `${g && groups.length > 1 ? `<h2 class="h2">${esc(g)}</h2>` : ''}${listed.filter(i => (i.front.cluster || '') === g).map(card).join('')}`).join('\n');
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>${coll === 'guides' ? '<p><a class="backlink" href="home-espresso-setup/"><span aria-hidden="true">&rarr;</span> Start here: the home espresso setup guide, with the size finder</a></p>' : ''}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1>\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------

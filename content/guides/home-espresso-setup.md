@@ -5,14 +5,18 @@ date: 2026-09-26
 collection: guides
 cluster: Home espresso
 image: assets/fit-guide-three-specs.jpg
+card_title: Home espresso, start to finish
+card_line: Will it fit, which machine and grinder, which accessories, first week. One page, with a size finder for your machine.
+tool_anchor: look-up-your-machine
+tool_label: Look up your machine
 ---
-# Home espresso setup guide: will it fit, what to buy, and your first week
+# Home espresso, start to finish
 
-Everything we know about setting up espresso at home, on one page, in the order the decisions happen. Start with the tool if you already own a machine; start at "Will it fit" if you are still shopping.
+Own a machine already? Look it up. Still shopping? Start at "Will it fit".
 
 {{PORTAFILTER_TOOL_HERO}}
 
-**On this page:** [Look up your machine](#look-up-your-machine) · [Will it fit?](#will-an-espresso-machine-fit-my-kitchen) · [Which machine?](#which-compact-espresso-machine) · [The grinder](#the-grinder-decides-more-than-the-machine) · [Beans](#whole-bean-or-pre-ground) · [Accessory sizes](#accessories-51-54-57-or-58-mm) · [First bag](#your-first-bag-of-beans) · [Tools](#keep-the-tool-list-short) · [Cleaning](#the-cleaning-routine) · [Buy, wait or skip](#buy-now-wait-or-skip) · [Our picks](#the-picks-in-one-place)
+[Will it fit?](#will-an-espresso-machine-fit-my-kitchen) · [Which machine?](#which-compact-espresso-machine) · [The grinder](#the-grinder-decides-more-than-the-machine) · [Beans](#whole-bean-or-pre-ground) · [Accessory sizes](#accessories-51-54-57-or-58-mm) · [First bag](#your-first-bag-of-beans) · [Tools](#keep-the-tool-list-short) · [Cleaning](#the-cleaning-routine) · [Buy, wait or skip](#buy-now-wait-or-skip) · [Our picks](#the-picks-in-one-place)
 
 ## Will an espresso machine fit my kitchen?
 

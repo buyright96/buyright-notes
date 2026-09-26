@@ -1,12 +1,9 @@
 <section class="pf-tool" id="pfTool" aria-labelledby="look-up-your-machine">
-  <h2 class="h2" id="look-up-your-machine">Look up your machine</h2>
-  <p class="pf-sub">Type your espresso machine to see its portafilter size and which accessories fit. Sizes are starting points; confirm against your exact model number before buying.</p>
-  <label class="pf-label" for="pfSearch">Your espresso machine</label>
-  <input class="pf-input" type="search" id="pfSearch" placeholder="e.g. Bambino, Dedica, Gaggia Classic" autocomplete="off" autocapitalize="off" spellcheck="false">
-  <p class="pf-hint">The full model number is on the base or back of the machine, not just the brand.</p>
+  <h2 class="h2" id="look-up-your-machine">What size does my espresso machine take?</h2>
+  <label class="visually-hidden" for="pfSearch">Your espresso machine</label>
+  <input class="pf-input" type="search" id="pfSearch" placeholder="Bambino, Dedica, Gaggia…" autocomplete="off" autocapitalize="off" spellcheck="false">
   <div class="pf-results" id="pfResults" role="list"></div>
   <div id="pfDetail" aria-live="polite"></div>
-  <p class="pf-foot">Diameter is a starting point, not a fit guarantee: basket depth, ridges, locking tabs and machine generation still differ. Sizes checked against manufacturer pages in September 2026; this tool has no affiliate links.</p>
 </section>
 <script>
 (function(){
@@ -54,7 +51,7 @@
     for(var a=0;a<f.yes.length;a++)h+="<li>"+esc(f.yes[a])+"</li>";
     h+='</ul><strong class="pf-k">What will not fit</strong><ul class="pf-list">';
     for(var b=0;b<f.no.length;b++)h+="<li>"+esc(f.no[b])+"</li>";
-    h+='</ul><p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model. A listing that only says &ldquo;fits most machines&rdquo; is missing information, not reassurance.</p></div><button class="pf-back" type="button" id="pfBack">Check another machine</button>';
+    h+='</ul><p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model; basket depth, ridges and machine generation can still differ. &ldquo;Fits most machines&rdquo; is not a yes.</p></div><button class="pf-back" type="button" id="pfBack">Check another machine</button>';
     det.innerHTML=h;
     det.querySelector("#pfBack").addEventListener("click",function(){inp.value="";clear(det);inp.focus();});
     det.querySelector(".pf-card").focus&&det.querySelector(".pf-card").setAttribute("tabindex","-1");
@@ -65,7 +62,7 @@
     if(!q)return;
     var hits=[];
     for(var i=0;i<M.length;i++){var t=(M[i].b+" "+M[i].m).toLowerCase();if(t.indexOf(q)>-1||String(M[i].s).indexOf(q)===0)hits.push(i);}
-    if(!hits.length){res.innerHTML='<p class="pf-none">No match yet. Try the model number (for example <strong>BES870</strong> or <strong>EC685</strong>) or just the brand. If your machine is not listed, look for the diameter stamped on the portafilter itself.</p>';return;}
+    if(!hits.length){res.innerHTML='<p class="pf-none">No match. Try the model number (<strong>BES870</strong>, <strong>EC685</strong>) or just the brand. Not listed? The size is stamped on the portafilter or in the manual.</p>';return;}
     for(var k=0;k<hits.length&&k<8;k++){(function(idx){var x=M[idx],btn=document.createElement("button");btn.type="button";btn.className="pf-row";btn.setAttribute("role","listitem");btn.innerHTML='<span class="pf-name">'+esc(x.m)+'<span class="pf-brand">'+esc(x.b)+'</span></span><span class="pf-size">'+x.s+' mm</span>';btn.addEventListener("click",function(){show(idx)});res.appendChild(btn);})(hits[k]);}
   }
   inp.addEventListener("input",function(){render(inp.value)});

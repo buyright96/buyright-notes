@@ -400,5 +400,14 @@ footer a { color: var(--text-2); text-decoration: none; }
 /* The finder as a page hero ({{PORTAFILTER_TOOL_HERO}}): same tool, more presence. */
 .pf-tool.pf-hero { padding: var(--sp-6) var(--sp-5); background: linear-gradient(180deg, var(--card), var(--surface)); box-shadow: inset 0 0 0 1px var(--line-strong), 0 24px 60px -36px rgba(0, 0, 0, 0.8); }
 .pf-tool.pf-hero .h2 { font-size: var(--fs-2xl); line-height: var(--lh-tight); }
-.pf-tool.pf-hero .pf-sub { font-size: var(--fs-md); }
+.pf-tool.pf-hero .h2 { max-width: 16ch; }
 .pf-tool.pf-hero .pf-input { min-height: 56px; font-size: var(--fs-lg); }
+
+/* Guides index: one card per guide with an obvious next step. */
+.guide-card { display: grid; gap: var(--sp-3); padding: var(--sp-5) var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.guide-card h2 { margin: 0; font-size: var(--fs-xl); }
+.guide-card h2 a { color: var(--text); text-decoration: none; }
+.guide-card h2 a:hover { color: var(--accent-hi); }
+.guide-card p { margin: 0; color: var(--text-2); }
+.guide-card .actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.guide-card .actions a { text-decoration: none; }
