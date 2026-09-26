@@ -16,7 +16,7 @@ Own a machine already, or have one in mind? Pick it below and the answers follow
 
 {{PORTAFILTER_TOOL_HERO}}
 
-[Will it fit?](#will-an-espresso-machine-fit-my-kitchen) · [Which machine?](#which-compact-espresso-machine) · [The grinder](#the-grinder-decides-more-than-the-machine) · [Beans](#whole-bean-or-pre-ground) · [Accessory sizes](#accessories-51-54-57-or-58-mm) · [First bag](#your-first-bag-of-beans) · [Tools](#keep-the-tool-list-short) · [Cleaning](#the-cleaning-routine) · [Buy, wait or skip](#buy-now-wait-or-skip) · [Our picks](#the-picks-in-one-place)
+[Will it fit?](#will-an-espresso-machine-fit-my-kitchen) · [Which machine?](#which-compact-espresso-machine) · [The grinder](#the-grinder-decides-more-than-the-machine) · [Beans](#whole-bean-or-pre-ground) · [Buy, wait or skip](#buy-now-wait-or-skip) · [Accessory sizes](#accessories-51-54-57-or-58-mm) · [First bag](#your-first-bag-of-beans) · [Tools](#keep-the-tool-list-short) · [Cleaning](#the-cleaning-routine) · [Our picks](#the-picks-in-one-place)
 
 ## Will an espresso machine fit my kitchen?
 
@@ -57,6 +57,16 @@ Our pick: **Baratza Encore ESP** ([our note](../../p/ENCORE-ESP/)). A dedicated 
 
 "Espresso roast" describes a flavor direction, not a compatibility guarantee. Many coffees work for espresso; start with tasting notes you already like.
 
+## Buy now, wait, or skip
+
+Before checkout, write two lines: the problem this machine must solve, and the one constraint that could make it unusable.
+
+- **Buy now** when the need is immediate, the measurements fit with room to spare, and the return policy is clear.
+- **Wait** when one measurement or compatibility detail is still missing. Get it first; it is cheaper than a return.
+- **Skip** when the machine adds work without solving the original problem.
+
+Ready when you can answer four questions: Does the machine fit with clearance to refill it? Do I have a grind plan? Do my accessories match this machine's basket size? Do I have a small bag of coffee to learn with?
+
 ## Accessories: 51, 54, 57 or 58 mm
 
 Espresso accessories are not universal. The millimeter number is the basket diameter, and fit can still depend on basket depth, tabs and machine generation. Pick your machine in the finder at the top of this page, then shop by exact model first and size second.
@@ -87,16 +97,6 @@ The manual comes first. Add a tool only when it solves a problem you have: a sca
 - **Monthly:** whatever your model calls for: a cleaning cycle, a filter check, a deeper rinse. Descaling is not a universal monthly job; water hardness and the maker's schedule decide it. Never guess a chemical dose or use a product the manufacturer does not approve.
 
 Keep the supplies in one small tray near the machine, without blocking the tank or the vents.
-
-## Buy now, wait, or skip
-
-Before checkout, write two lines: the problem this machine must solve, and the one constraint that could make it unusable.
-
-- **Buy now** when the need is immediate, the measurements fit with room to spare, and the return policy is clear.
-- **Wait** when one measurement or compatibility detail is still missing. Get it first; it is cheaper than a return.
-- **Skip** when the machine adds work without solving the original problem.
-
-Ready when you can answer four questions: Does the machine fit with clearance to refill it? Do I have a grind plan? Do my accessories match this machine's basket size? Do I have a small bag of coffee to learn with?
 
 ## The picks in one place
 
