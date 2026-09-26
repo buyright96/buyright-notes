@@ -214,7 +214,7 @@ function md(src) {
     const line = raw.trimEnd();
     if (!line.trim()) { flush(); continue; }
     let m;
-    if ((m = line.match(/^(#{1,3}) (.*)/))) { flush(); out.push(`<h${m[1].length}${m[1].length === 1 ? ' class="h1"' : m[1].length === 2 ? ' class="h2"' : ' class="h3"'}>${inline(m[2])}</h${m[1].length}>`); }
+    if ((m = line.match(/^(#{1,3}) (.*)/))) { flush(); const id = m[1].length > 1 ? ` id="${m[2].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}"` : ''; out.push(`<h${m[1].length}${m[1].length === 1 ? ' class="h1"' : m[1].length === 2 ? ' class="h2"' : ' class="h3"'}${id}>${inline(m[2])}</h${m[1].length}>`); }
     else if ((m = line.match(/^- (.*)/))) { if (list !== 'ul') { flush(); out.push('<ul>'); list = 'ul'; } out.push(`<li>${inline(m[1])}</li>`); }
     else if ((m = line.match(/^\d+\. (.*)/))) { if (list !== 'ol') { flush(); out.push('<ol>'); list = 'ol'; } out.push(`<li>${inline(m[1])}</li>`); }
     else if ((m = line.match(/^> (.*)/))) { flush(); out.push(`<blockquote>${inline(m[1])}</blockquote>`); }
@@ -227,15 +227,17 @@ const contactBlock = cfg.contact_email
   ? `**Email:** [${cfg.contact_email}](mailto:${cfg.contact_email})`
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
 // Tools that a markdown page can drop in by token, on their own line; the partial replaces the paragraph the renderer wraps it in.
-const TOOLS = { '{{PORTAFILTER_TOOL}}': rd('templates/partials/portafilter-tool.html').trim() };
+const PF = rd('templates/partials/portafilter-tool.html').trim();
+const TOOLS = { '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"') };
 const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html);
 const TEXT_PAGES = ['home-espresso', 'portafilter-size-finder', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'];
+const textFront = {}; // slug -> front matter, for the sitemap (a text page with merged_into is a pointer: canonical elsewhere, noindex, off the sitemap)
 for (const slug of TEXT_PAGES) {
   const raw = rd(`content/${slug}.md`).replace('{{CONTACT_BLOCK}}', contactBlock);
-  const { front, body } = frontMatter(raw);
-  const url = abs(`${slug}/`);
+  const { front, body } = frontMatter(raw); textFront[slug] = front;
+  const url = front.merged_into ? abs(front.merged_into) : abs(`${slug}/`);
   written.push(wr(`${slug}/index.html`, frame(pageTpl
-    .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '', image: front.image || undefined }))
+    .replace('<!--META-->', meta({ title: `${front.title} · ${cfg.name}`, description: front.description || homeDesc, url: base ? url : '', image: front.image || undefined }) + (front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : ''))
     .replace('<!--ANALYTICS-->', analytics)
     .replace('{{CONTENT}}', tools(md(body))), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE })));
 }
@@ -261,7 +263,7 @@ for (const [coll, items] of Object.entries(collections)) {
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>${coll === 'guides' ? '<p><a class="backlink" href="../home-espresso/"><span aria-hidden="true">&rarr;</span> Start here: Home espresso, start to finish</a></p>' : ''}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1><p>The long version behind our picks: what to measure, what fits what, and when to wait. Short notes live in the shop; the reasoning lives here.</p>${coll === 'guides' ? '<p><a class="backlink" href="home-espresso-setup/"><span aria-hidden="true">&rarr;</span> Start here: the home espresso setup guide, with the size finder</a></p>' : ''}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------
@@ -272,7 +274,7 @@ written.push(wr('404.html', frame(pageTpl
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
 const today = new Date().toISOString().slice(0, 10);
-const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...TEXT_PAGES.map(s => ({ loc: `${base}/${s}/`, lastmod: ['home-espresso', 'portafilter-size-finder'].includes(s) ? today : undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.filter(i => !i.front.merged_into).map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.filter(i => !i.front.merged_into).map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
+const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...TEXT_PAGES.filter(s => !textFront[s]?.merged_into).map(s => ({ loc: `${base}/${s}/`, lastmod: undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.filter(i => !i.front.merged_into).map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.filter(i => !i.front.merged_into).map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u.loc)}</loc>${/^\d{4}-\d{2}-\d{2}$/.test(u.lastmod || '') ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`));
 
 console.log(JSON.stringify({ data: dataFile, base_url: base || '(not set)', products_built: buildable.length, live_products: live.length, files: written.length, affiliate_links_enabled: site.affiliate_links_enabled === true, warnings: [!base && 'base_url is empty: canonical, sitemap and share URLs are relative', !cfg.contact_email && 'contact_email is empty: Contact page shows a placeholder', !cfg.pinterest_domain_verify && 'pinterest_domain_verify is empty'].filter(Boolean) }, null, 2));

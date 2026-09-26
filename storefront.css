@@ -396,3 +396,9 @@ footer a { color: var(--text-2); text-decoration: none; }
 .pf-tool .pf-flag { margin: var(--sp-2) 0 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
 .pf-tool .pf-flag strong { color: var(--text); }
 .pf-tool .pf-back { justify-self: start; min-height: 44px; padding: 0 var(--sp-2); font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--accent-hi); background: none; border: 0; cursor: pointer; text-decoration: underline; }
+
+/* The finder as a page hero ({{PORTAFILTER_TOOL_HERO}}): same tool, more presence. */
+.pf-tool.pf-hero { padding: var(--sp-6) var(--sp-5); background: linear-gradient(180deg, var(--card), var(--surface)); box-shadow: inset 0 0 0 1px var(--line-strong), 0 24px 60px -36px rgba(0, 0, 0, 0.8); }
+.pf-tool.pf-hero .h2 { font-size: var(--fs-2xl); line-height: var(--lh-tight); }
+.pf-tool.pf-hero .pf-sub { font-size: var(--fs-md); }
+.pf-tool.pf-hero .pf-input { min-height: 56px; font-size: var(--fs-lg); }

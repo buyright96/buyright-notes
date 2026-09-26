@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>What portafilter size does my espresso machine use? · BuyRight Notes</title>
-<meta name="description" content="Type your espresso machine and see its portafilter diameter (51, 54, 57 or 58 mm), which accessories fit and which will not. 26 machines, checked against manufacturer pages.">
-<link rel="canonical" href="https://buyright96.github.io/buyright-notes/portafilter-size-finder/">
+<meta name="description" content="The size finder now lives at the top of the Home espresso setup guide.">
+<link rel="canonical" href="https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/">
 <meta name="theme-color" content="#14100d">
 <meta property="og:site_name" content="BuyRight Notes">
 <meta property="og:type" content="website">
 <meta property="og:title" content="What portafilter size does my espresso machine use? · BuyRight Notes">
-<meta property="og:description" content="Type your espresso machine and see its portafilter diameter (51, 54, 57 or 58 mm), which accessories fit and which will not. 26 machines, checked against manufacturer pages.">
-<meta property="og:url" content="https://buyright96.github.io/buyright-notes/portafilter-size-finder/">
-<meta property="og:image" content="https://buyright96.github.io/buyright-notes/assets/fit-guide-three-specs.jpg">
+<meta property="og:description" content="The size finder now lives at the top of the Home espresso setup guide.">
+<meta property="og:url" content="https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/">
+<meta property="og:image" content="https://buyright96.github.io/buyright-notes/assets/kindle-paperwhite-e-reader.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="What portafilter size does my espresso machine use? · BuyRight Notes">
-<meta name="twitter:description" content="Type your espresso machine and see its portafilter diameter (51, 54, 57 or 58 mm), which accessories fit and which will not. 26 machines, checked against manufacturer pages.">
-<meta name="twitter:image" content="https://buyright96.github.io/buyright-notes/assets/fit-guide-three-specs.jpg">
+<meta name="twitter:description" content="The size finder now lives at the top of the Home espresso setup guide.">
+<meta name="twitter:image" content="https://buyright96.github.io/buyright-notes/assets/kindle-paperwhite-e-reader.jpg">
 <meta name="p:domain_verify" content="c0286d5f9051bd81696fae6fdabc9425">
+<meta name="robots" content="noindex,follow">
 <link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +37,7 @@
   .prose .byline b { color: var(--text-2); font-weight: 600; }
   .prose .disclosure { margin: 0; }
   .prose h3 { font-size: var(--fs-lg); margin-top: var(--sp-2); }
+  .prose h2, .prose h3, .prose .pf-tool { scroll-margin-top: 80px; } /* jump links land below the sticky header */
   .prose .backlink { display: inline-flex; gap: 6px; align-items: center; font-size: var(--fs-sm); color: var(--text-2); text-decoration: none; min-height: 44px; }
   .prose .backlink:hover { color: var(--text); }
   .collection { display: grid; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
@@ -66,98 +68,12 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
   </header>
   <main class="prose">
 <h1 class="h1">What portafilter size does my espresso machine use?</h1>
-<p>Espresso accessories are sold by basket diameter, and the sizes are not interchangeable. Look yours up before buying a tamper, basket, funnel or portafilter.</p>
-<section class="pf-tool" id="pfTool" aria-labelledby="pf-h">
-  <h2 class="h2" id="pf-h">Look up your machine</h2>
-  <p class="pf-sub">Type your espresso machine to see its portafilter size and which accessories fit. Sizes are starting points; confirm against your exact model number before buying.</p>
-  <label class="pf-label" for="pfSearch">Your espresso machine</label>
-  <input class="pf-input" type="search" id="pfSearch" placeholder="e.g. Bambino, Dedica, Gaggia Classic" autocomplete="off" autocapitalize="off" spellcheck="false">
-  <p class="pf-hint">The full model number is on the base or back of the machine, not just the brand.</p>
-  <div class="pf-results" id="pfResults" role="list"></div>
-  <div id="pfDetail" aria-live="polite"></div>
-  <p class="pf-foot">Diameter is a starting point, not a fit guarantee: basket depth, ridges, locking tabs and machine generation still differ. Sizes checked against manufacturer pages in September 2026; this tool has no affiliate links.</p>
-</section>
-<script>
-(function(){
-  var M=[
-    {b:"Breville / Sage",m:"Bambino (BES450)",s:54},
-    {b:"Breville / Sage",m:"Bambino Plus (BES500)",s:54},
-    {b:"Breville / Sage",m:"Barista Express (BES870)",s:54},
-    {b:"Breville / Sage",m:"Barista Express Impress (BES876)",s:54},
-    {b:"Breville / Sage",m:"Barista Pro (BES878)",s:54},
-    {b:"Breville / Sage",m:"Barista Touch (BES880)",s:54},
-    {b:"Breville / Sage",m:"Infuser (BES840)",s:54},
-    {b:"Breville / Sage",m:"Duo-Temp Pro (BES810)",s:54},
-    {b:"Breville / Sage",m:"Dual Boiler (BES920)",s:58},
-    {b:"Breville / Sage",m:"Oracle (BES980)",s:58},
-    {b:"Breville / Sage",m:"Oracle Touch (BES990)",s:58},
-    {b:"De'Longhi",m:"Dedica EC685",s:51},
-    {b:"De'Longhi",m:"Dedica Arte EC885",s:51},
-    {b:"De'Longhi",m:"Stilosa EC260",s:51},
-    {b:"De'Longhi",m:"La Specialista Arte EC9155",s:51},
-    {b:"CASABREWS",m:"CM5418",s:51},
-    {b:"Gaggia",m:"Classic Pro",s:58},
-    {b:"Gaggia",m:"Classic Evo Pro",s:58},
-    {b:"Rancilio",m:"Silvia",s:58},
-    {b:"Rancilio",m:"Silvia Pro X",s:58},
-    {b:"Profitec",m:"Pro 500 / Pro 600",s:58},
-    {b:"ECM",m:"Classika / Synchronika",s:58},
-    {b:"Rocket",m:"Appartamento / Mozzafiato",s:58},
-    {b:"Lelit",m:"Anna PL41 (LELIT57 group)",s:57},
-    {b:"Lelit",m:"Mara X (E61 group)",s:58},
-    {b:"Flair",m:"Flair 58",s:58}
-  ];
-  var FIT={
-    51:{who:"Compact and entry-level machines",yes:["51 mm tampers","51 mm bottomless portafilters made for your exact model","51 mm puck screens and dosing funnels"],no:["54 mm or 58 mm accessories will not fit","Most 'universal' tampers are 58 mm","Some retailer spec sheets list the De'Longhi Dedica basket rim as 53 mm; De'Longhi's own accessories for it are sold as 51 mm, so shop by 51 mm and your exact model"]},
-    54:{who:"Most Breville and Sage home machines",yes:["54 mm tampers","54 mm dosing funnels and puck screens","Precision baskets sold specifically for Breville 54 mm"],no:["58 mm tampers will not seat correctly","51 mm tampers leave an untamped ring"]},
-    57:{who:"Lelit's own 57 mm group (Anna PL41 and its siblings)",yes:["57 mm tampers and baskets made for LELIT57 machines","Lelit's own LELIT57 barista tools","Accessories whose listing names the Anna PL41 by model"],no:["58 mm tampers and baskets will not seat correctly; one millimetre matters here","54 mm and 51 mm accessories will not fit"]},
-    58:{who:"Prosumer and commercial-style group heads",yes:["58 mm tampers, the most widely stocked size","58 mm bottomless portafilters matched to your group","58 mm distribution tools and puck screens"],no:["51 mm and 54 mm accessories will not fit","Check 58 mm vs 58.5 mm for some baskets"]}
-  };
-  var tool=document.getElementById("pfTool"),inp=tool.querySelector("#pfSearch"),res=tool.querySelector("#pfResults"),det=tool.querySelector("#pfDetail");
-  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-  function clear(el){while(el.firstChild)el.removeChild(el.firstChild)}
-  function show(i){
-    var x=M[i],f=FIT[x.s];
-    clear(res);clear(det);
-    var h='<div class="pf-card"><h3 class="h3">'+esc(x.b)+" "+esc(x.m)+'</h3><div class="pf-big">'+x.s+' mm</div><p class="pf-who">'+esc(f.who)+'</p><strong class="pf-k">What fits</strong><ul class="pf-list">';
-    for(var a=0;a<f.yes.length;a++)h+="<li>"+esc(f.yes[a])+"</li>";
-    h+='</ul><strong class="pf-k">What will not fit</strong><ul class="pf-list">';
-    for(var b=0;b<f.no.length;b++)h+="<li>"+esc(f.no[b])+"</li>";
-    h+='</ul><p class="pf-flag"><strong>Before you buy:</strong> confirm the accessory maker names your exact model. A listing that only says &ldquo;fits most machines&rdquo; is missing information, not reassurance.</p></div><button class="pf-back" type="button" id="pfBack">Check another machine</button>';
-    det.innerHTML=h;
-    det.querySelector("#pfBack").addEventListener("click",function(){inp.value="";clear(det);inp.focus();});
-    det.querySelector(".pf-card").focus&&det.querySelector(".pf-card").setAttribute("tabindex","-1");
-  }
-  function render(q){
-    clear(det);clear(res);
-    q=q.trim().toLowerCase();
-    if(!q)return;
-    var hits=[];
-    for(var i=0;i<M.length;i++){var t=(M[i].b+" "+M[i].m).toLowerCase();if(t.indexOf(q)>-1||String(M[i].s).indexOf(q)===0)hits.push(i);}
-    if(!hits.length){res.innerHTML='<p class="pf-none">No match yet. Try the model number (for example <strong>BES870</strong> or <strong>EC685</strong>) or just the brand. If your machine is not listed, look for the diameter stamped on the portafilter itself.</p>';return;}
-    for(var k=0;k<hits.length&&k<8;k++){(function(idx){var x=M[idx],btn=document.createElement("button");btn.type="button";btn.className="pf-row";btn.setAttribute("role","listitem");btn.innerHTML='<span class="pf-name">'+esc(x.m)+'<span class="pf-brand">'+esc(x.b)+'</span></span><span class="pf-size">'+x.s+' mm</span>';btn.addEventListener("click",function(){show(idx)});res.appendChild(btn);})(hits[k]);}
-  }
-  inp.addEventListener("input",function(){render(inp.value)});
-})();
-</script>
-<h2 class="h2">If your machine is not listed</h2>
-<ul>
-<li>Look for the number stamped on the portafilter or in the manual's specifications page.</li>
-<li>Measure the inside of the basket rim to rim; 51, 54, 57 and 58 mm are the common sizes.</li>
-<li>Then search accessories by your exact model number, not by &quot;universal&quot;.</li>
-</ul>
-<h2 class="h2">Next</h2>
-<ul>
-<li><a href="../guides/first-week-with-an-espresso-machine/">First week with an espresso machine</a>: accessories by risk, the first bag of beans, and the cleaning routine.</li>
-<li><a href="../guides/which-compact-espresso-setup-should-i-buy/">Which compact espresso setup should I buy?</a></li>
-</ul>
-<p class="updated">Updated September 26, 2026. Sizes verified against manufacturer pages on September 21, 2026 where available; De'Longhi and same-family Breville values follow the makers' accessory lines.</p>
+<p>The finder now sits at the top of the <strong><a href="../guides/home-espresso-setup/#look-up-your-machine">Home espresso setup guide</a></strong>: type your machine, get its portafilter size and what fits.</p>
   </main>
   <footer>
     <nav>
       <a href="../guides/">Guides</a>
-      <a href="../home-espresso/">Home espresso</a>
-      <a href="../portafilter-size-finder/">Size finder</a>
+      <a href="../guides/home-espresso-setup/">Home espresso</a>
       <a href="../about/">About</a>
       <a href="../how-we-pick/">How we pick</a>
       <a href="../privacy/">Privacy</a>
