@@ -46,7 +46,13 @@
   .collection a:hover { color: var(--accent-hi); }
   .collection p { margin: 0; font-size: var(--fs-sm); }
   .collection small { font-size: var(--fs-xs); color: var(--text-3); }
-  .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
+  .prose blockquote { margin: 0; padding: var(--sp-3) var(--sp-4); background: color-mix(in srgb, var(--clay) 12%, var(--surface)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--clay) 30%, transparent); border-radius: var(--r-sm); color: var(--blush); font-size: var(--fs-sm); }
+  .prose p a, .prose li a { text-underline-offset: 0.2em; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); transition: color var(--dur-1) var(--ease-out), text-decoration-color var(--dur-1) var(--ease-out); }
+  .prose p a:hover, .prose li a:hover { color: var(--accent-hi); text-decoration-color: var(--accent-hi); }
+  .prose a:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: 4px; }
+  .prose .jumps { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-2); margin: 0; }
+  .prose .jumps a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-3); border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--text-2); font-size: var(--fs-sm); text-decoration: none; transition: color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
+  .prose .jumps a:hover { color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMLG0Q6ETM"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());
@@ -71,7 +77,7 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
 <h1 class="h1">A simple fall skincare routine</h1>
 <p class="byline"><b>Skincare</b><span>September 26, 2026</span></p>
 <p>Heating comes on, air dries out, and the summer routine stops working. Three steps in order cover most of it. This is product information from the brands, not medical advice; a skin condition is a question for a dermatologist.</p>
-<p><a href="#step-1-cleanse-with-a-balm">Step 1: cleanse</a> · <a href="#step-2-a-hydrating-serum">Step 2: hydrate</a> · <a href="#step-3-lips-at-night">Step 3: lips</a> · <a href="#order-and-timing">Order and timing</a> · <a href="#the-picks-in-one-place">Picks</a></p>
+<nav class="jumps" aria-label="On this page"><a href="#step-1-cleanse-with-a-balm">Step 1: cleanse</a><a href="#step-2-a-hydrating-serum">Step 2: hydrate</a><a href="#step-3-lips-at-night">Step 3: lips</a><a href="#order-and-timing">Order and timing</a><a href="#the-picks-in-one-place">Picks</a></nav>
 <h2 class="h2" id="step-1-cleanse-with-a-balm">Step 1: cleanse with a balm</h2>
 <p>A cleansing balm removes makeup and sunscreen without the tight feeling a foaming cleanser can leave in dry months.</p>
 <ul>

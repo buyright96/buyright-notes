@@ -269,7 +269,7 @@ footer a { color: var(--text-2); text-decoration: none; }
 /* Touch screens: every tap target is at least 44px tall (Apple's minimum); mouse users keep the tighter sizes. */
 @media (pointer: coarse) {
   .btn-sm, .catnav a, .top .brand { min-height: 44px; }
-  footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  footer a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; }
 }
 
 /* Home intro: one line that says what the shop is (a review on Sept 24 read the home page as a demo). */
@@ -387,13 +387,13 @@ footer a { color: var(--text-2); text-decoration: none; }
 .pf-tool .pf-name { font-weight: 600; font-size: var(--fs-sm); }
 .pf-tool .pf-brand { display: block; margin-top: 2px; font-weight: 400; font-size: var(--fs-xs); color: var(--text-3); }
 .pf-tool .pf-size { font: 700 var(--fs-md)/1 var(--font-display); color: var(--accent); white-space: nowrap; }
-.pf-tool .pf-card { display: grid; gap: var(--sp-2); padding: var(--sp-4); background: var(--card); border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px var(--line); }
+.pf-tool .pf-card { display: grid; gap: var(--sp-3); padding-top: var(--sp-4); border-top: 1px solid var(--line); }
 .pf-tool .pf-card h3 { margin: 0; }
 .pf-tool .pf-big { font: 600 var(--fs-3xl)/1 var(--font-display); color: var(--accent); }
 .pf-tool .pf-who { font-size: var(--fs-sm); color: var(--text-3); }
 .pf-tool .pf-k { margin-top: var(--sp-2); font-size: var(--fs-sm); color: var(--text); }
 .pf-tool .pf-list { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: var(--fs-sm); color: var(--text-2); }
-.pf-tool .pf-flag { margin: var(--sp-2) 0 0; padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--clay); background: var(--surface); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--blush); font-size: var(--fs-sm); }
+.pf-tool .pf-flag { margin: var(--sp-1) 0 0; padding: var(--sp-3) var(--sp-4); background: color-mix(in srgb, var(--clay) 12%, var(--card)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--clay) 30%, transparent); border-radius: var(--r-sm); color: var(--blush); font-size: var(--fs-sm); }
 .pf-tool .pf-flag strong { color: var(--text); }
 .pf-tool .pf-back { justify-self: start; min-height: 44px; padding: 0 var(--sp-2); font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--accent-hi); background: none; border: 0; cursor: pointer; text-decoration: underline; }
 

@@ -96,7 +96,7 @@
 
 /* Base */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; color-scheme: dark; }
+html { -webkit-text-size-adjust: 100%; color-scheme: dark; scrollbar-color: var(--ink-600) var(--bg); caret-color: var(--accent); }
 body {
   margin: 0;
   background: var(--bg);
@@ -190,7 +190,7 @@ a { color: inherit; }
 .disclosure {
   font-size: var(--fs-xs); color: var(--text-3); line-height: 1.5;
   padding: var(--sp-3) var(--sp-4);
-  border-left: 2px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px var(--line);
   background: color-mix(in srgb, var(--surface) 70%, transparent);
 }
 

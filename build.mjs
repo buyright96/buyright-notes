@@ -219,6 +219,7 @@ function md(src) {
     else if ((m = line.match(/^\d+\. (.*)/))) { if (list !== 'ol') { flush(); out.push('<ol>'); list = 'ol'; } out.push(`<li>${inline(m[1])}</li>`); }
     else if ((m = line.match(/^> (.*)/))) { flush(); out.push(`<blockquote>${inline(m[1])}</blockquote>`); }
     else if (/^\*[^*]+\*$/.test(line)) { flush(); out.push(`<p class="updated">${inline(line.slice(1, -1))}</p>`); }
+    else if (/^(\[[^\]]+\]\(#[a-z0-9-]+\)(\s*·\s*)?)+$/.test(line)) { flush(); out.push(`<nav class="jumps" aria-label="On this page">${[...line.matchAll(/\[([^\]]+)\]\((#[a-z0-9-]+)\)/g)].map(m => `<a href="${m[2]}">${esc(m[1])}</a>`).join('')}</nav>`); }
     else { flush(); out.push(`<p>${inline(line)}</p>`); }
   }
   flush(); return out.join('\n');
