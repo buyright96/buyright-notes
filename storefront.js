@@ -320,10 +320,18 @@
     // sheet is on screen (owner's screen recording, 2026-09-24: the note opened on its bottom buttons).
     inner.scrollTop = 0;
     sheet.showModal();
+    document.documentElement.classList.add('sheet-open');
     $('sheet-title').focus({ preventScroll: true });
-    inner.scrollTop = 0;
-    requestAnimationFrame(() => { inner.scrollTop = 0; requestAnimationFrame(() => { inner.scrollTop = 0; }); });
+    // Slide up from the script: a CSS animation on the freshly shown panel sometimes never started on iPhone Safari, which
+    // left the panel below the screen (nothing visible) until the next scroll nudged it. fill: none, so nothing can stick.
+    inner.style.transform = '';
+    if (!reduceMotion && inner.animate) inner.animate([{ transform: 'translateY(100%)' }, { transform: 'none' }], { duration: 420, easing: getComputedStyle(document.documentElement).getPropertyValue('--ease-drawer').trim() || 'cubic-bezier(.2,.8,.2,1)', fill: 'none' });
+    // Hold both scroll positions at the top while the sheet settles (Safari scrolls a dialog toward whatever it focuses).
+    const t0 = performance.now();
+    const hold = () => { inner.scrollTop = 0; sheet.scrollTop = 0; if (performance.now() - t0 < 500) requestAnimationFrame(hold); };
+    hold();
   }
+  sheet.addEventListener('close', () => document.documentElement.classList.remove('sheet-open'));
   // Every close slides the sheet back down to the edge it came from, then closes the dialog.
   const inner = sheet.querySelector('.sheet-inner');
   function closeSheet() {

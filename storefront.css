@@ -245,13 +245,15 @@ dialog.sheet::backdrop { background: rgba(10, 7, 5, 0.6); backdrop-filter: blur(
 .sheet-inner .close { justify-self: end; }
 /* The sheet comes from the bottom edge and goes back there; the panel stays solid, only the backdrop fades. */
 @media (prefers-reduced-motion: no-preference) {
-  dialog.sheet[open] .sheet-inner { animation: sheet-up 420ms var(--ease-drawer) both; }
+  /* The slide-up runs from the script (Web Animations) since iPhone Safari sometimes never started the CSS version on a
+     freshly opened dialog, leaving the panel parked below the screen until the next scroll (owner, Sept 27). */
   dialog.sheet[open]::backdrop { animation: fade-in 300ms var(--ease-out) both; }
   dialog.sheet.closing .sheet-inner { animation: sheet-down 240ms var(--ease-drawer) both; }
   dialog.sheet.closing::backdrop { animation: fade-out 200ms ease-out both; }
 }
 @media (prefers-reduced-motion: reduce) { dialog.sheet[open] .sheet-inner { animation: fade-in 150ms ease-out both; } }
-@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+/* While the sheet is open the page behind it must not scroll: on phones a finger on the sheet otherwise moved the page. */
+html.sheet-open, html.sheet-open body { overflow: hidden; overscroll-behavior: none; }
 @keyframes sheet-down { from { transform: none; } to { transform: translateY(100%); } }
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes fade-out { to { opacity: 0; } }
