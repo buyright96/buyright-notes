@@ -1,6 +1,6 @@
 ---
 title: How we pick
-description: How BuyRight Notes chooses what goes in the shop and what stays out.
+description: How BuyRight Notes chooses what goes in the shop and what stays out: the evidence we check, the specs we verify, and the reasons a product gets skipped.
 ---
 # How we pick
 

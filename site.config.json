@@ -21,12 +21,15 @@
   "home_title": "BuyRight Notes · Researched picks for a cozy home",
   "home_description": "Short, researched notes on home products: who each pick is for, what to check first, and who should skip it, with one link to Amazon.",
   "collection_titles": {
-    "guides": "Home espresso guides · BuyRight Notes"
+    "guides": "Buying guides for a cozy home · BuyRight Notes"
   },
   "collection_descriptions": {
-    "guides": "Three short guides to a first home espresso setup: whether it fits your kitchen, which compact machine and grinder to buy, and what to have ready for the first week."
+    "guides": "Six short buying guides, each saying who a pick is for, what to check first and who should skip it: home espresso, fall baking, holiday hosting, pet-proof floors, a reading nook, fall skincare."
+  },
+  "collection_intros": {
+    "guides": "Each guide is one page in the order the decisions happen: what to measure or check first, which pick fits which home, what to skip, and the few things worth buying after. Written from manufacturer specifications and product listings, not hands-on testing, with our picks at the end."
   },
   "collection_share_images": {
-    "guides": "assets/fit-guide-three-specs.jpg"
+    "guides": "assets/kitchenaid-artisan-stand-mixer.jpg"
   }
 }

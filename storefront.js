@@ -29,7 +29,7 @@
   }
 
   let data;
-  try { data = await load(); } catch (e) { $('hero-title').textContent = 'The store is being restocked.'; return; }
+  try { data = await load(); } catch (e) { const w = $('hero-why'); if (w) w.textContent = 'The shelf is being restocked; the notes below are still good.'; return; }
   const site = data.site || {};
   const sample = data._source.endsWith('sample.json');
   const previewNote = $('preview-note'); if (previewNote) previewNote.hidden = !(sample || preview); // only sample builds carry it
@@ -59,7 +59,7 @@
   function media(p, cls) {
     const el = document.createElement('div'); el.className = cls;
     if (p.card_image) {
-      const img = new Image(); img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; img.draggable = false; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img);
+      const img = new Image(); img.width = 1024; img.height = 1280; img.src = imgSrc(p.card_image); img.alt = p.image_alt || ''; img.loading = cls.startsWith('hero') ? 'eager' : 'lazy'; img.decoding = 'async'; img.draggable = false; if (cls.startsWith('hero')) img.fetchPriority = 'high'; el.appendChild(img);
     }
     else { const t = document.createElement('div'); t.className = 'tint'; if (p.tint) t.style.setProperty('--tint', p.tint); el.appendChild(t); }
     return el;
@@ -109,6 +109,10 @@
   // It steps aside while a wheel's own buttons pass through the strip of screen it covers (on a 375 px phone the wheel's
   // Buy and "Why we picked it" sat half under it; caught by 01_WORKSPACE/tools/storefront_mobile_check.mjs).
   const bar = $('buybar'); $('buybar-name').textContent = hero.title; const bc = $('buybar-cta'); setBuy(bc, hero, 'sticky_bar'); bc.textContent = 'Buy on Amazon';
+  // Fold the category bar on scroll-down, unfold on scroll-up or near the top (CSS applies it on phones only).
+  { const top = document.querySelector('header.top'); let last = window.scrollY, slim = false, tick = false;
+    const onScroll = () => { const y = window.scrollY; if (y < 80) slim = false; else if (y > last + 8) slim = true; else if (y < last - 8) slim = false; last = y; top.classList.toggle('slim', slim); tick = false; };
+    if (top) window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true }); }
   const setBar = (show) => { bar.classList.toggle('show', show); bar.toggleAttribute('inert', !show); bar.setAttribute('aria-hidden', String(!show)); };
   let watchUnderBar = () => {};
   if ('IntersectionObserver' in window) {
@@ -136,7 +140,9 @@
   let wheelCats = categories;
   if (!onHome) {
     const own = categories.find(r => r.id === hero.category && r.items.length > 1) || categories.find(r => r.id !== 'hot_deals' && r.items.length > 1);
-    wheelCats = [own, categories.find(r => r.id === 'hot_deals')].filter((r, i, a) => r && a.indexOf(r) === i);
+    const sib = hero.guide_url ? products.filter(p => p.guide_url === hero.guide_url && p.product_id !== hero.product_id) : [];
+    const second = sib.length ? { id: 'same_guide', label: 'From the same guide', items: sib } : categories.find(r => r.id === 'hot_deals');
+    wheelCats = [own, second].filter((r, i, a) => r && a.indexOf(r) === i);
   }
   // The first-view spin plays once, when a wheel is a third on screen (not at load, when wheels sit below the fold).
   const spinIO = 'IntersectionObserver' in window ? new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { spinIO.unobserve(e.target); e.target._spin(); } }, { threshold: 0.35 }) : null;

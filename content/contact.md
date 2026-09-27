@@ -1,6 +1,6 @@
 ---
 title: Contact
-description: How to reach BuyRight Notes with a correction, a question, or a problem with the site.
+description: How to reach BuyRight Notes with a correction, a question about a pick, or a problem with the site, and how quickly we answer.
 ---
 # Contact BuyRight Notes
 

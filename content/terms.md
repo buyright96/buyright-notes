@@ -1,6 +1,6 @@
 ---
 title: Terms of use
-description: The terms for using the BuyRight Notes shop and guides.
+description: The terms for using the BuyRight Notes shop and guides: what the site is, how affiliate links work, what we do not promise, and how to reach us.
 ---
 # Terms of use
 

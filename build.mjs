@@ -75,8 +75,9 @@ function jsonld(obj) { return `<script type="application/ld+json">${JSON.stringi
 const pins = fs.existsSync(path.join(root, 'data/pins.json')) ? JSON.parse(rd('data/pins.json')) : {};
 // Article, not Product: we cannot show prices, Pinterest product Rich Pins exclude affiliates, and product markup
 // would override the article Rich Pin (01_WORKSPACE skill references/pinterest-seo.md).
-const org = { '@type': 'Organization', name: cfg.name, url: base ? `${base}/` : undefined };
-const articleLd = (p, url, headline) => ({ '@context': 'https://schema.org', '@type': 'Article', headline, description: p.reason_to_buy, image: [p.card_image, pins[p.product_id]?.image].filter(Boolean).map(abs), url, author: org, publisher: org });
+const org = { '@type': 'Organization', name: cfg.name, url: base ? `${base}/` : undefined, logo: { '@type': 'ImageObject', url: abs('brand/favicon.svg') } };
+const crumbs = (items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })) });
+const articleLd = (p, url, headline) => [{ '@context': 'https://schema.org', '@type': 'Article', headline: p.title, alternativeHeadline: headline !== p.title ? headline : undefined, description: p.reason_to_buy, image: [p.card_image, pins[p.product_id]?.image].filter(Boolean).map(abs), url, mainEntityOfPage: url, datePublished: p.last_offer_check || undefined, dateModified: p.last_offer_check || undefined, author: org, publisher: org, about: { '@type': 'Product', name: p.title, image: p.card_image ? abs(p.card_image) : undefined, sku: p.asin || undefined, brand: p.brand ? { '@type': 'Brand', name: p.brand } : undefined } }, crumbs([[cfg.name, base ? `${base}/` : undefined], ...(p.guide_url ? [['Guide', p.guide_url]] : []), [p.title, url]])];
 const pinFigure = (p, rootPrefix) => {
   const pin = p && pins[p.product_id];
   return pin && !pin.same_as_card ? `    <figure class="inuse" id="inuse">
@@ -90,7 +91,7 @@ const storeTpl = rd('templates/store.html');
 // Hero text and photo are pre-rendered so nothing moves when storefront.js fills the page (no layout shift under the Buy button).
 const reelLabel = (id) => (data.reels || []).find(r => r.id === id)?.label || id;
 // data-pin-media: the Pinterest Save button offers the tall 2:3 Pin image instead of the 4:5 card.
-const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(saveDescription(pins[p.product_id]))}"` : ''}>` : '';
+const heroMedia = (p, rootPrefix) => p && p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" width="1024" height="1280" fetchpriority="high" decoding="async"${pins[p.product_id] ? ` data-pin-media="${esc(abs(pins[p.product_id].image))}" data-pin-description="${esc(saveDescription(pins[p.product_id]))}"` : ''}>` : '';
 // "Why we picked it", pre-rendered so a product page shows its notes open with nothing moving when storefront.js runs.
 // Mirrors fillDetail in storefront.js: reason lines, "+ " highlights, "Label: value" facts, and the "Skip it if" line.
 const SPEC_LABELS = new Set(['Size', 'Weight', 'Fits', 'Works with', 'Capacity', 'Includes', 'Tank', 'Power', 'Battery', 'Screen', 'Runtime', 'Care', 'Hopper', 'Pitcher', 'Bowl', 'Connects', 'Cord', 'Hose', 'Burrs', 'Colors', 'Formula', 'Skin', 'Brews', 'Speeds', 'Pressure', 'Cleanup', 'Oven', 'Sounds', 'Storage']);
@@ -113,7 +114,10 @@ const categories = (data.reels || []).map(r => ({ ...r, items: buildable.filter(
 const pageCats = (hero, isHome) => {
   if (isHome) return categories;
   const own = categories.find(r => r.id === hero.category && r.items.length > 1) || categories.find(r => r.id !== 'hot_deals' && r.items.length > 1);
-  return [own, categories.find(r => r.id === 'hot_deals')].filter((r, i, a) => r && a.indexOf(r) === i);
+  // Second wheel: the other picks from this product's guide (topical links beat a repeated deals shelf); Hot deals only when there are none.
+  const sib = hero.guide_url ? buildable.filter(p => p.guide_url === hero.guide_url && p.product_id !== hero.product_id) : [];
+  const second = sib.length ? { id: 'same_guide', label: 'From the same guide', items: sib } : categories.find(r => r.id === 'hot_deals');
+  return [own, second].filter((r, i, a) => r && a.indexOf(r) === i);
 };
 const catnav = (hero, isHome, rootPrefix) => {
   const here = new Set(pageCats(hero, isHome).map(c => c.id));
@@ -122,9 +126,9 @@ const catnav = (hero, isHome, rootPrefix) => {
 };
 const staticShelves = (hero, isHome, rootPrefix) => pageCats(hero, isHome).map(c => `<section class="shelf static" id="${c.id}" aria-labelledby="shelf-${c.id}">
   <div class="shelf-head"><h2 class="h2" id="shelf-${c.id}">${esc(c.label)}</h2></div>
-  <ul class="picks">${c.items.map(p => `<li><a href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b>${p.reason_to_buy ? `<span>${esc(p.reason_to_buy)}</span>` : ''}</a></li>`).join('')}</ul>
+  <ul class="picks">${c.items.map(p => `<li><a href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" width="1024" height="1280" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b>${p.reason_to_buy ? `<span>${esc(p.reason_to_buy)}</span>` : ''}</a></li>`).join('')}</ul>
 </section>`).join('\n');
-const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.items.find(p => p.product_id !== hero.product_id) || c.items[0]; return `<a class="tile" href="${rootPrefix}./#${c.id}"${c.id === hero.category ? ' aria-current="true"' : ''}><span class="card-media">${pic.card_image ? `<img src="${esc(rootPrefix + pic.card_image)}" alt="${esc(pic.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(c.label)}</b><span>${c.items.length} ${c.items.length === 1 ? 'pick' : 'picks'}</span></a>`; }).join('');
+const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.items.find(p => p.product_id !== hero.product_id) || c.items[0]; return `<a class="tile" href="${rootPrefix}./#${c.id}"${c.id === hero.category ? ' aria-current="true"' : ''}><span class="card-media">${pic.card_image ? `<img src="${esc(rootPrefix + pic.card_image)}" alt="${esc(pic.image_alt || '')}" width="1024" height="1280" loading="lazy" decoding="async">` : ''}</span><b>${esc(c.label)}</b><span>${c.items.length} ${c.items.length === 1 ? 'pick' : 'picks'}</span></a>`; }).join('');
 const pageTpl = rd('templates/page.html');
 // ---------- shared header and footer (templates/partials), so a nav change is one edit for every page ----------
 const partials = { header: rd('templates/partials/header.html'), footer: rd('templates/partials/footer.html') };
@@ -158,14 +162,14 @@ const featuredRow = (rootPrefix) => {
   const label = id => (categories.find(c => c.id === id) || {}).label || '';
   return `    <section class="featured" aria-labelledby="featured-h">
       <div class="row-head"><h2 class="h2" id="featured-h">Featured picks</h2><span class="row-note">Chosen by us this week</span></div>
-      <div class="tiles">${picks.map(p => `<a class="tile" href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b><span>${esc(label(p.category))}</span></a>`).join('')}</div>
+      <div class="tiles">${picks.map(p => `<a class="tile" href="${rootPrefix}p/${p.product_id}/"><span class="card-media">${p.card_image ? `<img src="${esc(rootPrefix + p.card_image)}" alt="${esc(p.image_alt || '')}" width="1024" height="1280" loading="lazy" decoding="async">` : ''}</span><b>${esc(p.title)}</b><span>${esc(label(p.category))}</span></a>`).join('')}</div>
     </section>`;
 };
 const FOOTER_LINE = "Prices and availability change. We link you to Amazon to see today's.";
 // Home page row of guides: the newest four, as text tiles, with a link to the whole collection.
 const guidesRow = (rootPrefix) => guides.filter(g => !g.front.merged_into).length ? `    <section class="guides-row" aria-labelledby="guides-h">
       <div class="row-head"><h2 class="h2" id="guides-h">Guides</h2><a class="btn btn-ghost btn-sm" href="${rootPrefix}guides/">All guides</a></div>
-      <div class="guide-tiles">${guides.filter(g => !g.front.merged_into).slice(0, 4).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
+      <div class="guide-tiles">${guides.filter(g => !g.front.merged_into).slice(0, 6).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
     </section>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   const isHome = !heroId;
@@ -175,13 +179,16 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
     .replace('{{HERO_DETAIL}}', hero ? renderDetail(hero.detail) : '')
+    .replace('{{HERO_CHECKS}}', heroId && hero && hero.page_notes ? `<div class="checks"><h3 class="h3">Before you buy</h3><ul>${hero.page_notes.checks.map(c => `<li>${esc(c)}</li>`).join('')}</ul>${hero.page_notes.fit ? `<p class="fitline"><b>Fits:</b> ${esc(hero.page_notes.fit)}</p>` : ''}${hero.page_notes.not_fit ? `<p class="fitline"><b>Not for:</b> ${esc(hero.page_notes.not_fit)}</p>` : ''}</div>` : '')
     .replace('{{CATNAV}}', hero ? catnav(hero, isHome, rootPrefix) : '')
     .replace('{{SHELVES}}', hero ? staticShelves(hero, isHome, rootPrefix) : '')
     .replace('{{CATGRID_HIDDEN}}', isHome ? ' hidden' : '')
     .replace('{{CATGRID}}', hero && !isHome ? staticTiles(hero, rootPrefix) : '')
     .replace('{{DISCLOSURE}}', esc(site.disclosure || 'As an Amazon Associate we earn from qualifying purchases.'))
     .replace('{{PREVIEW_NOTE}}', dataFile.endsWith('sample.json') ? '\n  <p class="preview-note" id="preview-note">Preview with sample products</p>\n' : '')
-    .replace('{{HOME_INTRO}}', isHome ? `\n  <p class="intro">Research before you buy. Every pick here says who it is for, what to check first, and who should skip it.</p>\n` : '')
+    .replace('{{HOME_INTRO}}', isHome ? `\n  <h1 class="intro">Research before you buy. Every pick here says who it is for, what to check first, and who should skip it.</h1>\n` : '')
+    .replaceAll('{{HERO_TAG}}', isHome ? 'h2' : 'h1')
+    .replace('{{GUIDE_LINE_HIDDEN}}', heroGuideUrl && heroGuideUrl !== '#' ? '' : ' hidden')
     .replace('<!--ANALYTICS-->', analytics)
     .replace('{{GUIDES_ROW}}', isHome ? guidesRow(rootPrefix) : '')
     .replace('{{HERO_ID}}', heroId || (hero ? hero.product_id : ''))
@@ -197,7 +204,7 @@ const homeDesc = cfg.home_description || cfg.tagline || site.disclosure || '';
 const homeTitle = cfg.home_title || cfg.name;
 // Home features the newest pick (the last hero-eligible row), so it changes every time a product launches.
 const homeHero = [...buildable].reverse().find(p => p.hero_eligible) || buildable[buildable.length - 1];
-written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: homeTitle, description: homeDesc, url: base ? `${base}/` : '', heroBuyUrl: buyUrl(homeHero), heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } })));
+written.push(wr('index.html', storePage({ rootPrefix: '', heroId: '', title: homeTitle, description: homeDesc, url: base ? `${base}/` : '', image: homeHero?.card_image, heroBuyUrl: buyUrl(homeHero), heroGuideUrl: homeHero?.guide_url, hero: homeHero, ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: cfg.name, url: base ? `${base}/` : undefined, description: homeDesc, publisher: org }, { '@context': 'https://schema.org', ...org, sameAs: [site.blog_url].filter(Boolean), email: cfg.contact_email || undefined }, { '@context': 'https://schema.org', '@type': 'ItemList', name: cfg.name, itemListElement: buildable.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: abs(`p/${p.product_id}/`) })) } ] })));
 for (const p of buildable) {
   const url = abs(`p/${p.product_id}/`);
   // The page title repeats the Pin title when there is one, so the Pin and its landing page say the same thing.
@@ -251,9 +258,9 @@ for (const [coll, items] of Object.entries(collections)) {
     const hasAmazon = /amazon\.com/.test(it.body);
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
     const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
-    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', datePublished: it.front.date || undefined, author: { '@type': 'Organization', name: cfg.name }, publisher: { '@type': 'Organization', name: cfg.name }, mainEntityOfPage: base ? url : undefined };
+    const ld = it.front.merged_into ? null : [{ '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', image: abs(it.front.image || (cfg.collection_share_images || {})[coll] || cfg.default_share_image), datePublished: it.front.date || undefined, dateModified: it.front.updated || it.front.date || undefined, url: base ? url : undefined, mainEntityOfPage: base ? url : undefined, author: org, publisher: org }, crumbs([[cfg.name, base ? `${base}/` : undefined], [coll[0].toUpperCase() + coll.slice(1), abs(`${coll}/`)], [it.front.title, url]])];
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
-      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? (it.front.merged_into ? abs(`${coll}/${it.front.merged_into}/`) : url) : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: jsonld(ld) + (it.front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : '') }))
+      .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? (it.front.merged_into ? abs(`${coll}/${it.front.merged_into}/`) : url) : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: (ld ? jsonld(ld) : '') + (it.front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : '') }))
       .replace('<!--ANALYTICS-->', analytics)
       .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: coll })));
   }
@@ -261,17 +268,20 @@ for (const [coll, items] of Object.entries(collections)) {
   const listed = items.filter(i => !i.front.merged_into);
   const groups = [...new Set(listed.map(i => i.front.cluster || ''))];
   const card = (i) => `<article class="guide-card"><h2><a href="${i.slug}/">${esc(i.front.card_title || i.front.title)}</a></h2><p>${esc(i.front.card_line || i.front.description || '')}</p><p class="actions"><a class="btn btn-primary btn-sm" href="${i.slug}/">Read the guide</a>${i.front.tool_anchor ? `<a class="btn btn-ghost btn-sm" href="${i.slug}/#${i.front.tool_anchor}">${esc(i.front.tool_label || 'Open the tool')}</a>` : ''}</p></article>`;
-  const list = groups.map(g => `${g && groups.length > 1 ? `<h2 class="h2">${esc(g)}</h2>` : ''}${listed.filter(i => (i.front.cluster || '') === g).map(card).join('')}`).join('\n');
+  const grouped = groups.some(g => listed.filter(i => (i.front.cluster || '') === g).length > 1);
+  const list = groups.map(g => `${g && grouped ? `<h2 class="h2">${esc(g)}</h2>` : ''}${listed.filter(i => (i.front.cluster || '') === g).map(card).join('')}`).join('\n');
+  const hubLd = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: (cfg.collection_titles || {})[coll] || label, url: abs(`${coll}/`), publisher: org, mainEntity: { '@type': 'ItemList', itemListElement: listed.map((i, n) => ({ '@type': 'ListItem', position: n + 1, name: i.front.title, url: abs(`${coll}/${i.slug}/`) })) } }, crumbs([[cfg.name, base ? `${base}/` : undefined], [label, abs(`${coll}/`)]])];
+  const hubIntro = (cfg.collection_intros || {})[coll] ? `<p>${esc(cfg.collection_intros[coll])}</p>` : '';
   written.push(wr(`${coll}/index.html`, frame(pageTpl
-    .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] }))
+    .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] , extra: jsonld(hubLd) }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1>\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1>${hubIntro}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------
 written.push(wr('404.html', frame(pageTpl
   .replace('<!--META-->', meta({ title: `Not found · ${cfg.name}`, description: 'That page is not on the shelf.' }) + '\n<meta name="robots" content="noindex">')
-  .replace('<!--ANALYTICS-->', analytics), { rootPrefix: '/', nav: '', footerLine: FOOTER_LINE })
+  .replace('<!--ANALYTICS-->', analytics), { rootPrefix: base ? new URL(base + '/').pathname : '/', nav: '', footerLine: FOOTER_LINE })
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));

@@ -31,6 +31,17 @@ body { min-height: 100%; }
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .catnav::-webkit-scrollbar { display: none; }
+/* Phones: the category bar folds away while reading (scroll down) and returns on scroll up or near the top, so the
+   sticky header drops from ~117px to the 56px brand row. Keyboard focus inside the bar keeps it open. */
+@media (max-width: 719px) {
+  /* Owner (Sept 27): text showed through the translucent bar while scrolling. Near-opaque on phones, and a solid strip
+     under the status bar so nothing scrolls "above" the header. */
+  .top { background: color-mix(in srgb, var(--ink-950) 94%, transparent); }
+  .top::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: env(safe-area-inset-top, 0px); background: var(--ink-950); }
+  .catnav { max-height: 56px; transition: max-height var(--dur-2) var(--ease-out), opacity var(--dur-1) var(--ease-out), margin-top var(--dur-2) var(--ease-out); }
+  .top.slim:not(:focus-within) .catnav { max-height: 0; opacity: 0; margin-top: -6px; padding-top: 0; padding-bottom: 0; overflow: hidden; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .catnav { transition: none; } }
+}
 .catnav:empty { display: none; }
 .catnav a {
   flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
@@ -183,7 +194,7 @@ summary:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px
 .buybar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
   display: flex; justify-content: center;
-  padding: 10px var(--gutter) calc(12px + env(safe-area-inset-bottom, 0px));
+  padding: 6px var(--gutter) calc(8px + env(safe-area-inset-bottom, 0px));
   transform: translateY(110%); transition: transform 240ms var(--ease-out);
   pointer-events: none;
 }
@@ -418,3 +429,10 @@ footer a { color: var(--text-2); text-decoration: none; }
 .pf-tool .pf-row2 b { color: var(--text); }
 .pf-tool .pf-row2 a, .pf-tool .pf-flag a { color: var(--accent-hi); }
 @media (min-width: 720px) { .pf-tool .pf-pick { grid-template-columns: 1fr 1fr; } }
+
+/* "Before you buy" on product pages: three checks, then who it fits and who it does not. */
+.checks { display: grid; gap: var(--sp-2); margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--line); }
+.checks h3 { margin: 0; font-size: var(--fs-md); }
+.checks ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--text-2); font-size: var(--fs-sm); }
+.checks .fitline { margin: 0; font-size: var(--fs-sm); color: var(--text-2); }
+.checks .fitline b { color: var(--text); font-weight: 600; }
