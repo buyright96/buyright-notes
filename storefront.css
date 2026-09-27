@@ -470,6 +470,11 @@ footer a { color: var(--text-2); text-decoration: none; }
 .ff .ff-kit b { color: var(--text); font-weight: 600; }
 .ff .ff-kit a, .ff .ff-flag a { color: var(--accent-hi); }
 .ff .ff-flag { margin: 0; padding: var(--sp-3) var(--sp-4); border-radius: var(--r-sm); background: color-mix(in srgb, var(--clay) 12%, var(--card)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--clay) 30%, transparent); font-size: var(--fs-sm); color: var(--text); }
+.ff .ff-sits { display: grid; gap: 6px; margin: 0; padding: var(--sp-3) var(--sp-4); border-radius: var(--r-sm); background: color-mix(in srgb, var(--clay) 12%, var(--card)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--clay) 30%, transparent); }
+.ff .ff-sits p { margin: 0; font-size: var(--fs-sm); color: var(--text); }
+.ff .ff-sits .ff-sits-h { font: 600 var(--fs-xs)/1 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-hi); margin-bottom: 2px; }
+.ff .ff-opts-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ff .ff-place { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-strong); font: 600 var(--fs-xs)/1.6 var(--font-ui); color: var(--text-3); white-space: nowrap; vertical-align: middle; }
 .ff .ff-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
 .ff .ff-foot { margin: 0; padding-top: var(--sp-3); border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--text-3); }
 @media (min-width: 720px) {

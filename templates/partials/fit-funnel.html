@@ -12,10 +12,9 @@
     </fieldset>
     <fieldset class="ff-q" data-q="cab">
       <legend class="ff-label">Cabinets above it</legend>
-      <div class="ff-opts" role="group">
+      <div class="ff-opts ff-opts-2" role="group">
         <button type="button" class="ff-opt" data-v="tight">Tight<small>under 15 in</small></button>
-        <button type="button" class="ff-opt" data-v="normal" aria-pressed="true">Normal<small>15 to 18 in</small></button>
-        <button type="button" class="ff-opt" data-v="open">None<small>open counter</small></button>
+        <button type="button" class="ff-opt" data-v="room" aria-pressed="true">Room above<small>15 in or open</small></button>
       </div>
     </fieldset>
     <fieldset class="ff-q" data-q="want">
@@ -32,16 +31,16 @@
 
     <article class="ff-result" data-outcome="fast" hidden>
       <figure class="ff-photo"><img src="{{IMG:KEURIG-KCLASSIC}}" alt="{{ALT:KEURIG-KCLASSIC}}" width="1024" height="1280" loading="lazy"></figure>
-      <p class="ff-eyebrow">Fits your kitchen</p>
+      <p class="ff-eyebrow" data-eyebrow>Fits your kitchen</p>
       <h3 class="ff-name">{{TITLE:KEURIG-KCLASSIC}}</h3>
       <p class="ff-why">One button, one mug, no grinder and nothing to measure. For a weekday kitchen that wants hot coffee in a minute, this is the setup that gets used every single day.</p>
-      <p class="ff-flag" data-flag hidden></p>
+      <div class="ff-sits" data-sits></div>
       <h4 class="ff-h4">Check these before you order</h4>
       <ul class="ff-checks">{{CHECKS:KEURIG-KCLASSIC}}</ul>
       <h4 class="ff-h4">The kit</h4>
       <ul class="ff-kit">
-        <li><b>{{TITLE:KEURIG-KCLASSIC}}</b>: the whole setup; pods are the only supply.</li>
-        <li>Prefer no machine at all? The <a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a> makes a clean pot with a kettle and paper filters.</li>
+        <li data-item="machine"><b>{{TITLE:KEURIG-KCLASSIC}}</b>: the whole setup; pods are the only supply.</li>
+        <li data-item="pot" data-optional>Prefer no machine at all? The <a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a> makes a clean pot with a kettle and paper filters.</li>
       </ul>
       <div class="ff-actions">
         <a class="btn btn-primary" href="{{BUY:KEURIG-KCLASSIC}}" data-asin="{{ASIN:KEURIG-KCLASSIC}}" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
@@ -51,16 +50,16 @@
 
     <article class="ff-result" data-outcome="espresso-bambino" hidden>
       <figure class="ff-photo"><img src="{{IMG:BAMBINO-54}}" alt="{{ALT:BAMBINO-54}}" width="1024" height="1280" loading="lazy"></figure>
-      <p class="ff-eyebrow">Fits your kitchen</p>
+      <p class="ff-eyebrow" data-eyebrow>Fits your kitchen</p>
       <h3 class="ff-name">{{TITLE:BAMBINO-54}}</h3>
       <p class="ff-why">Cafe-style espresso and steamed milk from a machine 6.3 inches wide that is hot in about three seconds. It is the small-kitchen pick because it does the two things a latte needs and nothing that eats counter.</p>
-      <p class="ff-flag" data-flag hidden></p>
+      <div class="ff-sits" data-sits></div>
       <h4 class="ff-h4">Check these before you order</h4>
       <ul class="ff-checks">{{CHECKS:BAMBINO-54}}</ul>
       <h4 class="ff-h4">The kit</h4>
       <ul class="ff-kit">
-        <li><b>{{TITLE:BAMBINO-54}}</b>: the machine, with a tamper, a milk jug and both basket types in the box.</li>
-        <li><a href="{{NOTE:ENCORE-ESP}}">Baratza Encore ESP</a>: the grinder with a real espresso range. Start on pre-ground with the pressurized basket if you like; add this when you want to dial in a shot.</li>
+        <li data-item="machine"><b>{{TITLE:BAMBINO-54}}</b>: the machine, with a tamper, a milk jug and both basket types in the box.</li>
+        <li data-item="grinder"><a href="{{NOTE:ENCORE-ESP}}">Baratza Encore ESP</a>: the grinder with a real espresso range. Start on pre-ground with the pressurized basket if you like; add this when you want to dial in a shot.</li>
         <li>A small bag of coffee you can finish in two weeks. Chocolate and nut notes are the easy start for milk drinks.</li>
       </ul>
       <div class="ff-actions">
@@ -71,16 +70,16 @@
 
     <article class="ff-result" data-outcome="espresso-casabrews" hidden>
       <figure class="ff-photo"><img src="{{IMG:CASABREWS-51}}" alt="{{ALT:CASABREWS-51}}" width="1024" height="1280" loading="lazy"></figure>
-      <p class="ff-eyebrow">Fits your corner</p>
+      <p class="ff-eyebrow" data-eyebrow>Fits your corner</p>
       <h3 class="ff-name">{{TITLE:CASABREWS-51}}</h3>
       <p class="ff-why">The narrowest espresso machine we list, 5.5 inches wide, with a steam wand for milk and a starter price. When the only free spot is a corner, this is the one that actually fits there.</p>
-      <p class="ff-flag" data-flag hidden></p>
+      <div class="ff-sits" data-sits></div>
       <h4 class="ff-h4">Check these before you order</h4>
       <ul class="ff-checks">{{CHECKS:CASABREWS-51}}</ul>
       <h4 class="ff-h4">The kit</h4>
       <ul class="ff-kit">
-        <li><b>{{TITLE:CASABREWS-51}}</b>: pressurized baskets in the box, so pre-ground espresso works on day one.</li>
-        <li><a href="{{NOTE:ENCORE-ESP}}">Baratza Encore ESP</a> when you want fresh beans; hold the dosing cup under the chute for a 51 mm basket.</li>
+        <li data-item="machine"><b>{{TITLE:CASABREWS-51}}</b>: pressurized baskets in the box, so pre-ground espresso works on day one.</li>
+        <li data-item="grinder"><a href="{{NOTE:ENCORE-ESP}}">Baratza Encore ESP</a> when you want fresh beans; hold the dosing cup under the chute for a 51 mm basket.</li>
         <li>Accessories by model name only: search "CM5418", never "universal".</li>
       </ul>
       <div class="ff-actions">
@@ -91,17 +90,17 @@
 
     <article class="ff-result" data-outcome="bar-bambino" hidden>
       <figure class="ff-photo"><img src="{{IMG:ENCORE-ESP}}" alt="{{ALT:ENCORE-ESP}}" width="1024" height="1280" loading="lazy"></figure>
-      <p class="ff-eyebrow">Your home bar</p>
+      <p class="ff-eyebrow" data-eyebrow>Your home bar</p>
       <h3 class="ff-name">Bambino + Encore ESP, plus a pot for slow mornings</h3>
       <p class="ff-why">The full bar in about 18 inches: a compact espresso machine, a quiet grinder that covers espresso and filter coffee on one dial, and a glass pour-over for the mornings that want a whole pot instead of a shot.</p>
-      <p class="ff-flag" data-flag hidden></p>
+      <div class="ff-sits" data-sits></div>
       <h4 class="ff-h4">Check these before you order</h4>
       <ul class="ff-checks">{{CHECKS:ENCORE-ESP}}</ul>
       <h4 class="ff-h4">The kit</h4>
       <ul class="ff-kit">
-        <li><a href="{{NOTE:BAMBINO-54}}">{{TITLE:BAMBINO-54}}</a>: the machine; 54 mm accessories are easy to find.</li>
-        <li><b>{{TITLE:ENCORE-ESP}}</b>: settings 1 to 20 for espresso, 21 to 40 for the pot, 13.4 inches tall with the hopper on.</li>
-        <li><a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a>: 40 ounces of clean coffee from the same beans; order a box of Chemex filters with it.</li>
+        <li data-item="machine"><a href="{{NOTE:BAMBINO-54}}">{{TITLE:BAMBINO-54}}</a>: the machine; 54 mm accessories are easy to find.</li>
+        <li data-item="grinder"><b>{{TITLE:ENCORE-ESP}}</b>: settings 1 to 20 for espresso, 21 to 40 for the pot, 13.4 inches tall with the hopper on.</li>
+        <li data-item="pot"><a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a>: 40 ounces of clean coffee from the same beans; order a box of Chemex filters with it.</li>
       </ul>
       <div class="ff-actions">
         <a class="btn btn-primary" href="{{BUY:ENCORE-ESP}}" data-asin="{{ASIN:ENCORE-ESP}}" rel="sponsored noopener" target="_blank">Buy the grinder on Amazon</a>
@@ -111,17 +110,17 @@
 
     <article class="ff-result" data-outcome="bar-casabrews" hidden>
       <figure class="ff-photo"><img src="{{IMG:CASABREWS-51}}" alt="{{ALT:CASABREWS-51}}" width="1024" height="1280" loading="lazy"></figure>
-      <p class="ff-eyebrow">Your home bar, corner edition</p>
+      <p class="ff-eyebrow" data-eyebrow>Your home bar, corner edition</p>
       <h3 class="ff-name">CASABREWS + Encore ESP, grinder on a shelf</h3>
       <p class="ff-why">A full bar does not need a full counter. Put the 5.5-inch machine in the corner, the grinder on a shelf or the other side of the sink, and the Chemex in the cupboard until the weekend.</p>
-      <p class="ff-flag" data-flag hidden></p>
+      <div class="ff-sits" data-sits></div>
       <h4 class="ff-h4">Check these before you order</h4>
       <ul class="ff-checks">{{CHECKS:CASABREWS-51}}</ul>
       <h4 class="ff-h4">The kit</h4>
       <ul class="ff-kit">
-        <li><b>{{TITLE:CASABREWS-51}}</b>: the machine; buy accessories by the model name CM5418.</li>
-        <li><a href="{{NOTE:ENCORE-ESP}}">{{TITLE:ENCORE-ESP}}</a>: one grinder for the shot and the pot; it does not have to sit next to the machine.</li>
-        <li><a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a> for the slow mornings, with its own paper filters.</li>
+        <li data-item="machine"><b>{{TITLE:CASABREWS-51}}</b>: the machine; buy accessories by the model name CM5418.</li>
+        <li data-item="grinder"><a href="{{NOTE:ENCORE-ESP}}">{{TITLE:ENCORE-ESP}}</a>: one grinder for the shot and the pot; it does not have to sit next to the machine.</li>
+        <li data-item="pot"><a href="{{NOTE:CHEMEX-8CUP}}">Chemex 8-cup</a> for the slow mornings, with its own paper filters.</li>
       </ul>
       <div class="ff-actions">
         <a class="btn btn-primary" href="{{BUY:CASABREWS-51}}" data-asin="{{ASIN:CASABREWS-51}}" rel="sponsored noopener" target="_blank">Buy on Amazon</a>
@@ -135,29 +134,58 @@
 <script>
 (function(){
   var root = document.getElementById('fitFunnel'); if (!root) return;
-  var state = { space: 'foot', cab: 'normal', want: 'espresso' };
-  // Which write-up answers the three taps. A corner gets the 5.5-inch CASABREWS; anything wider gets the Bambino.
+  var state = { space: 'foot', cab: 'room', want: 'espresso' };
+  // Which write-up answers the taps. A corner gets the 5.5-inch CASABREWS; anything wider gets the Bambino.
   function outcome() {
     if (state.want === 'fast') return 'fast';
     var m = state.space === 'corner' ? 'casabrews' : 'bambino';
     return (state.want === 'bar' ? 'bar-' : 'espresso-') + m;
   }
-  // One extra line when a tap changes what to watch for. Facts come from the makers' pages (see each product note).
-  function flag(o) {
-    if (o === 'fast' && state.cab === 'tight') return 'Tight cabinets: the K-Classic needs about 17.6 in with its lid open. Pull it forward to load a pod, or set it a hand-width off the back wall.';
-    if (o === 'fast' && state.space === 'corner') return 'The 48 oz tank lifts off the side, so leave that side open rather than the back.';
-    if (/bambino/.test(o) && state.cab === 'tight') return 'Tight cabinets: the Bambino is 12 in tall and its tank lifts out at the back. Leave a gap behind it, or plan to reach over the top to refill.';
-    if (/casabrews/.test(o) && state.cab === 'tight') return 'Tight cabinets: the CASABREWS tank is removable from the back, so it wants a gap behind it or a spot you can pull forward.';
-    if (o === 'bar-casabrews') return 'Pick a home for the grinder first (13.4 in tall with the hopper on). A shelf or the far side of the sink both work; the counter corner stays for the machine.';
-    if (o === 'bar-bambino' && state.space === 'foot') return 'About 18 in fits the machine and grinder side by side. The Chemex lives in a cupboard between weekends.';
-    if (o === 'espresso-bambino' && state.space === 'plenty') return 'With room to spare, leave a cup-width beside the machine for the grinder and a knock box later.';
+  var SPACE = { corner: 'a corner', foot: 'a stretch of counter', plenty: 'a counter with room to spare' };
+  // Every tap changes the answer somewhere the shopper can see it: the eyebrow names the situation, "How it sits" is
+  // rewritten from all three taps, and each kit item is tagged with where it lives. Sizes come from the makers' pages.
+  function eyebrow(o) {
+    var s = SPACE[state.space] + (state.cab === 'tight' ? ', under tight cabinets' : '');
+    if (o === 'fast') return (state.cab === 'tight' ? 'Fits ' + SPACE[state.space] + ', pulled forward' : 'Fits ' + s);
+    if (o.indexOf('bar') === 0) return 'Your home bar, ' + (state.space === 'corner' ? 'in ' : 'on ') + s;
+    return 'Fits ' + s;
+  }
+  function sits(o) {
+    var L = [], tight = state.cab === 'tight', sp = state.space, machine = /casabrews/.test(o) ? 'CASABREWS' : /bambino/.test(o) ? 'Bambino' : 'K-Classic';
+    var grinderInKit = o !== 'fast', potInKit = o.indexOf('bar') === 0;
+    // On the counter
+    if (o === 'fast') L.push(sp === 'corner' ? 'On the counter: just the K-Classic. Its 48 oz tank lifts off the side, so the open side of the corner faces the tank.' : sp === 'foot' ? 'On the counter: the K-Classic with a mug spot beside it; the tank lifts off the side, so keep that side clear.' : 'On the counter: the K-Classic with room beside it for mugs and a pod rack; the tank side stays clear.');
+    else if (sp === 'corner') L.push('On the counter: only the ' + machine + ' (' + (machine === 'CASABREWS' ? '5.5' : '6.3') + ' in wide). Nothing else has to share the corner.');
+    else if (sp === 'foot') L.push('On the counter: the ' + machine + ' and the Encore ESP side by side, about 12 in together, with a cup landing zone between them.');
+    else L.push('On the counter: ' + machine + ', Encore ESP' + (potInKit ? ' and the Chemex' : '') + ' in a row, with a landing zone for cups' + (potInKit ? '' : ' and room left for a pour-over later') + '.');
+    // Above it
+    if (o === 'fast') L.push(tight ? 'Lid: the K-Classic needs about 17.6 in with the lid open. Set it a hand-width forward so the lid clears the cabinet.' : 'Lid: opens to about 17.6 in, which clears a normal cabinet; no need to pull it forward.');
+    else if (tight) L.push('Refill: the ' + machine + ' is about 12 in tall, so it clears the cabinet, but its tank comes out the back. Leave a gap behind it or slide it forward to refill.' + (grinderInKit ? ' The Encore ESP is 13.4 in tall with the hopper on, so it clears too.' : ''));
+    else L.push('Refill: lift the ' + machine + ' tank straight out the back; with room above, nothing gets in the way.');
+    // What lives elsewhere
+    if (grinderInKit && sp === 'corner') L.push('Grinder: on a shelf or the far side of the sink. It grinds into its cup, so it never needs to touch the machine.');
+    if (potInKit && sp !== 'plenty') L.push('Chemex: in the cupboard between pot mornings; it needs the counter only while it brews.');
+    if (o === 'fast' && sp === 'plenty') L.push('Weekend option: a Chemex for a full pot when people are over.');
+    return L;
+  }
+  function place(item, o) {
+    if (item === 'machine') return 'on the counter';
+    if (item === 'grinder') return state.space === 'corner' ? 'on a shelf' : 'on the counter';
+    if (item === 'pot') return o === 'fast' ? 'if you skip the machine' : state.space === 'plenty' ? 'on the counter' : 'in the cupboard';
     return '';
   }
   function show() {
     var o = outcome();
     root.querySelectorAll('.ff-result').forEach(function (a) {
-      var on = a.getAttribute('data-outcome') === o; a.hidden = !on;
-      if (on) { var f = a.querySelector('[data-flag]'); var t = flag(o); f.textContent = t; f.hidden = !t; }
+      var on = a.getAttribute('data-outcome') === o; a.hidden = !on; if (!on) return;
+      a.querySelector('[data-eyebrow]').textContent = eyebrow(o);
+      var box = a.querySelector('[data-sits]'); box.innerHTML = '';
+      var h = document.createElement('p'); h.className = 'ff-sits-h'; h.textContent = 'How it sits'; box.appendChild(h);
+      sits(o).forEach(function (t) { var p = document.createElement('p'); p.textContent = t; box.appendChild(p); });
+      a.querySelectorAll('.ff-kit li[data-item]').forEach(function (li) {
+        var tag = li.querySelector('.ff-place'); if (!tag) { tag = document.createElement('span'); tag.className = 'ff-place'; li.appendChild(tag); }
+        tag.textContent = place(li.getAttribute('data-item'), o);
+      });
     });
     try { if (typeof gtag === 'function') gtag('event', 'fit_funnel', { space: state.space, cab: state.cab, want: state.want, outcome: o }); } catch (e) {}
   }
