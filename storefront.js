@@ -111,7 +111,7 @@
   const bar = $('buybar'); $('buybar-name').textContent = hero.title; const bc = $('buybar-cta'); setBuy(bc, hero, 'sticky_bar'); bc.textContent = 'Buy on Amazon';
   // Fold the category bar on scroll-down, unfold on scroll-up or near the top (CSS applies it on phones only).
   { const top = document.querySelector('header.top'); let last = window.scrollY, slim = false, tick = false;
-    const onScroll = () => { const y = window.scrollY; if (y < 80) slim = false; else if (y > last + 8) slim = true; else if (y < last - 8) slim = false; last = y; top.classList.toggle('slim', slim); tick = false; };
+    const onScroll = () => { const y = window.scrollY; if (y < 80) slim = false; else if (y > last + 8) slim = true; else if (y < last - 8) slim = false; last = y; top.classList.toggle('slim', slim); document.documentElement.classList.toggle('scrolling-down', slim); tick = false; };
     // Measure the unfolded header once (and on resize) so the page can hold that padding while the header is fixed on phones.
     const fit = () => { if (!slim) { document.documentElement.style.setProperty('--top-h', top.offsetHeight + 'px'); document.documentElement.classList.add('fixhead'); } };
     if (top) { fit(); window.addEventListener('resize', fit, { passive: true }); if (document.fonts) document.fonts.ready.then(fit);

@@ -42,7 +42,12 @@ function meta({ title, description, url, image, type = 'website', extra = '' }) 
     `<title>${esc(title)}</title>`,
     `<meta name="description" content="${esc(description)}">`,
     url ? `<link rel="canonical" href="${esc(url)}">` : '',
-    `<meta name="theme-color" content="${cfg.theme_color || '#14100d'}">`,
+    `<meta name="theme-color" content="${cfg.theme_color || '#171117'}">`,
+    // Home-screen web app on iPhone: the page extends under the status bar and the header's safe-area padding covers it
+    // (owner, Sept 27: the clock/signal/battery strip showed the page background).
+    '<meta name="apple-mobile-web-app-capable" content="yes">',
+    '<meta name="mobile-web-app-capable" content="yes">',
+    '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">',
     `<meta property="og:site_name" content="${esc(cfg.name)}">`,
     `<meta property="og:type" content="${type}">`,
     `<meta property="og:title" content="${esc(title)}">`,
