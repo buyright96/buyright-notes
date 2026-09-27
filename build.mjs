@@ -215,12 +215,17 @@ for (const p of buildable) {
 // ---------- text pages (tiny markdown: headings, paragraphs, lists, links, emphasis, blockquote) ----------
 function md(src) {
   const inline = (s) => esc(s).replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  const out = []; let list = null;
+  const out = []; let list = null, fold = false;
   const flush = () => { if (list) { out.push(`</${list}>`); list = null; } };
+  const closeFold = () => { if (fold) { out.push('</details>'); fold = false; } };
   for (const raw of src.split(/\r?\n/)) {
     const line = raw.trimEnd();
     if (!line.trim()) { flush(); continue; }
     let m;
+    // "## Title {fold}": a closed section the reader opens on tap. Everything to the next H1/H2 lives inside it, so the
+    // words stay in the HTML for search while the page reads short (owner, Sept 27: one question, one kit, one screen).
+    if ((m = line.match(/^## (.*) \{fold\}$/))) { flush(); closeFold(); const id = m[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); out.push(`<details class="fold" id="${id}"><summary><h2 class="h2">${inline(m[1])}</h2></summary>`); fold = true; continue; }
+    if (/^#{1,2} /.test(line)) { flush(); closeFold(); }
     if ((m = line.match(/^(#{1,3}) (.*)/))) { flush(); const id = m[1].length > 1 ? ` id="${m[2].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}"` : ''; out.push(`<h${m[1].length}${m[1].length === 1 ? ' class="h1"' : m[1].length === 2 ? ' class="h2"' : ' class="h3"'}${id}>${inline(m[2])}</h${m[1].length}>`); }
     else if ((m = line.match(/^- (.*)/))) { if (list !== 'ul') { flush(); out.push('<ul>'); list = 'ul'; } out.push(`<li>${inline(m[1])}</li>`); }
     else if ((m = line.match(/^\d+\. (.*)/))) { if (list !== 'ol') { flush(); out.push('<ol>'); list = 'ol'; } out.push(`<li>${inline(m[1])}</li>`); }
@@ -229,14 +234,25 @@ function md(src) {
     else if (/^(\[[^\]]+\]\(#[a-z0-9-]+\)(\s*·\s*)?)+$/.test(line)) { flush(); out.push(`<nav class="jumps" aria-label="On this page">${[...line.matchAll(/\[([^\]]+)\]\((#[a-z0-9-]+)\)/g)].map(m => `<a href="${m[2]}">${esc(m[1])}</a>`).join('')}</nav>`); }
     else { flush(); out.push(`<p>${inline(line)}</p>`); }
   }
-  flush(); return out.join('\n');
+  flush(); closeFold(); return out.join('\n');
 }
 const contactBlock = cfg.contact_email
   ? `**Email:** [${cfg.contact_email}](mailto:${cfg.contact_email})`
   : `> A public contact address is being set up. Until then, use the contact form on [the guides site](${site.blog_url || '#'}).`;
 // Tools that a markdown page can drop in by token, on their own line; the partial replaces the paragraph the renderer wraps it in.
 const PF = rd('templates/partials/portafilter-tool.html').trim();
-const TOOLS = { '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"') };
+// The fit funnel (guides): three taps, one pick. {{IMG|ALT|TITLE|ASIN|BUY|NOTE|CHECKS:ID}} tokens pull from the product record,
+// so a fact lives in one place. Buy links are the tagged Amazon URL (plain when affiliate links are off); the partial's script
+// swaps them for plain links in internal mode.
+const byId = Object.fromEntries(buildable.map(p => [p.product_id, p]));
+const FF = rd('templates/partials/fit-funnel.html').trim().replace(/\{\{(IMG|ALT|TITLE|ASIN|BUY|NOTE|CHECKS):([A-Z0-9-]+)\}\}/g, (_, k, id) => {
+  const p = byId[id]; if (!p) throw Error(`fit funnel: unknown product ${id}`);
+  if (k === 'IMG') return '../../' + p.card_image; if (k === 'ALT') return esc(p.image_alt || p.title); if (k === 'TITLE') return esc(p.title);
+  if (k === 'ASIN') return p.asin || ''; if (k === 'NOTE') return `../../p/${p.product_id}/`;
+  if (k === 'BUY') return (site.affiliate_links_enabled === true && p.amazon_url) ? p.amazon_url : (p.asin ? `https://www.amazon.com/dp/${p.asin}` : '#');
+  return (p.page_notes?.checks || []).map(c => `<li>${esc(c)}</li>`).join('');
+});
+const TOOLS = { '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"'), '{{FIT_FUNNEL}}': FF };
 const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html);
 const TEXT_PAGES = ['home-espresso', 'portafilter-size-finder', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'];
 const textFront = {}; // slug -> front matter, for the sitemap (a text page with merged_into is a pointer: canonical elsewhere, noindex, off the sitemap)
@@ -255,10 +271,13 @@ const DISCLOSURE_LINE = site.disclosure || 'As an Amazon Associate we earn from 
 for (const [coll, items] of Object.entries(collections)) {
   for (const it of items) {
     const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
-    const hasAmazon = /amazon\.com/.test(it.body);
+    const hasAmazon = /amazon\.com/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}'); // the funnel carries tagged Buy links
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
     const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
-    const ld = it.front.merged_into ? null : [{ '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', image: abs(it.front.image || (cfg.collection_share_images || {})[coll] || cfg.default_share_image), datePublished: it.front.date || undefined, dateModified: it.front.updated || it.front.date || undefined, url: base ? url : undefined, mainEntityOfPage: base ? url : undefined, author: org, publisher: org }, crumbs([[cfg.name, base ? `${base}/` : undefined], [coll[0].toUpperCase() + coll.slice(1), abs(`${coll}/`)], [it.front.title, url]])];
+    // FAQPage schema from a "Questions people ask" section: each ### question with the paragraph under it.
+    const faq = [...it.body.matchAll(/^### (.+)\n+([^\n#].*)$/gm)].map(m => ({ '@type': 'Question', name: m[1].trim(), acceptedAnswer: { '@type': 'Answer', text: m[2].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\*\*?/g, '').trim() } }));
+    const faqLd = faq.length && /^## Questions people ask/m.test(it.body) ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq }] : [];
+    const ld = it.front.merged_into ? null : [...faqLd, { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', image: abs(it.front.image || (cfg.collection_share_images || {})[coll] || cfg.default_share_image), datePublished: it.front.date || undefined, dateModified: it.front.updated || it.front.date || undefined, url: base ? url : undefined, mainEntityOfPage: base ? url : undefined, author: org, publisher: org }, crumbs([[cfg.name, base ? `${base}/` : undefined], [coll[0].toUpperCase() + coll.slice(1), abs(`${coll}/`)], [it.front.title, url]])];
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
       .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? (it.front.merged_into ? abs(`${coll}/${it.front.merged_into}/`) : url) : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: (ld ? jsonld(ld) : '') + (it.front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : '') }))
       .replace('<!--ANALYTICS-->', analytics)

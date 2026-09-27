@@ -1,76 +1,50 @@
 ---
-title: Home espresso setup guide: fit, machine, grinder, first week
-description: One page for a first home espresso setup: look up your machine, measure the counter, pick a compact machine and grinder, buy accessories that fit, clean it right.
+title: Home espresso that fits your kitchen
+description: Tap your counter space, cabinet height and the coffee you want; we show the espresso machine or coffee maker that fits, the kit to buy with it, and what to check first.
 date: 2026-09-26
+updated: 2026-09-27
 collection: guides
 home_rank: 1
 cluster: Home espresso
-image: assets/fit-guide-three-specs.jpg
-card_title: Home espresso, start to finish
-card_line: Will it fit, which machine and grinder, which accessories, first week. One page, with a size finder for your machine.
-tool_anchor: look-up-your-machine
-tool_label: Look up your machine
+image: assets/breville-bambino-espresso-machine.jpg
+card_title: Home espresso that fits
+card_line: Three taps about your kitchen, one machine that fits, and what to buy with it. Already have a machine in mind? Look it up on the same page.
+tool_anchor: fits-my-kitchen
+tool_label: Find my machine
 ---
-# Home espresso, start to finish
+# Home espresso that fits your kitchen
 
-Own a machine already, or have one in mind? Pick it below and the answers follow. Still shopping? Start at "Will it fit".
+{{FIT_FUNNEL}}
 
-{{PORTAFILTER_TOOL_HERO}}
+## Already have a machine in mind? {fold}
 
-[Will it fit?](#will-an-espresso-machine-fit-my-kitchen) · [Which machine?](#which-compact-espresso-machine) · [The grinder](#the-grinder-decides-more-than-the-machine) · [Beans](#whole-bean-or-pre-ground) · [Buy, wait or skip](#buy-now-wait-or-skip) · [Accessory sizes](#accessories-51-54-57-or-58-mm) · [First bag](#your-first-bag-of-beans) · [Tools](#keep-the-tool-list-short) · [Cleaning](#the-cleaning-routine) · [Our picks](#the-picks-in-one-place)
+Pick the brand and model and we show its accessory size, how its water tank comes out, and whether it needs a separate grinder.
 
-## Will an espresso machine fit my kitchen?
+{{PORTAFILTER_TOOL}}
+
+## Will an espresso machine fit my kitchen? {fold}
 
 Most espresso regrets happen before the first shot: the machine fits on paper, then you cannot refill the tank without dragging it out. Ten minutes with a tape measure settles it.
 
-1. **Usable counter width.** The clear stretch where the machine will live, with room beside it for a cup, a tamper and, if you grind fresh, the grinder.
+1. **Usable counter width.** The clear stretch where the machine will live, with room beside it for a cup and, if you grind fresh, the grinder.
 2. **Depth.** From the backsplash to the safe front edge, with a gap behind for the cord and for rear-fill tanks.
-3. **Height under the cabinets.** Top-fill tanks and lids need open air above the machine.
-4. **The refill path.** Top, rear, or a side tank that slides out: can you reach it, lift it and put it back without moving the machine?
+3. **Height under the cabinets.** Top-fill tanks and pod lids need open air above the machine.
+4. **The refill path.** Top, rear, or a tank that slides out the side: can you reach it, lift it and put it back without moving the machine?
 5. **The cord and the outlet.** A safe path to power, away from the sink and the drip tray.
 
-What the tank position means: a **top-fill** tank works under cabinets only with clearance to open the lid; a **rear-fill** tank needs a real gap behind the machine or every refill becomes a chore; a **removable side or front tank** is the most forgiving. Do not plan on sliding a hot, full, plugged-in machine out every day.
+A **top-fill** tank works under cabinets only with room to open the lid. A **rear-fill** tank needs a real gap behind the machine or every refill becomes a chore. A **removable side or front tank** is the most forgiving. Confirm the exact model number and read its current dimensions before ordering; same-brand machines differ by generation.
 
-Confirm the exact model number and read its current dimensions and manual before ordering. Same-brand machines differ by generation.
+## Do I need a grinder? {fold}
 
-## Which compact espresso machine?
+Not on day one. Both machines we list ship with a pressurized basket, which makes a fair shot from pre-ground espresso coffee. Buy the grinder when you want fresh beans, a non-pressurized basket, or the ability to fix a shot that runs too fast or too slow; that fix is a grind change, and a drip grinder cannot make it.
 
-**Breville Bambino** ([our note](../../p/BAMBINO-54/)). About 6.3 in wide, a 47 oz tank that lifts out at the back, hot in about 3 seconds, and **54 mm** baskets and tampers that are easy to find. The pick for a small kitchen that wants cafe-style milk drinks. Skip it if you want a built-in grinder.
+Espresso needs a much finer, narrower grind range than drip coffee. The [Baratza Encore ESP](../../p/ENCORE-ESP/) has a dedicated espresso range plus a coarser range for a pot, a 54 mm dosing cup and a 58 mm adapter in the box, and it is quiet enough for an early house.
 
-**CASABREWS CM5418** ([our note](../../p/CASABREWS-51/)). The starter machine: 20-bar pump, steam wand, 34 oz tank, a smaller price. The catch: **51 mm** baskets, while most accessory kits are made for 54 or 58 mm. Buy accessories by model name, never by "universal".
+**Whole bean** if you own an espresso-capable grinder; grind close to brewing and keep the bag sealed away from heat and light. **Pre-ground** if you want the fewest steps: buy coffee sold for espresso or a fine grind, and accept that you cannot make small adjustments when a shot tastes sour or bitter.
 
-Either fits an 18-inch stretch of counter once the grinder lives elsewhere.
+## Which accessory size: 51, 54 or 58 mm? {fold}
 
-## The grinder decides more than the machine
-
-Espresso needs a much finer, narrower grind range than drip coffee. A grinder that cannot reach and adjust inside that range is the bottleneck, whatever the machine can do.
-
-- **You can wait on a grinder** if your machine ships with a pressurized (dual-wall) basket and you are happy with pre-ground espresso while you learn.
-- **Buy the grinder first** if you want fresh beans, a non-pressurized basket, or the ability to fix a shot that runs too fast or too slow. That fix is a grind change.
-
-Our pick: **Baratza Encore ESP** ([our note](../../p/ENCORE-ESP/)). A dedicated espresso range plus a coarser range for other brew methods, a 54 mm dosing cup and a 58 mm adapter in the box, and quiet enough for an early house.
-
-## Whole bean or pre-ground?
-
-- **Whole bean** if you own an espresso-capable grinder. Grind close to brewing; store the bag sealed, away from heat, light and moisture.
-- **Pre-ground** if you want the fewest steps or your machine has a pressurized basket. Buy coffee sold for espresso or a fine grind, and accept that you cannot make small adjustments when a shot tastes sour or bitter.
-- Never push a drip grind through a non-pressurized espresso basket and expect a predictable result.
-
-"Espresso roast" describes a flavor direction, not a compatibility guarantee. Many coffees work for espresso; start with tasting notes you already like.
-
-## Buy now, wait, or skip
-
-Before checkout, write two lines: the problem this machine must solve, and the one constraint that could make it unusable.
-
-- **Buy now** when the need is immediate, the measurements fit with room to spare, and the return policy is clear.
-- **Wait** when one measurement or compatibility detail is still missing. Get it first; it is cheaper than a return.
-- **Skip** when the machine adds work without solving the original problem.
-
-Ready when you can answer four questions: Does the machine fit with clearance to refill it? Do I have a grind plan? Do my accessories match this machine's basket size? Do I have a small bag of coffee to learn with?
-
-## Accessories: 51, 54, 57 or 58 mm
-
-Espresso accessories are not universal. The millimeter number is the basket diameter, and fit can still depend on basket depth, tabs and machine generation. Pick your machine in the finder at the top of this page, then shop by exact model first and size second.
+Espresso accessories are not universal. The millimeter number is the basket diameter, and fit can still depend on basket depth, tabs and machine generation. Shop by exact model first and size second.
 
 - **51 mm:** compact consumer machines, including the CASABREWS CM5418 and the De'Longhi Dedica line.
 - **54 mm:** most Breville and Sage home machines, including the Bambino.
@@ -79,34 +53,52 @@ Espresso accessories are not universal. The millimeter number is the basket diam
 
 Risk, low to high: a tamper (a poor match leaves an untamped ring), a dosing funnel (must match diameter and mounting), a puck screen (needs headspace), a replacement basket (depth and ridges matter), a full portafilter (locking tabs and group fit must match). A listing that says "universal" but does not name your machine is missing information, not reassurance.
 
-## Your first bag of beans
+## Your first bag of beans {fold}
 
 - Buy a **small bag** you can finish while it still tastes good; a value bag wastes more than it saves while you learn.
 - Pick **tasting notes you already like**: chocolate, nut and caramel notes suit milk drinks; brighter, fruitier coffees need more dialing in.
 - Use the **roast date as planning**, not pass/fail. Roasters commonly suggest using coffee within 2 to 4 weeks of roasting and resting espresso 5 to 7 days after roast; your taste decides.
-- **Store** it sealed at room temperature, away from sun, heat and moisture. The freezer is not the default for a bag in use.
+- **Store** it sealed at room temperature, away from sun, heat and moisture.
 - When dialing in, change **one thing at a time**: grind, dose, yield or time.
 
-## Keep the tool list short
+## Keeping it clean {fold}
 
-The manual comes first. Add a tool only when it solves a problem you have: a scale for repeatable recipes, a compatible tamper if the machine did not include one, a milk pitcher for milk drinks, and only the cleaning products your manufacturer names. If you already measure by weight in the kitchen, the [Escali Primo scale](../../p/ESCALI-PRIMO/) reads to 1 g.
-
-## The cleaning routine
-
-- **After each use:** knock out the puck, empty the drip tray when needed, rinse the parts the manual allows, and wipe the steam wand immediately. Milk residue hardens fast; this is the one task not to postpone.
-- **Weekly:** clean the tray, wipe the exterior, check the tank, and look around the group head for old grounds and moisture. Let parts dry before storing them.
+- **After each use:** knock out the puck, rinse the parts the manual allows, and wipe the steam wand immediately. Milk residue hardens fast; this is the one task not to postpone.
+- **Weekly:** clean the tray, wipe the exterior, check the tank, and look around the group head for old grounds.
 - **Monthly:** whatever your model calls for: a cleaning cycle, a filter check, a deeper rinse. Descaling is not a universal monthly job; water hardness and the maker's schedule decide it. Never guess a chemical dose or use a product the manufacturer does not approve.
 
 Keep the supplies in one small tray near the machine, without blocking the tank or the vents.
 
+## Questions people ask {fold}
+
+### Can an espresso machine go under kitchen cabinets?
+
+Yes, if the tank comes out the back or the side. The Breville Bambino is 12 inches tall with a rear-lift tank, and the CASABREWS CM5418 has a removable rear tank, so both clear a 15-inch cabinet; leave a gap behind them for refills. A pod machine with a lid, like the Keurig K-Classic, needs about 17.6 inches open.
+
+### Do I need a grinder to start making espresso?
+
+No. Both machines here include a pressurized basket that makes a fair shot from pre-ground espresso coffee, so you can start the day the box arrives. Add an espresso grinder such as the Baratza Encore ESP when you want fresh beans or want to fix a shot that runs too fast or too slow.
+
+### Is a 51 mm espresso machine a problem?
+
+Only for accessories. A 51 mm machine like the CASABREWS CM5418 makes espresso the same way; the catch is that most tampers, baskets and funnels are sold for 54 or 58 mm. Search accessories by the model name and you avoid the mismatch entirely.
+
+### Pod machine or espresso machine for a small kitchen?
+
+Pick by the drink, not the size. A pod machine makes hot coffee in about a minute with nothing to measure; an espresso machine makes real shots and steamed milk but needs a basket, a tamp and a rinse. Both fit an 18-inch stretch of counter.
+
+### What should I buy with a first espresso machine?
+
+A small bag of coffee you can finish in two weeks, and nothing else until you have pulled a few shots. The grinder comes second, when you want fresh beans. Cleaning supplies should be only the ones your machine's maker names.
+
 ## The picks in one place
 
 - [Breville Bambino, 54 mm](../../p/BAMBINO-54/): the small-kitchen pick for cafe-style drinks.
-- [CASABREWS CM5418, 51 mm](../../p/CASABREWS-51/): the starter machine, with one catch on accessory size.
+- [CASABREWS CM5418, 51 mm](../../p/CASABREWS-51/): the corner-sized starter, with one catch on accessory size.
 - [Baratza Encore ESP](../../p/ENCORE-ESP/): the grinder with a real espresso range.
-- [Escali Primo scale](../../p/ESCALI-PRIMO/): 1 g readings for repeatable shots.
-- No machine yet? The [Chemex 8-cup](../../p/CHEMEX-8CUP/) makes a clean pot from the same fresh grind.
+- [Keurig K-Classic](../../p/KEURIG-KCLASSIC/): one button, one mug, no fuss.
+- [Chemex 8-cup](../../p/CHEMEX-8CUP/): a clean pot from the same fresh grind, no machine at all.
 
-Every pick page says who it is for, what to check, and who should skip it. As an Amazon Associate, BuyRight Notes earns from qualifying purchases; using our links does not change the price you pay.
+Every pick page says who it is for, what to check, and who should skip it.
 
-*Updated September 26, 2026. Written from manufacturer specifications and manuals, not hands-on testing. Portafilter sizes verified against manufacturer pages on September 21, 2026 where available.*
+*Updated September 27, 2026. Written from manufacturer specifications and manuals, not hands-on testing. Portafilter sizes verified against manufacturer pages on September 21, 2026 where available.*
