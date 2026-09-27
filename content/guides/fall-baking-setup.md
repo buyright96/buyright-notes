@@ -3,6 +3,7 @@ title: Fall baking setup: stand mixer, Dutch oven and scale
 description: When a stand mixer beats a hand mixer, why an enameled Dutch oven makes crusty no-knead bread, why a 1 g scale fixes recipes, and which buys can wait.
 date: 2026-09-26
 collection: guides
+home_rank: 3
 cluster: Fall baking
 image: assets/kitchenaid-artisan-stand-mixer.jpg
 card_title: Fall baking setup

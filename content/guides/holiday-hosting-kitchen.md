@@ -3,6 +3,7 @@ title: Holiday hosting kitchen: air fryer, cheese board, blender, dessert
 description: Four things that make holiday hosting easier: a 6 qt air fryer for appetizers, a complete cheese board, a blender for party drinks, and make-ahead dessert.
 date: 2026-09-26
 collection: guides
+home_rank: 4
 cluster: Holiday hosting
 image: assets/cosori-turboblaze-air-fryer.jpg
 card_title: Holiday hosting kitchen

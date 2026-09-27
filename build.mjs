@@ -79,7 +79,7 @@ const org = { '@type': 'Organization', name: cfg.name, url: base ? `${base}/` : 
 const articleLd = (p, url, headline) => ({ '@context': 'https://schema.org', '@type': 'Article', headline, description: p.reason_to_buy, image: [p.card_image, pins[p.product_id]?.image].filter(Boolean).map(abs), url, author: org, publisher: org });
 const pinFigure = (p, rootPrefix) => {
   const pin = p && pins[p.product_id];
-  return pin ? `    <figure class="inuse" id="inuse">
+  return pin && !pin.same_as_card ? `    <figure class="inuse" id="inuse">
       <img src="${esc(rootPrefix + pin.image)}" alt="${esc(pin.alt)}" width="1000" height="1500" loading="lazy" decoding="async" data-pin-description="${esc(saveDescription(pin))}">
       <figcaption>How it looks at home</figcaption>
     </figure>` : '';
@@ -147,7 +147,7 @@ for (const coll of fs.existsSync(path.join(root, 'content')) ? fs.readdirSync(pa
   collections[coll] = fs.readdirSync(path.join(root, 'content', coll)).filter(f => f.endsWith('.md')).map(f => {
     const { front, body } = frontMatter(rd(`content/${coll}/${f}`));
     return { slug: f.replace(/\.md$/, ''), coll, front, body };
-  }).sort((a, b) => (b.front.date || '').localeCompare(a.front.date || '') || a.front.title.localeCompare(b.front.title));
+  }).sort((a, b) => (b.front.date || '').localeCompare(a.front.date || '') || (Number(a.front.home_rank) || 99) - (Number(b.front.home_rank) || 99) || a.front.title.localeCompare(b.front.title)); // same-day guides: home_rank (front matter) decides the home row
 }
 const guides = collections.guides || [];
 

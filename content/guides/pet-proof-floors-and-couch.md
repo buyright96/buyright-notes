@@ -3,6 +3,7 @@ title: Pet-proof floors and couch: robot vacuum, spot cleaner or brush?
 description: Which pet mess needs which tool: a robot vacuum for daily hair, a spot cleaner for couch and rug accidents, a deshedding brush for the source. What to skip.
 date: 2026-09-26
 collection: guides
+home_rank: 2
 cluster: Pet home
 image: assets/eufy-e25-robot-vacuum-mop.jpg
 card_title: Pet-proof floors and couch
