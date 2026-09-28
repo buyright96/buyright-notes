@@ -123,5 +123,40 @@
     "alt": "A Hatch Restore 3 glowing soft amber on a nightstand at night beside a bed, a book and a glass of water.",
     "title": "Hatch Restore 3: a sunrise alarm and sound machine for new moms",
     "same_as_card": true
+  },
+  "BARISTA-EXPRESS-54": {
+    "image": "assets/pins/breville-barista-express-espresso-machine-in-use.jpg",
+    "alt": "A Breville Barista Express with its bean hopper full on a wood counter, a shot pouring into a glass while hands steam milk in a small steel jug, a candle and a plant beside it.",
+    "title": "Espresso machine with grinder: Breville Barista Express for a holiday coffee bar at home"
+  },
+  "MAGNIFICA-DUO": {
+    "image": "assets/pins/delonghi-magnifica-duo-espresso-machine-in-use.jpg",
+    "alt": "A silver De'Longhi Magnifica Duo on a kitchen counter as a hand touches its screen, an iced latte filling a tall glass under the spout, a cappuccino and a fruit bowl beside it.",
+    "title": "Automatic espresso machine: De'Longhi Magnifica Duo, hot and iced lattes for holiday mornings"
+  },
+  "VERTUO-POP-PLUS": {
+    "image": "assets/pins/nespresso-vertuo-pop-plus-coffee-machine-in-use.jpg",
+    "alt": "A black Nespresso Vertuo Pop+ under a wood kitchen cabinet as a hand lifts a fresh cup of coffee with crema off its drip tray, a dish of capsules and a potted herb beside it.",
+    "title": "Pod coffee machine for a small kitchen: Nespresso Vertuo Pop+ for guest mornings under low cabinets"
+  },
+  "ROCCO-ROXIE-SPRAY": {
+    "image": "assets/pins/rocco-roxie-stain-odor-eliminator-in-use.jpg",
+    "alt": "A hand sprays a white 32 oz bottle of Rocco & Roxie enzyme cleaner onto a spot on a cream rug beside a couch while a golden retriever sleeps on its bed in the background.",
+    "title": "Pet odor eliminator for holiday guests: Rocco & Roxie enzyme spray for rugs, couches and crates"
+  },
+  "TEMPPRO-TP19H": {
+    "image": "assets/pins/temppro-tp19h-instant-read-thermometer-in-use.jpg",
+    "alt": "A hand holds a folding TempPro instant-read thermometer with an orange accent, its probe in a crusty loaf of bread inside a black Dutch oven, an oven mitt lifting the lid.",
+    "title": "Instant read meat thermometer: TempPro TP19H for the holiday roast and Dutch oven bread"
+  },
+  "CERAVE-AM-SPF30": {
+    "image": "assets/pins/cerave-am-facial-moisturizing-lotion-spf-30-in-use.jpg",
+    "alt": "Hands squeeze a dab of white lotion from a CeraVe AM SPF 30 tube in front of a bathroom mirror, a second tube standing on the marble counter beside a glass of water and a small plant.",
+    "title": "Daily moisturizer with SPF: CeraVe AM SPF 30, the stocking stuffer for a simple morning routine"
+  },
+  "FENMZEE-LAMP": {
+    "image": "assets/pins/fenmzee-bedside-table-lamp-in-use.jpg",
+    "alt": "A hand reaches from under a chunky knit blanket to touch the base of a small glowing Fenmzee bedside lamp, an open book, a mug of tea and a phone charging on the nightstand.",
+    "title": "Bedside lamp with USB port: Fenmzee touch lamp for a cozy winter reading nook"
   }
 }
