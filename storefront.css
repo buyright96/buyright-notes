@@ -34,16 +34,14 @@ body { min-height: 100%; }
 /* Phones: the category bar folds away while reading (scroll down) and returns on scroll up or near the top, so the
    sticky header drops from ~117px to the 56px brand row. Keyboard focus inside the bar keeps it open. */
 @media (max-width: 719px) {
-  /* Owner (Sept 27): text showed through the translucent bar while scrolling. Near-opaque on phones, and a solid strip
-     under the status bar so nothing scrolls "above" the header. */
-  .top { background: color-mix(in srgb, var(--ink-950) 94%, transparent); }
-  .top::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: env(safe-area-inset-top, 0px); background: var(--ink-950); }
-  /* With the script running, the header is fixed and the page keeps a constant top padding, so folding the category bar
-     never shifts the content under a reader's thumb (the sticky version jumped the page 62px on every fold, Sept 27). */
-  html.fixhead .top { position: fixed; left: 0; right: 0; top: 0; }
+  /* Owner (Sept 28): solid, never see-through. When the header is on screen it covers from its bottom edge to the very
+     top of the iPhone, clock and battery included: it overshoots the top by 40px (off-screen in a browser, under the
+     status bar in the home-screen app) so no mode leaves a gap. When it slides away, nothing stays behind. */
+  .top { background: var(--ink-950); }
+  /* With the script running, the header is fixed and the page keeps a constant top padding, so folding or hiding the
+     header never shifts the content under a reader's thumb (the sticky version jumped the page 62px, Sept 27). */
+  html.fixhead .top { position: fixed; left: 0; right: 0; top: -40px; padding-top: calc(50px + env(safe-area-inset-top, 0px)); }
   html.fixhead body { padding-top: var(--top-h, 118px); }
-  /* The status bar strip is always covered, even while the header is away. */
-  body::before { content: ""; position: fixed; left: 0; right: 0; top: 0; height: env(safe-area-inset-top, 0px); background: var(--ink-950); z-index: 30; pointer-events: none; }
   /* Scroll down and the header and Buy bar slide away; scroll up (or reach the top) and they come back. Keyboard focus
      inside the header keeps it on screen. */
   html.fixhead .top { transition: transform var(--dur-2) var(--ease-out); }

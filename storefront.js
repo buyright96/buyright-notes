@@ -113,7 +113,8 @@
   { const top = document.querySelector('header.top'); let last = window.scrollY, slim = false, tick = false;
     const onScroll = () => { const y = window.scrollY; if (y < 80) slim = false; else if (y > last + 8) slim = true; else if (y < last - 8) slim = false; last = y; top.classList.toggle('slim', slim); document.documentElement.classList.toggle('scrolling-down', slim); tick = false; };
     // Measure the unfolded header once (and on resize) so the page can hold that padding while the header is fixed on phones.
-    const fit = () => { if (!slim) { document.documentElement.style.setProperty('--top-h', top.offsetHeight + 'px'); document.documentElement.classList.add('fixhead'); } };
+    // Page padding = the header's on-screen height: its box minus the 40px it overshoots above the screen (phone CSS).
+    const fit = () => { if (!slim) { document.documentElement.classList.add('fixhead'); const over = matchMedia('(max-width: 719px)').matches ? 40 : 0; document.documentElement.style.setProperty('--top-h', Math.max(0, top.offsetHeight - over) + 'px'); } };
     if (top) { fit(); window.addEventListener('resize', fit, { passive: true }); if (document.fonts) document.fonts.ready.then(fit);
       window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true }); } }
   const setBar = (show) => { bar.classList.toggle('show', show); bar.toggleAttribute('inert', !show); bar.setAttribute('aria-hidden', String(!show)); };

@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-27T05:31:56.049Z"
+    "generated_at": "2026-09-28T19:43:33.521Z"
   },
   "reels": [
     {
@@ -754,6 +754,219 @@
       "amazon_url": "https://www.amazon.com/dp/B0DLLSCVZW?tag=buyrightnotes-storefront-20",
       "status": "LIVE",
       "last_offer_check": "2026-09-24"
+    },
+    {
+      "product_id": "BARISTA-EXPRESS-54",
+      "asin": "B00CH9QWOU",
+      "title": "Breville Barista Express, 54 mm with built-in grinder",
+      "category": "coffee_bar",
+      "reels": [
+        "coffee_bar",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The whole espresso bar in one 16-inch machine: a built-in burr grinder that doses straight into the 54 mm portafilter, a steam wand for milk, and the rest in the box.",
+      "detail": "We chose it for the kitchen that wants fresh-ground espresso without a separate grinder on the counter.\n+ Built-in conical burr grinder with 16 settings and dose control, per Breville\n+ 54 mm portafilter: tampers, baskets and funnels are easy to find\n+ Single- and dual-wall baskets, tamper, razor tool, milk jug and water filter in the box\nSize: 15.9 in wide, 13.1 in deep, 12.4 in tall, per Breville\nTank: 67 oz, removable; hopper: 1/2 lb of beans\nHeat: Thermocoil with PID temperature control; 15-bar pump, 9-bar extraction, per Breville\nSkip it if your counter stretch is under 16 in, or if you want one-touch milk drinks; the wand is manual.",
+      "page_notes": {
+        "checks": [
+          "Counter width: 15.9 in wide with the hopper on, plus room beside it for a cup and the milk jug.",
+          "Above it: the bean hopper lid opens from the top, so leave clearance over the 12.4 in height; the 67 oz tank lifts out.",
+          "Accessory size: 54 mm, same as the Bambino; buy tampers, baskets and funnels sold for Breville 54 mm."
+        ],
+        "fit": "A kitchen with about 18 in of counter that wants fresh-ground espresso and hand-steamed milk from one machine.",
+        "not_fit": "A corner under 16 in wide, or anyone who wants one-touch lattes."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
+      "guide_label": "Which coffee setup fits my kitchen?",
+      "card_image": "assets/breville-barista-express-espresso-machine.jpg",
+      "image_alt": "A Breville Barista Express with its bean hopper full on a wood counter in morning light, a filled portafilter locked in and a latte beside it.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B00CH9QWOU?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "MAGNIFICA-DUO",
+      "asin": "B0H31SYSWZ",
+      "title": "De'Longhi Magnifica Duo, one-touch hot and iced",
+      "category": "coffee_bar",
+      "reels": [
+        "coffee_bar",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "Bean-to-cup at one touch, hot or iced: it grinds, brews and froths milk on its own, with 20 preset drinks and two milk carafes, one for hot foam and one for cold.",
+      "detail": "We chose it for the household that wants lattes and iced coffee without learning to pull a shot.\n+ 20 preset hot and iced recipes, per De'Longhi: espresso, drip-style coffee, iced latte, cold brew\n+ Built-in conical burr grinder with 13 settings; no portafilter, no tamping\n+ LatteCrema hot and cool: two milk carafes, one for hot microfoam and one for cold foam\nSize: 9.5 in wide, 17.5 in deep, 14 in tall, per the listing\nTank: 60 oz (1.8 L) removable; hopper: 8.82 oz of beans\nProfiles: 3 user profiles; 5 drink sizes, 4 intensities, 3 temperatures; 3-year warranty, per De'Longhi\nSkip it if you want to tamp and dial in shots yourself, or if your counter is under 18 in deep.",
+      "page_notes": {
+        "checks": [
+          "Depth: 17.5 in front to back, so measure from the backsplash to the counter edge before ordering.",
+          "Two milk carafes come with it; plan fridge space for the one in use and a spot for the other.",
+          "Fully automatic: no portafilter or accessory size to match; whole beans only, 8.82 oz hopper."
+        ],
+        "fit": "A household that wants hot and iced cafe drinks at one touch, with 18 in of counter depth.",
+        "not_fit": "Anyone who wants to pull and dial in shots by hand, or a counter under 18 in deep."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
+      "guide_label": "Which coffee setup fits my kitchen?",
+      "card_image": "assets/delonghi-magnifica-duo-espresso-machine.jpg",
+      "image_alt": "A silver De'Longhi Magnifica Duo on a kitchen counter with an iced latte under its spout and a hot cappuccino beside it, morning light from a window.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0H31SYSWZ?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "VERTUO-POP-PLUS",
+      "asin": "B0DVD67F76",
+      "title": "Nespresso Vertuo Pop+, one-touch pod coffee",
+      "category": "coffee_bar",
+      "reels": [
+        "coffee_bar",
+        "kitchen"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "One-touch coffee or espresso from a pod, hot in 30 seconds, from a machine only 10.4 inches tall: the fast setup that still fits under a low cabinet.",
+      "detail": "We chose it for the tight-cabinet kitchen that wants pod coffee with crema and nothing to measure.\n+ Five cup sizes from one machine: espresso, double espresso, 5, 8 and 12 oz, per Nespresso\n+ 30-second heat-up and one-touch brewing, per the listing\n+ 25 fl oz water tank on the side, so nothing needs to open at the back\nSize: 8.6 in wide, 14 in deep, 10.4 in tall, per the listing\nPods: Vertuo capsules only; it does not take Original-line pods, K-Cups or ground coffee\nSkip it if you want to use your own ground coffee or a grinder, or if you want an espresso-machine shot rather than pod crema.",
+      "page_notes": {
+        "checks": [
+          "Pods: Vertuo capsules only, sold by Nespresso and on Amazon; not Original-line pods, K-Cups or ground coffee.",
+          "Height: 10.4 in, so it clears a 15 in cabinet; the 25 oz tank is on the side, so leave that side open.",
+          "Sizes: the machine reads the pod and brews its size (espresso to 12 oz); check the pod range you want first."
+        ],
+        "fit": "A fast weekday kitchen under low cabinets that wants pod coffee with crema and nothing to measure.",
+        "not_fit": "Anyone who wants ground coffee, a grinder or the control of a manual machine."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
+      "guide_label": "Which coffee setup fits my kitchen?",
+      "card_image": "assets/nespresso-vertuo-pop-plus-coffee-machine.jpg",
+      "image_alt": "A black Nespresso Vertuo Pop+ under a kitchen cabinet with a fresh cup of coffee with crema in front of it and a small basket of capsules beside it.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0DVD67F76?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "ROCCO-ROXIE-SPRAY",
+      "asin": "B00CKFL93K",
+      "title": "Rocco & Roxie enzyme stain and odor spray, 32 oz",
+      "category": "pets",
+      "reels": [
+        "pets",
+        "clean_home",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The bottle to reach for before the spot cleaner: an enzyme spray that eats the source of pet urine, vomit and other organic smells instead of covering them.",
+      "detail": "We chose it as the first step for pet accidents on rugs, couches and beds, before the spot cleaner comes out.\n+ Enzymatic bacteria that feed on the organic matter and ammonia crystals until they are gone, per Rocco & Roxie\n+ Certified by the Carpet and Rug Institute; chlorine-free and color-safe, per the maker\n+ Made in the USA; safe to use around pets and children, per the maker\nUse: spray, let it sit 30 to 60 minutes (at least an hour for deep odors), blot, air dry, per the maker\nSize: 32 oz trigger spray\nSkip it if you want a scented cover-up or an instant wipe; enzymes need contact time to work.",
+      "page_notes": {
+        "checks": [
+          "Contact time: 30 to 60 minutes wet on the spot, at least an hour for deep odors, per the maker; it is not an instant wipe.",
+          "Test a hidden corner of the fabric first, as with any cleaner; the maker calls it chlorine-free and color-safe.",
+          "For soaked-through accidents, spray enough to reach as deep as the mess went, then blot and air-dry."
+        ],
+        "fit": "Pet parents with rugs, couches, crates or car seats who want the smell gone at the source.",
+        "not_fit": "Anyone who wants an instant wipe-and-done cleaner."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/pet-proof-floors-and-couch/",
+      "guide_label": "Pet-proof floors and couch",
+      "card_image": "assets/rocco-roxie-stain-odor-eliminator.jpg",
+      "image_alt": "A white 32 oz spray bottle with a black trigger on a wood side table beside a beige couch with a folded throw and a rolled cloth.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B00CKFL93K?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "TEMPPRO-TP19H",
+      "asin": "B07XXSYLL8",
+      "title": "TempPro TP19H instant-read thermometer",
+      "category": "baking",
+      "reels": [
+        "baking",
+        "kitchen",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The one-second answer to \"is it done?\": a folding probe thermometer that reads in a second, turns on when you open it, and rinses under the tap.",
+      "detail": "We chose it for the baker or roaster who guesses and wants to stop.\n+ 1-second reading, accurate to 0.9 F, per TempPro\n+ Wakes when you pick it up, sleeps after 90 seconds; the display rotates so it reads from either hand\n+ Rinse-clean: IP65 water resistant, per TempPro\nRange: -58 to 572 F; probe 4 in, stainless; runs on one AAA battery for up to 3000 hours, per TempPro\nWarranty: 3 years after registration, per TempPro\nSkip it if you want a leave-in probe that stays in the oven; this one is for quick checks, not for monitoring a roast from the couch.",
+      "page_notes": {
+        "checks": [
+          "Quick-check only: it does not stay in the oven; for a roast you monitor from the couch you want a leave-in probe.",
+          "Power: one AAA battery, up to 3000 hours per TempPro; a battery is listed as included on the current page.",
+          "Name: ThermoPro became TempPro in 2026; the TP19H model number is the same."
+        ],
+        "fit": "A home cook who wants a one-second, rinse-clean answer to whether the bread, roast or oil is at temperature.",
+        "not_fit": "Anyone who wants a leave-in probe with an alarm."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/fall-baking-setup/",
+      "guide_label": "Fall baking setup",
+      "card_image": "assets/temppro-tp19h-instant-read-thermometer.jpg",
+      "image_alt": "A folding instant-read thermometer with an orange accent lying on a wooden board beside a resting roast chicken, thyme and salt.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B07XXSYLL8?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "CERAVE-AM-SPF30",
+      "asin": "B00F97FHAW",
+      "title": "CeraVe AM moisturizer with SPF 30, 3 oz",
+      "category": "beauty",
+      "reels": [
+        "beauty",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "The morning step most routines skip: a fragrance-free daily moisturizer with SPF 30 built in, so sunscreen happens without a separate bottle.",
+      "detail": "We chose it as the last step of a simple morning routine, after the serum and before makeup.\n+ Broad-spectrum SPF 30 in a lotion, per CeraVe: hybrid mineral and chemical filters (zinc oxide 8%)\n+ Three ceramides, hyaluronic acid and niacinamide, per CeraVe\n+ Fragrance-free, oil-free and non-comedogenic, per CeraVe\nSize: 3 oz tube; made for normal to dry skin, per CeraVe\nUse: apply 15 minutes before sun, reapply at least every 2 hours, per the label\nSkip it if you want a tinted or high-SPF beach sunscreen; this is an everyday face lotion, and patch-test anything new.",
+      "page_notes": {
+        "checks": [
+          "Daily-wear SPF 30, not a beach sunscreen: apply 15 minutes before sun and reapply every 2 hours, per the label.",
+          "Hybrid filters (zinc oxide plus chemical filters); read the actives if you avoid either kind.",
+          "Fragrance-free and non-comedogenic per CeraVe; patch-test anything new."
+        ],
+        "fit": "A simple morning routine that wants SPF built into the moisturizer.",
+        "not_fit": "Anyone who wants a tinted finish or a high-SPF sunscreen for long sun days."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/simple-fall-skincare-routine/",
+      "guide_label": "Simple fall skincare routine",
+      "card_image": "assets/cerave-am-facial-moisturizing-lotion-spf-30.jpg",
+      "image_alt": "A white tube of CeraVe AM moisturizer with a blue-green cap on a marble bathroom shelf beside a round mirror, a washcloth and eucalyptus.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B00F97FHAW?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
+    },
+    {
+      "product_id": "FENMZEE-LAMP",
+      "asin": "B0BZXNSW5K",
+      "title": "Fenmzee bedside lamp, dimmable touch with USB",
+      "category": "reading",
+      "reels": [
+        "reading",
+        "wellness",
+        "hot_deals"
+      ],
+      "hero_eligible": true,
+      "reason_to_buy": "A small warm reading lamp for the nightstand: three brightness levels by touch, a bulb in the box, and USB-A, USB-C and an outlet on the base to charge the phone.",
+      "detail": "We chose it for the reading nook or nightstand that needs one warm light and a place to charge.\n+ Touch base, three brightness levels, per the listing\n+ USB-A and USB-C ports plus an AC outlet on the base, per the listing\n+ LED bulb included; cream fabric shade, wood-grain and metal base\nSize: about 14 in tall, 4.45 in across, per the listing\nSkip it if you want a lamp that dims by app or voice, or a bright task light for a desk.",
+      "page_notes": {
+        "checks": [
+          "Ports on the base: USB-A, USB-C and one AC outlet, per the listing; check what you plan to plug in.",
+          "Light: a warm LED bulb comes in the box, three levels by touch; no app or voice control.",
+          "Size: about 14 in tall and 4.45 in across, so it fits a narrow nightstand."
+        ],
+        "fit": "A nightstand or reading corner that needs one warm light and a charger in the same spot.",
+        "not_fit": "Anyone who wants app or voice control, or a bright desk lamp."
+      },
+      "guide_url": "https://buyright96.github.io/buyright-notes/guides/reading-nook-that-helps-you-sleep/",
+      "guide_label": "A reading nook that helps you sleep",
+      "card_image": "assets/fenmzee-bedside-table-lamp.jpg",
+      "image_alt": "A small bedside lamp with a cream fabric shade glowing warm on a walnut nightstand beside a bed, an open paperback and reading glasses.",
+      "tracking_id": "buyrightnotes-storefront-20",
+      "amazon_url": "https://www.amazon.com/dp/B0BZXNSW5K?tag=buyrightnotes-storefront-20",
+      "status": "LIVE",
+      "last_offer_check": "2026-09-28"
     }
   ]
 }
