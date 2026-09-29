@@ -37,7 +37,7 @@ body { min-height: 100%; }
   /* Owner (Sept 28): solid, never see-through. When the header is on screen it covers from its bottom edge to the very
      top of the iPhone, clock and battery included: it overshoots the top by 40px (off-screen in a browser, under the
      status bar in the home-screen app) so no mode leaves a gap. When it slides away, nothing stays behind. */
-  .top { background: var(--ink-950); }
+  .top { background: var(--ink-950); backdrop-filter: none; -webkit-backdrop-filter: none; }
   /* With the script running, the header is fixed and the page keeps a constant top padding, so folding or hiding the
      header never shifts the content under a reader's thumb (the sticky version jumped the page 62px, Sept 27). */
   html.fixhead .top { position: fixed; left: 0; right: 0; top: -40px; padding-top: calc(50px + env(safe-area-inset-top, 0px)); }
@@ -270,9 +270,10 @@ html.sheet-open, html.sheet-open body { overflow: hidden; overscroll-behavior: n
   }
 }
 
-/* Touch devices: lighter blurs for smoother scrolling. */
+/* Touch devices: a lighter blur on the Buy bar for smoother scrolling. The phone header is solid with no blur at all
+   (owner, Sept 28: when it slides back in, nothing shows through it), so it is left out here; tablets keep the base blur. */
 @media (pointer: coarse) {
-  .top, .buybar .inner { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .buybar .inner { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 }
 
 /* Reduced motion: the buy bar fades in place instead of sliding; press feedback stays. */
