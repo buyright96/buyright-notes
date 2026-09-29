@@ -506,3 +506,15 @@ footer a { color: var(--text-2); text-decoration: none; }
 .kit ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--text-2); font-size: var(--fs-sm); }
 .kit a { color: var(--text); font-weight: 600; }
 .kit a:hover { color: var(--accent-hi); }
+
+/* Deals lane (guides): one card per deal that held a full day; the button is the only loud thing on the card. */
+.deals { list-style: none; margin: var(--sp-4) 0; padding: 0; display: grid; gap: var(--sp-3, 16px); }
+.deals .deal { border: 1px solid var(--line); border-radius: 16px; padding: var(--sp-4); display: grid; gap: var(--sp-2); }
+.deals .deal h3 { margin: 0; font-size: var(--fs-md); }
+.deals .deal p { margin: 0; color: var(--text-2); font-size: var(--fs-sm); }
+.deals .deal-alt b { color: var(--text); font-weight: 600; }
+.deals .deal-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3, 16px); margin-top: var(--sp-1, 4px); }
+.deals .deal-verified { font-size: var(--fs-xs, 0.8rem); color: var(--text-2); }
+.deals-empty { border: 1px dashed var(--line); border-radius: 16px; padding: var(--sp-4); margin: var(--sp-4) 0; }
+.deals-empty p { margin: 0; color: var(--text-2); }
+.deals-empty b { color: var(--text); }

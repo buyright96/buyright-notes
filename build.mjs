@@ -258,7 +258,15 @@ const FF = rd('templates/partials/fit-funnel.html').trim().replace(/\{\{(IMG|ALT
   if (k === 'BUY') return (site.affiliate_links_enabled === true && p.amazon_url) ? p.amazon_url : (p.asin ? `https://www.amazon.com/dp/${p.asin}` : '#');
   return (p.page_notes?.checks || []).map(c => `<li>${esc(c)}</li>`).join('');
 });
-const TOOLS = { '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"'), '{{FIT_FUNNEL}}': FF };
+// Deals list (guides): the exported deals lane, one card each. A deal in our catalog links to our note; any other links to the
+// tagged Amazon page (plain when affiliate links are off). An empty lane renders one honest line, so the page can be live
+// before the first deal clears the 24-hour check.
+const DL = (() => {
+  const deals = Array.isArray(data.deals) ? data.deals : [];
+  if (!deals.length) return '<div class="deals deals-empty"><p><b>Nothing has cleared yet.</b> A deal lands here only after the offer has held for a full day and the seller checks out. Check back the morning of the sale, or start with <a href="../../">the picks</a>, which say who each one is for.</p></div>';
+  return `<ul class="deals">${deals.map(d => { const p = d.product_id && byId[d.product_id]; const href = p ? `../../p/${p.product_id}/` : d.asin ? (site.affiliate_links_enabled === true ? `https://www.amazon.com/dp/${d.asin}?tag=${site.tracking_id}` : `https://www.amazon.com/dp/${d.asin}`) : '#'; const alts = [d.replacement_1, d.replacement_2].filter(Boolean); return `<li class="deal"><h3 class="h3">${esc(d.product)}</h3><p>${esc(d.buyer_fit)}</p>${alts.length ? `<p class="deal-alt"><b>If it sells out:</b> ${esc(alts.join(' or '))}</p>` : ''}<p class="deal-cta">${p ? `<a class="btn btn-primary" href="${href}">Read our note</a>` : `<a class="btn btn-primary" href="${esc(href)}" rel="sponsored noopener" target="_blank" data-asin="${esc(d.asin)}">Check today's offer on Amazon</a>`}<span class="deal-verified">Checked ${esc(d.last_verified)}</span></p></li>`; }).join('')}</ul>`;
+})();
+const TOOLS = { '{{DEAL_LIST}}': DL, '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"'), '{{FIT_FUNNEL}}': FF };
 const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html);
 const TEXT_PAGES = ['home-espresso', 'portafilter-size-finder', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'];
 const textFront = {}; // slug -> front matter, for the sitemap (a text page with merged_into is a pointer: canonical elsewhere, noindex, off the sitemap)
@@ -277,7 +285,7 @@ const DISCLOSURE_LINE = site.disclosure || 'As an Amazon Associate we earn from 
 for (const [coll, items] of Object.entries(collections)) {
   for (const it of items) {
     const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
-    const hasAmazon = /amazon\.com/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}'); // the funnel carries tagged Buy links
+    const hasAmazon = /amazon\.com/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}') || it.body.includes('{{DEAL_LIST}}'); // the funnel carries tagged Buy links
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
     const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
     // FAQPage schema from a "Questions people ask" section: each ### question with the paragraph under it.

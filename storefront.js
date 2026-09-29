@@ -368,3 +368,6 @@
     grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end);
   }
 })();
+
+// Internal mode for tagged Amazon links outside the product template (deal cards): our own visits get the plain link.
+(() => { const run = () => { if (window.__INTERNAL !== true) return; document.querySelectorAll('a[data-asin][href*="amazon.com"]').forEach(a => { a.href = 'https://www.amazon.com/dp/' + a.dataset.asin; }); }; if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run(); })();
