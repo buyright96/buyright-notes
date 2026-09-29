@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-29T01:44:59.568Z"
+    "generated_at": "2026-09-29T19:54:51.618Z"
   },
   "reels": [
     {
@@ -1301,5 +1301,18 @@
       "last_offer_check": "2026-09-28"
     }
   ],
-  "deals": []
+  "deals": [
+    {
+      "candidate_id": "WDD-002-01",
+      "product": "Philips Sonicare 5950 rechargeable electric toothbrush, 2 brush heads, black (HX7131/03)",
+      "asin": "B0GQWSKBLD",
+      "category": "Health & Personal Care",
+      "buyer_fit": "Someone replacing a manual or aging electric toothbrush before the holidays; two heads and a travel case in the box per the listing title",
+      "replacement_1": "Philips Sonicare 4100",
+      "replacement_2": "Oral-B iO Series 3",
+      "last_verified": "2026-09-29",
+      "tracking_id": "buyrightnotes-deals-20",
+      "product_id": ""
+    }
+  ]
 }
