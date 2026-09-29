@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-28T19:43:33.521Z"
+    "generated_at": "2026-09-29T01:04:43.808Z"
   },
   "reels": [
     {
@@ -89,6 +89,20 @@
         "fit": "A small kitchen that wants cafe-style milk drinks from a machine that is hot in about 3 seconds.",
         "not_fit": "Anyone who wants a grinder built in, or who already owns 58 mm tools."
       },
+      "kit": [
+        {
+          "product_id": "ENCORE-ESP",
+          "why": "the grinder with a real espresso range"
+        },
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the beans and the shot"
+        },
+        {
+          "product_id": "CHEMEX-8CUP",
+          "why": "a pot on the slow mornings"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Home espresso guide",
       "card_image": "assets/breville-bambino-espresso-machine.jpg",
@@ -118,6 +132,20 @@
         "fit": "A first espresso setup where the machine ships with a pressurized basket and you want to move to fresh beans and a non-pressurized basket.",
         "not_fit": "Drip-only households; a simpler grinder does that job for less."
       },
+      "kit": [
+        {
+          "product_id": "BAMBINO-54",
+          "why": "the compact machine it pairs with"
+        },
+        {
+          "product_id": "CHEMEX-8CUP",
+          "why": "the pot for the filter range"
+        },
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the dose"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Home espresso guide",
       "card_image": "assets/baratza-encore-esp-coffee-grinder.jpg",
@@ -148,6 +176,16 @@
         "fit": "A starter espresso machine for someone who wants steam-wand milk drinks at a small price and is happy to buy 51 mm accessories.",
         "not_fit": "Anyone who already owns 54 or 58 mm tampers and baskets, or wants a grinder built in."
       },
+      "kit": [
+        {
+          "product_id": "ENCORE-ESP",
+          "why": "the grinder when you want fresh beans"
+        },
+        {
+          "product_id": "CHEMEX-8CUP",
+          "why": "a pot from the same beans"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Home espresso guide",
       "card_image": "assets/casabrews-cm5418-espresso-machine.jpg",
@@ -178,6 +216,16 @@
         "fit": "A fast hot cup with nothing to measure, and a travel mug up to 7.1 in tall under the spout.",
         "not_fit": "Espresso or latte drinkers, and anyone avoiding single-use pods."
       },
+      "kit": [
+        {
+          "product_id": "NINJA-BL610",
+          "why": "the other one-minute breakfast appliance"
+        },
+        {
+          "product_id": "VERTUO-POP-PLUS",
+          "why": "the pod machine that fits under a low cabinet"
+        }
+      ],
       "guide_url": "",
       "guide_label": "Read the guide",
       "card_image": "assets/keurig-k-classic-single-serve-coffee-maker.jpg",
@@ -208,6 +256,16 @@
         "fit": "Homes with pets, kids or a fabric couch, where the same small messes happen every week.",
         "not_fit": "Anyone who needs to deep-clean whole rooms; rent or buy a full-size carpet cleaner for that."
       },
+      "kit": [
+        {
+          "product_id": "ROCCO-ROXIE-SPRAY",
+          "why": "pre-treat the spot, then lift it"
+        },
+        {
+          "product_id": "FURMINATOR-LARGE",
+          "why": "less hair on the couch to begin with"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/pet-proof-floors-and-couch/",
       "guide_label": "Read the guide",
       "card_image": "assets/bissell-little-green-mini-spot-cleaner.jpg",
@@ -238,6 +296,16 @@
         "fit": "Families and hosts who blend big batches: smoothies for four, frozen drinks by the pitcher.",
         "not_fit": "Anyone who wants a quiet blender or single-serve cups."
       },
+      "kit": [
+        {
+          "product_id": "KEURIG-KCLASSIC",
+          "why": "coffee in the same minute"
+        },
+        {
+          "product_id": "VERTUO-POP-PLUS",
+          "why": "the pod machine under low cabinets"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/holiday-hosting-kitchen/",
       "guide_label": "Read the guide",
       "card_image": "assets/ninja-professional-bl610-blender.jpg",
@@ -267,6 +335,16 @@
         "fit": "One simple hydrating step for dry-air months, without rebuilding a routine.",
         "not_fit": "Treating a skin condition; that is a question for a dermatologist, not a serum."
       },
+      "kit": [
+        {
+          "product_id": "CERAVE-AM-SPF30",
+          "why": "the SPF moisturizer that goes on after it"
+        },
+        {
+          "product_id": "SUMMER-FRIDAYS-LIP",
+          "why": "the lip step of the same routine"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/simple-fall-skincare-routine/",
       "guide_label": "Read the guide",
       "card_image": "assets/la-roche-posay-hyalu-b5-serum.jpg",
@@ -297,6 +375,16 @@
         "fit": "Busy homes with pets, where hair comes back daily and nobody is home to chase it.",
         "not_fit": "Small spaces with no wall room for a tall dock."
       },
+      "kit": [
+        {
+          "product_id": "ROCCO-ROXIE-SPRAY",
+          "why": "for the accidents a vacuum cannot fix"
+        },
+        {
+          "product_id": "FURMINATOR-LARGE",
+          "why": "less hair for the robot to chase"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/pet-proof-floors-and-couch/",
       "guide_label": "Read the guide",
       "card_image": "assets/eufy-e25-robot-vacuum-mop.jpg",
@@ -326,6 +414,20 @@
         "fit": "Bakers who bake most weeks, make bread or cookie dough in quantity, or want the attachment hub later.",
         "not_fit": "A few bakes a year; a hand mixer does that for a fraction of the price and space."
       },
+      "kit": [
+        {
+          "product_id": "TEMPPRO-TP19H",
+          "why": "the thermometer for candy and custard"
+        },
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the flour for the same result every time"
+        },
+        {
+          "product_id": "LODGE-DUTCH-OVEN",
+          "why": "the pot for the bread the mixer kneads"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/fall-baking-setup/",
       "guide_label": "",
       "card_image": "assets/kitchenaid-artisan-stand-mixer.jpg",
@@ -356,6 +458,16 @@
         "fit": "A first enameled Dutch oven for bread, soups and braises; 6 quarts fits a loaf or a family stew.",
         "not_fit": "Anyone who cannot lift a heavy pot safely, or who wants a small pot for one."
       },
+      "kit": [
+        {
+          "product_id": "TEMPPRO-TP19H",
+          "why": "the one-second check on the loaf and the roast"
+        },
+        {
+          "product_id": "KITCHENAID-ARTISAN",
+          "why": "the mixer for bread day"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/fall-baking-setup/",
       "guide_label": "",
       "card_image": "assets/lodge-enameled-dutch-oven.jpg",
@@ -385,6 +497,16 @@
         "fit": "Readers who want a book at bedtime, not a tablet: no apps, no notifications, waterproof for the bath.",
         "not_fit": "People who love paper books, or who want color comics and magazines."
       },
+      "kit": [
+        {
+          "product_id": "FENMZEE-LAMP",
+          "why": "a warm lamp with a charger on the nightstand"
+        },
+        {
+          "product_id": "KINDLE-PAPERWHITE-COVER",
+          "why": "the cover for the bag"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/reading-nook-that-helps-you-sleep/",
       "guide_label": "",
       "card_image": "assets/kindle-paperwhite-e-reader.jpg",
@@ -415,6 +537,16 @@
         "fit": "A quiet home office or open-plan desk, with Transparency mode for when someone talks to you.",
         "not_fit": "Workouts or running; small earbuds suit that better."
       },
+      "kit": [
+        {
+          "product_id": "HATCH-RESTORE-3",
+          "why": "the wind-down after the headphones come off"
+        },
+        {
+          "product_id": "FENMZEE-LAMP",
+          "why": "a warm lamp for the quiet desk"
+        }
+      ],
       "guide_url": "",
       "guide_label": "",
       "card_image": "assets/beats-studio-pro-headphones.jpg",
@@ -444,6 +576,12 @@
         "fit": "New parents building a bedtime routine: pink noise or heartbeat, a soft night light, one button to start.",
         "not_fit": "Anyone who would rather not run a nursery device from a phone app."
       },
+      "kit": [
+        {
+          "product_id": "FENMZEE-LAMP",
+          "why": "a dimmable lamp for the nursery chair"
+        }
+      ],
       "guide_url": "",
       "guide_label": "",
       "card_image": "assets/hatch-baby-sound-machine.jpg",
@@ -475,6 +613,20 @@
         "fit": "Weeknight dinners for a family and appetizer trays when the oven is full.",
         "not_fit": "Cooking for one or two with a small counter."
       },
+      "kit": [
+        {
+          "product_id": "SMIRLY-CHARCUTERIE",
+          "why": "the board the snacks land on"
+        },
+        {
+          "product_id": "NINJA-CREAMI",
+          "why": "dessert for the same table"
+        },
+        {
+          "product_id": "TEMPPRO-TP19H",
+          "why": "the one-second check on wings"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/holiday-hosting-kitchen/",
       "guide_label": "Read the guide",
       "card_image": "assets/cosori-turboblaze-air-fryer.jpg",
@@ -505,6 +657,16 @@
         "fit": "Dessert nights and hosting, where a make-your-own pint station is the party trick.",
         "not_fit": "Anyone who wants ice cream tonight, or has no freezer room for pints."
       },
+      "kit": [
+        {
+          "product_id": "SMIRLY-CHARCUTERIE",
+          "why": "the board for the party before dessert"
+        },
+        {
+          "product_id": "COSORI-TURBOBLAZE",
+          "why": "the air fryer for the savory side"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/holiday-hosting-kitchen/",
       "guide_label": "Read the guide",
       "card_image": "assets/ninja-creami-ice-cream-maker.jpg",
@@ -535,6 +697,20 @@
         "fit": "Hosts and gift-givers who want the whole cheese board, knives and bowls included, in one box.",
         "not_fit": "Rare hosts, or anyone who wants a name-brand serving piece."
       },
+      "kit": [
+        {
+          "product_id": "COSORI-TURBOBLAZE",
+          "why": "the hot snacks beside the board"
+        },
+        {
+          "product_id": "NINJA-CREAMI",
+          "why": "dessert after the board"
+        },
+        {
+          "product_id": "LODGE-DUTCH-OVEN",
+          "why": "the pot for the main course"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/holiday-hosting-kitchen/",
       "guide_label": "Read the guide",
       "card_image": "assets/smirly-bamboo-charcuterie-board-set.jpg",
@@ -565,6 +741,16 @@
         "fit": "Coffee lovers who grind fresh and enjoy five minutes of pour-over, and a gift that looks the part on the counter.",
         "not_fit": "Push-button coffee people, or anyone without a kettle and grinder."
       },
+      "kit": [
+        {
+          "product_id": "ENCORE-ESP",
+          "why": "the grinder with a filter range"
+        },
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the coffee and the water"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Home espresso guide",
       "card_image": "assets/chemex-8-cup-pour-over-coffeemaker.jpg",
@@ -595,6 +781,16 @@
         "fit": "A thick balm for bedtime that doubles as a daytime shine, and a safe beauty gift.",
         "not_fit": "Matte lips or a plain unscented balm."
       },
+      "kit": [
+        {
+          "product_id": "CERAVE-AM-SPF30",
+          "why": "daily SPF for the face, not just the lips"
+        },
+        {
+          "product_id": "LRP-HYALU-B5",
+          "why": "the serum in the same morning routine"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/simple-fall-skincare-routine/",
       "guide_label": "Read the guide",
       "card_image": "assets/summer-fridays-lip-butter-balm.jpg",
@@ -625,6 +821,16 @@
         "fit": "The first step of a nightly routine that has to take off makeup and sunscreen without a tight feeling.",
         "not_fit": "Fragrance-free routines."
       },
+      "kit": [
+        {
+          "product_id": "CERAVE-AM-SPF30",
+          "why": "the morning step"
+        },
+        {
+          "product_id": "LRP-HYALU-B5",
+          "why": "the serum after cleansing"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/simple-fall-skincare-routine/",
       "guide_label": "Read the guide",
       "card_image": "assets/elemis-pro-collagen-cleansing-balm.jpg",
@@ -655,6 +861,16 @@
         "fit": "Owners of the 2024 Paperwhite who want wake-and-sleep on open and one-handed reading.",
         "not_fit": "Older Paperwhite models; buy the cover made for that year instead."
       },
+      "kit": [
+        {
+          "product_id": "KINDLE-PAPERWHITE",
+          "why": "the reader it fits"
+        },
+        {
+          "product_id": "FENMZEE-LAMP",
+          "why": "a warm reading light for the nook"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/reading-nook-that-helps-you-sleep/",
       "guide_label": "Read the guide",
       "card_image": "assets/kindle-paperwhite-fabric-cover.jpg",
@@ -685,6 +901,16 @@
         "fit": "Owners of big, long-haired shedders who vacuum every day and want less hair at the source.",
         "not_fit": "Small dogs or short coats; pick the matching FURminator size."
       },
+      "kit": [
+        {
+          "product_id": "ROCCO-ROXIE-SPRAY",
+          "why": "the enzyme spray for the rug"
+        },
+        {
+          "product_id": "BISSELL-LITTLE-GREEN",
+          "why": "the spot cleaner for the couch"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/pet-proof-floors-and-couch/",
       "guide_label": "Read the guide",
       "card_image": "assets/furminator-deshedding-tool-large-dog.jpg",
@@ -715,6 +941,16 @@
         "fit": "Bakers who follow recipes by weight and want one scale that lasts years.",
         "not_fit": "Anyone who needs tenths of a gram."
       },
+      "kit": [
+        {
+          "product_id": "TEMPPRO-TP19H",
+          "why": "weigh, then check the temperature"
+        },
+        {
+          "product_id": "KITCHENAID-ARTISAN",
+          "why": "the mixer the recipe goes into"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/fall-baking-setup/",
       "guide_label": "Read the guide",
       "card_image": "assets/escali-primo-digital-kitchen-scale.jpg",
@@ -746,6 +982,16 @@
         "fit": "Light sleepers and tired new parents who want one bedside device for sound, light and a gentle alarm.",
         "not_fit": "Anyone who wants an alarm clock with no app."
       },
+      "kit": [
+        {
+          "product_id": "FENMZEE-LAMP",
+          "why": "a reading light for the other side of the bed"
+        },
+        {
+          "product_id": "KINDLE-PAPERWHITE",
+          "why": "the book before the sunrise alarm"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/reading-nook-that-helps-you-sleep/",
       "guide_label": "Read the guide",
       "card_image": "assets/hatch-restore-3-sunrise-alarm-clock.jpg",
@@ -776,6 +1022,16 @@
         "fit": "A kitchen with about 18 in of counter that wants fresh-ground espresso and hand-steamed milk from one machine.",
         "not_fit": "A corner under 16 in wide, or anyone who wants one-touch lattes."
       },
+      "kit": [
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the beans and the shot for a repeatable recipe"
+        },
+        {
+          "product_id": "CHEMEX-8CUP",
+          "why": "a clean pot from the same beans on slow mornings"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Which coffee setup fits my kitchen?",
       "card_image": "assets/breville-barista-express-espresso-machine.jpg",
@@ -806,6 +1062,16 @@
         "fit": "A household that wants hot and iced cafe drinks at one touch, with 18 in of counter depth.",
         "not_fit": "Anyone who wants to pull and dial in shots by hand, or a counter under 18 in deep."
       },
+      "kit": [
+        {
+          "product_id": "SMIRLY-CHARCUTERIE",
+          "why": "the board for the guests you will be serving lattes"
+        },
+        {
+          "product_id": "LODGE-DUTCH-OVEN",
+          "why": "the dinner that waits while the machine does dessert"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Which coffee setup fits my kitchen?",
       "card_image": "assets/delonghi-magnifica-duo-espresso-machine.jpg",
@@ -836,6 +1102,16 @@
         "fit": "A fast weekday kitchen under low cabinets that wants pod coffee with crema and nothing to measure.",
         "not_fit": "Anyone who wants ground coffee, a grinder or the control of a manual machine."
       },
+      "kit": [
+        {
+          "product_id": "NINJA-BL610",
+          "why": "the other weekday-morning appliance on a small counter"
+        },
+        {
+          "product_id": "KEURIG-KCLASSIC",
+          "why": "the K-Cup route if you would rather not commit to Vertuo pods"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/home-espresso-setup/",
       "guide_label": "Which coffee setup fits my kitchen?",
       "card_image": "assets/nespresso-vertuo-pop-plus-coffee-machine.jpg",
@@ -867,6 +1143,20 @@
         "fit": "Pet parents with rugs, couches, crates or car seats who want the smell gone at the source.",
         "not_fit": "Anyone who wants an instant wipe-and-done cleaner."
       },
+      "kit": [
+        {
+          "product_id": "BISSELL-LITTLE-GREEN",
+          "why": "the spot cleaner that lifts the mess after the enzymes work"
+        },
+        {
+          "product_id": "FURMINATOR-LARGE",
+          "why": "less hair on the couch to begin with"
+        },
+        {
+          "product_id": "EUFY-E25",
+          "why": "floors done while you are out"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/pet-proof-floors-and-couch/",
       "guide_label": "Pet-proof floors and couch",
       "card_image": "assets/rocco-roxie-stain-odor-eliminator.jpg",
@@ -898,6 +1188,20 @@
         "fit": "A home cook who wants a one-second, rinse-clean answer to whether the bread, roast or oil is at temperature.",
         "not_fit": "Anyone who wants a leave-in probe with an alarm."
       },
+      "kit": [
+        {
+          "product_id": "LODGE-DUTCH-OVEN",
+          "why": "the no-knead loaf and the chili it checks"
+        },
+        {
+          "product_id": "KITCHENAID-ARTISAN",
+          "why": "the mixer for the cookie dough"
+        },
+        {
+          "product_id": "ESCALI-PRIMO",
+          "why": "weigh the flour, then check the temperature"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/fall-baking-setup/",
       "guide_label": "Fall baking setup",
       "card_image": "assets/temppro-tp19h-instant-read-thermometer.jpg",
@@ -928,6 +1232,20 @@
         "fit": "A simple morning routine that wants SPF built into the moisturizer.",
         "not_fit": "Anyone who wants a tinted finish or a high-SPF sunscreen for long sun days."
       },
+      "kit": [
+        {
+          "product_id": "LRP-HYALU-B5",
+          "why": "the serum that goes on before it"
+        },
+        {
+          "product_id": "ELEMIS-CLEANSING-BALM",
+          "why": "the night step of the same routine"
+        },
+        {
+          "product_id": "SUMMER-FRIDAYS-LIP",
+          "why": "the lip balm that rides in the same bag"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/simple-fall-skincare-routine/",
       "guide_label": "Simple fall skincare routine",
       "card_image": "assets/cerave-am-facial-moisturizing-lotion-spf-30.jpg",
@@ -959,6 +1277,20 @@
         "fit": "A nightstand or reading corner that needs one warm light and a charger in the same spot.",
         "not_fit": "Anyone who wants app or voice control, or a bright desk lamp."
       },
+      "kit": [
+        {
+          "product_id": "KINDLE-PAPERWHITE",
+          "why": "the reader it lights"
+        },
+        {
+          "product_id": "KINDLE-PAPERWHITE-COVER",
+          "why": "the cover for the nightstand stack"
+        },
+        {
+          "product_id": "HATCH-RESTORE-3",
+          "why": "sound and a sunrise for the same bedside"
+        }
+      ],
       "guide_url": "https://buyright96.github.io/buyright-notes/guides/reading-nook-that-helps-you-sleep/",
       "guide_label": "A reading nook that helps you sleep",
       "card_image": "assets/fenmzee-bedside-table-lamp.jpg",

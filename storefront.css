@@ -499,3 +499,10 @@ footer a { color: var(--text-2); text-decoration: none; }
 .prose details.fold > :not(summary) { margin-top: var(--sp-3); }
 .prose details.fold > :last-child { margin-bottom: var(--sp-4); }
 .prose details.fold .pf-tool { margin-top: var(--sp-3); }
+
+/* "Goes with" on product pages (decision 62): the two or three things bought together, each one tap away. */
+.kit { display: grid; gap: var(--sp-2); margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--line); }
+.kit h3 { margin: 0; font-size: var(--fs-md); }
+.kit ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--text-2); font-size: var(--fs-sm); }
+.kit a { color: var(--text); font-weight: 600; }
+.kit a:hover { color: var(--accent-hi); }

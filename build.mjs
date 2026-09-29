@@ -31,6 +31,7 @@ const buyUrl = (p) => p ? ((site.affiliate_links_enabled === true && p.amazon_ur
 const DISCLOSURE = 'We earn a commission if you buy through our links.';
 const saveDescription = (pin) => `${pin.title} ${DISCLOSURE}`;
 const buildable = dataFile.endsWith('sample.json') ? (data.products || []).filter(p => !p.example) : live;
+const byId = Object.fromEntries(buildable.map(p => [p.product_id, p])); // product records by id (kits, funnel tokens)
 const written = [];
 // Generated product pages are rebuilt from scratch so retired products disappear.
 fs.rmSync(path.join(root, 'p'), { recursive: true, force: true });
@@ -184,6 +185,7 @@ function storePage({ rootPrefix, heroId, title, description, url, image, ld, her
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
     .replace('{{MORE_OPEN}}', heroId ? ' open' : '')
     .replace('{{HERO_DETAIL}}', hero ? renderDetail(hero.detail) : '')
+    .replace('{{HERO_KIT}}', heroId && hero && Array.isArray(hero.kit) && hero.kit.some(k => byId[k.product_id]) ? `<div class="kit"><h3 class="h3">Goes with</h3><ul>${hero.kit.filter(k => byId[k.product_id]).map(k => `<li><a href="../../p/${k.product_id}/">${esc(byId[k.product_id].title)}</a>${k.why ? `: ${esc(k.why)}` : ''}</li>`).join('')}</ul></div>` : '')
     .replace('{{HERO_CHECKS}}', heroId && hero && hero.page_notes ? `<div class="checks"><h3 class="h3">Before you buy</h3><ul>${hero.page_notes.checks.map(c => `<li>${esc(c)}</li>`).join('')}</ul>${hero.page_notes.fit ? `<p class="fitline"><b>Fits:</b> ${esc(hero.page_notes.fit)}</p>` : ''}${hero.page_notes.not_fit ? `<p class="fitline"><b>Not for:</b> ${esc(hero.page_notes.not_fit)}</p>` : ''}</div>` : '')
     .replace('{{CATNAV}}', hero ? catnav(hero, isHome, rootPrefix) : '')
     .replace('{{SHELVES}}', hero ? staticShelves(hero, isHome, rootPrefix) : '')
@@ -249,7 +251,6 @@ const PF = rd('templates/partials/portafilter-tool.html').trim();
 // The fit funnel (guides): three taps, one pick. {{IMG|ALT|TITLE|ASIN|BUY|NOTE|CHECKS:ID}} tokens pull from the product record,
 // so a fact lives in one place. Buy links are the tagged Amazon URL (plain when affiliate links are off); the partial's script
 // swaps them for plain links in internal mode.
-const byId = Object.fromEntries(buildable.map(p => [p.product_id, p]));
 const FF = rd('templates/partials/fit-funnel.html').trim().replace(/\{\{(IMG|ALT|TITLE|ASIN|BUY|NOTE|CHECKS):([A-Z0-9-]+)\}\}/g, (_, k, id) => {
   const p = byId[id]; if (!p) throw Error(`fit funnel: unknown product ${id}`);
   if (k === 'IMG') return '../../' + p.card_image; if (k === 'ALT') return esc(p.image_alt || p.title); if (k === 'TITLE') return esc(p.title);
