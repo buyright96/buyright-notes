@@ -66,14 +66,20 @@ function meta({ title, description, url, image, type = 'website', extra = '' }) 
   ].filter(Boolean).join('\n');
 }
 // Internal mode (owner, 2026-09-24): opening any page once with ?internal=on marks that browser as ours (?internal=off undoes it).
-// Our visits are then sent with traffic_type=internal, so GA4's Internal Traffic filter can drop or count them, and
-// storefront.js gives our Buy buttons untagged Amazon links, so our clicks never reach the Associates report.
+// Internal browsers do not load GA4 or send events. This does not depend on the account's filter being Active.
+// Every template also removes Amazon affiliate tags in internal mode; product-page JS keeps dynamic links plain.
 // Local previews (localhost) are always internal.
-const analytics = cfg.ga4_measurement_id ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${cfg.ga4_measurement_id}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());
-(function(){var i=false;try{var q=new URLSearchParams(location.search).get('internal');if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');i=localStorage.getItem('br_internal')==='1';}catch(e){}
-if(/^(localhost|127\\.|\\[::1\\])/.test(location.hostname))i=true;window.__INTERNAL=i;if(i)gtag('set',{traffic_type:'internal'});
-gtag('config','${cfg.ga4_measurement_id}',i?{send_page_view:true,traffic_type:'internal'}:{send_page_view:true});})();</script>` : '<!-- analytics: no GA4 id in site.config.json -->';
+const analytics = `<script data-br-analytics>
+(function(){var q=new URLSearchParams(location.search).get('internal'),i=q==='on';
+try{if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');if(q!=='on'&&q!=='off')i=localStorage.getItem('br_internal')==='1';}catch(e){}
+if(/^(localhost|127\\.|\\[::1\\])/.test(location.hostname))i=true;window.__INTERNAL=i;
+window.dataLayer=window.dataLayer||[];window.gtag=i?function(){}:function(){window.dataLayer.push(arguments);};
+var id=${JSON.stringify(cfg.ga4_measurement_id || '')};
+if(!i&&id){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);document.head.appendChild(s);gtag('js',new Date());gtag('config',id,{send_page_view:true});}
+if(i)document.addEventListener('DOMContentLoaded',function(){
+document.querySelectorAll('a[href]').forEach(function(a){try{var u=new URL(a.href);if(u.protocol==='https:'&&(u.hostname==='amazon.com'||u.hostname==='www.amazon.com')){u.searchParams.delete('tag');a.href=u.href;}}catch(e){}});
+if(!document.querySelector('.internal-chip')){var chip=document.createElement('a'),off=new URL(location.href);off.searchParams.set('internal','off');chip.className='internal-chip';chip.href=off.href;chip.textContent='Internal testing';chip.title='Site tracking is off in this browser and Amazon affiliate tags are removed. Tap to turn off.';document.querySelector('.top .spacer')?.after(chip);}
+});})();</script>`;
 
 function jsonld(obj) { return `<script type="application/ld+json">${JSON.stringify(obj)}</script>`; }
 // The exact Pin B image each product is promoted with (01_WORKSPACE/tools/export_pin_media.mjs), shown on its page so
@@ -315,7 +321,7 @@ for (const [coll, items] of Object.entries(collections)) {
 written.push(wr('404.html', frame(pageTpl
   .replace('<!--META-->', meta({ title: `Not found · ${cfg.name}`, description: 'That page is not on the shelf.' }) + '\n<meta name="robots" content="noindex">')
   .replace('<!--ANALYTICS-->', analytics), { rootPrefix: base ? new URL(base + '/').pathname : '/', nav: '', footerLine: FOOTER_LINE })
-  .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>`)));
+  .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="${esc(base ? base + '/' : '/')}">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
 const today = new Date().toISOString().slice(0, 10);

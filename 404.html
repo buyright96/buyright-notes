@@ -55,11 +55,17 @@
   .prose .jumps a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-3); border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--text-2); font-size: var(--fs-sm); text-decoration: none; transition: color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
   .prose .jumps a:hover { color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YMLG0Q6ETM"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());
-(function(){var i=false;try{var q=new URLSearchParams(location.search).get('internal');if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');i=localStorage.getItem('br_internal')==='1';}catch(e){}
-if(/^(localhost|127\.|\[::1\])/.test(location.hostname))i=true;window.__INTERNAL=i;if(i)gtag('set',{traffic_type:'internal'});
-gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{send_page_view:true});})();</script>
+<script data-br-analytics>
+(function(){var q=new URLSearchParams(location.search).get('internal'),i=q==='on';
+try{if(q==='on')localStorage.setItem('br_internal','1');if(q==='off')localStorage.removeItem('br_internal');if(q!=='on'&&q!=='off')i=localStorage.getItem('br_internal')==='1';}catch(e){}
+if(/^(localhost|127\.|\[::1\])/.test(location.hostname))i=true;window.__INTERNAL=i;
+window.dataLayer=window.dataLayer||[];window.gtag=i?function(){}:function(){window.dataLayer.push(arguments);};
+var id="G-YMLG0Q6ETM";
+if(!i&&id){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);document.head.appendChild(s);gtag('js',new Date());gtag('config',id,{send_page_view:true});}
+if(i)document.addEventListener('DOMContentLoaded',function(){
+document.querySelectorAll('a[href]').forEach(function(a){try{var u=new URL(a.href);if(u.protocol==='https:'&&(u.hostname==='amazon.com'||u.hostname==='www.amazon.com')){u.searchParams.delete('tag');a.href=u.href;}}catch(e){}});
+if(!document.querySelector('.internal-chip')){var chip=document.createElement('a'),off=new URL(location.href);off.searchParams.set('internal','off');chip.className='internal-chip';chip.href=off.href;chip.textContent='Internal testing';chip.title='Site tracking is off in this browser and Amazon affiliate tags are removed. Tap to turn off.';document.querySelector('.top .spacer')?.after(chip);}
+});})();</script>
 </head>
 <body class="grain">
 <div class="lampfield" aria-hidden="true"></div>
@@ -74,7 +80,7 @@ gtag('config','G-YMLG0Q6ETM',i?{send_page_view:true,traffic_type:'internal'}:{se
 
   </header>
   <main class="prose">
-<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="/">Back to the shop</a>.</p>
+<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="https://buyright96.github.io/buyright-notes/">Back to the shop</a>.</p>
   </main>
   <footer>
     <nav>
