@@ -273,7 +273,16 @@ const DL = (() => {
   return `<ul class="deals">${deals.map(d => { const p = d.product_id && byId[d.product_id]; const href = p ? `../../p/${p.product_id}/` : d.asin ? (site.affiliate_links_enabled === true ? `https://www.amazon.com/dp/${d.asin}?tag=${d.tracking_id || site.tracking_id}` : `https://www.amazon.com/dp/${d.asin}`) : '#'; const alts = [d.replacement_1, d.replacement_2].filter(Boolean); return `<li class="deal"><h3 class="h3">${esc(d.product)}</h3><p>${esc(d.buyer_fit)}</p>${alts.length ? `<p class="deal-alt"><b>If it sells out:</b> ${esc(alts.join(' or '))}</p>` : ''}<p class="deal-cta">${p ? `<a class="btn btn-primary" href="${href}">Read our note</a>` : `<a class="btn btn-primary" href="${esc(href)}" rel="sponsored noopener" target="_blank" data-asin="${esc(d.asin)}">Check today's offer on Amazon</a>`}<span class="deal-verified">Checked ${esc(d.last_verified)}</span></p></li>`; }).join('')}</ul>`;
 })();
 const TOOLS = { '{{DEAL_LIST}}': DL, '{{PORTAFILTER_TOOL}}': PF, '{{PORTAFILTER_TOOL_HERO}}': PF.replace('class="pf-tool"', 'class="pf-tool pf-hero"'), '{{FIT_FUNNEL}}': FF };
-const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html);
+// Static Amazon button for a markdown page: {{BUY:ID|Label}} on its own line, next to the specific recommendation (Codex pack,
+// Sept 30: a legacy route should reach Amazon from the matched guide text, not only through a product page). Same link rule
+// as the finder (tagged URL when affiliate links are on, plain otherwise); the internal-mode bootstrap strips the tag for us.
+const buyButton = (id, label) => {
+  const p = byId[id]; if (!p) throw Error(`buy button: unknown product ${id}`);
+  const href = (site.affiliate_links_enabled === true && p.amazon_url) ? p.amazon_url : (p.asin ? `https://www.amazon.com/dp/${p.asin}` : '#');
+  return `<p class="deal-cta"><a class="btn btn-primary" href="${esc(href)}" rel="sponsored noopener" target="_blank" data-asin="${esc(p.asin || '')}" data-product-id="${esc(p.product_id)}">${label}</a></p>`;
+};
+const tools = (html) => Object.entries(TOOLS).reduce((h, [tok, part]) => h.split(`<p>${tok}</p>`).join(part), html)
+  .replace(/<p>\{\{BUY:([A-Z0-9-]+)\|([^}<]+)\}\}<\/p>/g, (_, id, label) => buyButton(id, label));
 const TEXT_PAGES = ['home-espresso', 'portafilter-size-finder', 'about', 'how-we-pick', 'privacy', 'terms', 'contact'];
 const textFront = {}; // slug -> front matter, for the sitemap (a text page with merged_into is a pointer: canonical elsewhere, noindex, off the sitemap)
 for (const slug of TEXT_PAGES) {
@@ -291,7 +300,7 @@ const DISCLOSURE_LINE = site.disclosure || 'As an Amazon Associate we earn from 
 for (const [coll, items] of Object.entries(collections)) {
   for (const it of items) {
     const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
-    const hasAmazon = /amazon\.com/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}') || it.body.includes('{{DEAL_LIST}}'); // the funnel carries tagged Buy links
+    const hasAmazon = /amazon\.com/.test(it.body) || /\{\{BUY:/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}') || it.body.includes('{{DEAL_LIST}}'); // the funnel, deals and buy buttons carry tagged links
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
     const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
     // FAQPage schema from a "Questions people ask" section: each ### question with the paragraph under it.
