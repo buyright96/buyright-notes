@@ -32,7 +32,7 @@ Confirm the exact model number and read its current dimensions before ordering; 
 
 {{BUY:CASABREWS-51|Check the CASABREWS on Amazon}}
 
-**Under a low cabinet? Nespresso Vertuo Pop+.** 10.4 in tall, per the listing, with the 25 oz tank on the side, so nothing opens at the back or the top. The catch: Vertuo pods only; no ground coffee, no grinder, none of the control of a manual machine. [Our note](../../p/VERTUO-POP-PLUS/)
+**Under a low cabinet? Nespresso Vertuo Pop+.** 10.4 in tall, per the listing, with the 25 oz tank on the side, so nothing needs to open at the back. The catch: Vertuo pods only; no ground coffee, no grinder, none of the control of a manual machine. [Our note](../../p/VERTUO-POP-PLUS/)
 
 {{BUY:VERTUO-POP-PLUS|Check the Vertuo Pop+ on Amazon}}
 
