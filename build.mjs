@@ -333,7 +333,8 @@ written.push(wr('404.html', frame(pageTpl
   .replace('{{CONTENT}}', `<h1 class="h1">That page is not on the shelf.</h1><p>The product may have been retired. <a href="${esc(base ? base + '/' : '/')}">Back to the shop</a>.</p>`)));
 written.push(wr('manifest.webmanifest', JSON.stringify({ name: cfg.name, short_name: 'BuyRight', start_url: './', display: 'standalone', background_color: cfg.theme_color, theme_color: cfg.theme_color, icons: [{ src: 'brand/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }, null, 2)));
 written.push(wr('robots.txt', `User-agent: *\nAllow: /\nDisallow: /data/\n${base ? `Sitemap: ${base}/sitemap.xml\n` : ''}`));
-const today = new Date().toISOString().slice(0, 10);
+// Central date, not UTC: an evening build would otherwise stamp the home page with tomorrow (sitemap diagnosis, Sept 30).
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 const urls = [{ loc: `${base}/`, lastmod: today }, ...buildable.map(p => ({ loc: `${base}/p/${p.product_id}/`, lastmod: p.last_offer_check })), ...TEXT_PAGES.filter(s => !textFront[s]?.merged_into).map(s => ({ loc: `${base}/${s}/`, lastmod: undefined })), ...Object.entries(collections).flatMap(([c, items]) => [{ loc: `${base}/${c}/`, lastmod: items.filter(i => !i.front.merged_into).map(i => i.front.date).filter(Boolean).sort().pop() }, ...items.filter(i => !i.front.merged_into).map(i => ({ loc: `${base}/${c}/${i.slug}/`, lastmod: i.front.date }))])];
 written.push(wr('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${esc(u.loc)}</loc>${/^\d{4}-\d{2}-\d{2}$/.test(u.lastmod || '') ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`));
 

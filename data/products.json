@@ -6,7 +6,7 @@
     "disclosure": "As an Amazon Associate, BuyRight Notes earns from qualifying purchases. We pick products from published specs and our own notes, not paid placements.",
     "blog_url": "https://buyrightnotes.blogspot.com/",
     "storefront_url": "https://buyright96.github.io/buyright-notes",
-    "generated_at": "2026-09-30T21:32:30.546Z"
+    "generated_at": "2026-10-01T22:28:25.956Z"
   },
   "reels": [
     {
@@ -1303,6 +1303,18 @@
   ],
   "deals": [
     {
+      "candidate_id": "WDD-001-05",
+      "product": "BISSELL Little Green Mini 4075",
+      "asin": "B0DJMP6T3N",
+      "category": "Home Care",
+      "buyer_fit": "Homes with pets, kids or a fabric couch, where the same small messes happen every week: a 16 oz spot cleaner for cushions, rugs, stairs and car seats, not whole rooms.",
+      "replacement_1": "BISSELL Little Green 4064 (the larger-tank sibling)",
+      "replacement_2": "Rocco & Roxie enzyme spray, to treat spots by hand",
+      "last_verified": "2026-10-01",
+      "tracking_id": "buyrightnotes-deals-20",
+      "product_id": "BISSELL-LITTLE-GREEN"
+    },
+    {
       "candidate_id": "WDD-002-01",
       "product": "Philips Sonicare 5950 rechargeable electric toothbrush, 2 brush heads, black (HX7131/03)",
       "asin": "B0GQWSKBLD",
@@ -1310,7 +1322,7 @@
       "buyer_fit": "Someone replacing a manual or aging electric toothbrush before the holidays; two heads and a travel case in the box per the listing title",
       "replacement_1": "Philips Sonicare 4100",
       "replacement_2": "Oral-B iO Series 3",
-      "last_verified": "2026-09-29",
+      "last_verified": "2026-10-01",
       "tracking_id": "buyrightnotes-deals-20",
       "product_id": ""
     }
