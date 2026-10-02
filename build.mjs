@@ -7,10 +7,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const rd = (f) => fs.readFileSync(path.join(root, f), 'utf8');
 const wr = (f, s) => { const p = path.join(root, f); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, s, 'utf8'); return f; };
+// Asset version stamps: GitHub Pages lets browsers cache every file for 10 minutes, so a deploy could pair new HTML with
+// the old stylesheet (seen Oct 1: the new header drawn with the old CSS). A content hash in each URL makes every page ask
+// for exactly the CSS and JS it was built with.
+// A file that is not there (the contract tests build from a copy of the inputs only) simply gets no stamp.
+const ver = Object.fromEntries(['brand/brand.css', 'storefront.css', 'storefront.js'].filter(f => fs.existsSync(path.join(root, f))).map(f => [f, crypto.createHash('sha256').update(fs.readFileSync(path.join(root, f))).digest('hex').slice(0, 10)]));
+const stamp = (html) => html.replace(/(brand\/brand\.css|storefront\.css|storefront\.js)"/g, (m, f) => ver[f] ? `${f}?v=${ver[f]}"` : m);
 const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const cfg = JSON.parse(rd('site.config.json'));
@@ -166,7 +173,8 @@ const browse = (rootPrefix, current, exact, here, cat) => partials.browse
 // `nav` is the category bar (store pages; `has-bar` on the header). `topMod` adds a header class (`on-product`: the bar
 // gives way to the Menu drawer on phones). The Browse trigger is a plain link until the drawer's script upgrades it:
 // `browseHref` is where it goes without the script (the Shop page's shelves, unless the page lists the categories itself).
-const frame = (html, { rootPrefix, nav, footerLine, current = '', exact = false, here = new Set(), cat = '', browseHref = '', topMod = '' }) => html
+const frame = (html, opts) => stamp(frameRaw(html, opts));
+const frameRaw = (html, { rootPrefix, nav, footerLine, current = '', exact = false, here = new Set(), cat = '', browseHref = '', topMod = '' }) => html
   .replace('{{HEADER}}', partials.header.replace('{{TOP_MOD}}', (nav ? ' has-bar' : '') + topMod).replace('{{SITENAV}}', siteNav(rootPrefix, current, exact)).replace('{{BROWSE_HREF}}', browseHref || `${rootPrefix}./#shelves`).replace('{{NAV}}', nav))
   .replace('{{FOOTER}}', partials.footer.replace('{{FOOTER_SITE}}', siteLinks(rootPrefix, current, exact)).replace('{{FOOTER_LINE}}', footerLine))
   .replace('{{BROWSE}}', () => browse(rootPrefix, current, exact, here, cat)) // a function, so a "$" in the drawer's script is never read as a replace pattern
