@@ -10,6 +10,11 @@
   "bing_site_verification": "",
   "contact_email": "shopfixlet@gmail.com",
   "theme_color": "#171117",
+  "_nav_comment": "Header, drawer and footer links are Shop, Buying Guides and Deals on every page. deals_page is where Deals goes: the current deals hub, as a site path; change it when the event changes, or leave it empty to drop the link. collection_labels is a collection's name wherever it is shown (nav, hub heading, back link).",
+  "deals_page": "guides/prime-big-deal-days-2026/",
+  "collection_labels": {
+    "guides": "Buying Guides"
+  },
   "default_share_image": "assets/kindle-paperwhite-e-reader.jpg",
   "_featured_comment": "Featured picks on the home page, in order, by product_id. Edit freely; unknown ids are skipped.",
   "featured": [

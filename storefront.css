@@ -14,13 +14,11 @@ body { min-height: 100%; }
   border-bottom: 1px solid var(--line);
 }
 .top .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-family: var(--font-display); font-size: 1.15rem; letter-spacing: -0.01em; }
-.top .brand svg { width: 28px; height: 28px; }
+.top .brand svg { width: 28px; height: 28px; flex: none; } /* the mark keeps its size when the name wraps (it shrank with it, to a dot at 1080px) */
 .top .brand em { font-style: italic; font-weight: 400; color: var(--text-2); }
 .top .spacer { flex: 1; }
 /* Internal mode marker: only our own browsers ever see it. */
 .internal-chip { font: 600 var(--fs-xs)/1 var(--font-ui); color: var(--text-2); text-decoration: none; padding: 8px 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1.5px var(--accent); white-space: nowrap; }
-.top .guides { font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text-2); text-decoration: none; padding: 10px 12px; border-radius: var(--r-pill); }
-@media (hover: hover) and (pointer: fine) { .top .guides:hover { color: var(--text); background: var(--surface); } }
 
 /* Category bar: a swipeable row of chips inside the sticky header. The current section is highlighted
    (bone text, ember outline); the solid ember fill stays reserved for Buy buttons. */
@@ -46,8 +44,14 @@ body { min-height: 100%; }
      inside the header keeps it on screen. */
   html.fixhead .top { transition: transform var(--dur-2) var(--ease-out); }
   html.fixhead.scrolling-down .top:not(:focus-within) { transform: translateY(-100%); }
+  /* Closing the Browse drawer hands focus back to its trigger in the header. That is not someone tabbing through the
+     header, so it must not pin the header open: where :has() works, only visible (keyboard) focus keeps it on screen. */
+  @supports selector(:has(a)) { html.fixhead.scrolling-down .top:not(:has(:focus-visible)) { transform: translateY(-100%); } }
   html.scrolling-down .buybar.show { transform: translateY(110%); }
   @media (prefers-reduced-motion: reduce) { html.fixhead .top { transition: none; } }
+  /* Our own browsers only: the marker takes the end of the header (a row of its own on most phones), so the first row is
+     the name and the trigger, as visitors see it. */
+  .internal-chip { order: 2; }
 }
 .catnav:empty { display: none; }
 .catnav a {
@@ -63,8 +67,8 @@ body { min-height: 100%; }
 .catnav a:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
 @media (hover: hover) and (pointer: fine) { .catnav a:hover { color: var(--text); } }
 
-/* Jumps land below the sticky header instead of under it. */
-.shelf { scroll-margin-top: var(--nav-h, 120px); }
+/* Jumps land below the sticky header instead of under it (the wheels; without scripts, the trigger's two targets). */
+.shelf, #shelves, .catgrid { scroll-margin-top: var(--nav-h, 120px); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 /* Back to all picks: Pinterest visitors land on a product page with no history, so the way back is explicit. */
@@ -379,10 +383,11 @@ footer a { color: var(--text-2); text-decoration: none; }
 .guide-tile:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
 .guide-tile:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
 
-/* Site nav: Shop and Guides on every page, in the header after the brand. Room for one or two more pages later. */
+/* Site nav: Shop, Buying Guides and Deals on every page, in the header after the brand (tablet and up; on phones the
+   same three links lead the Menu drawer, since they do not fit beside the name). The outline marks the reader's section. */
 .sitenav { display: flex; gap: 4px; }
-.sitenav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--r-pill); color: var(--text-2); text-decoration: none; font: 600 var(--fs-sm) var(--font-ui); -webkit-tap-highlight-color: transparent; }
-.sitenav a[aria-current="page"] { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.sitenav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--r-pill); color: var(--text-2); text-decoration: none; white-space: nowrap; font: 600 var(--fs-sm) var(--font-ui); -webkit-tap-highlight-color: transparent; }
+.sitenav a[aria-current] { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
 .sitenav a:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
 @media (hover: hover) and (pointer: fine) { .sitenav a:hover { color: var(--text); background: var(--surface); } }
 /* Featured picks on the home page: the owner's short list from site.config.json, as product tiles. */
@@ -519,3 +524,117 @@ footer a { color: var(--text-2); text-decoration: none; }
 .deals-empty { border: 1px dashed var(--line); border-radius: 16px; padding: var(--sp-4); margin: var(--sp-4) 0; }
 .deals-empty p { margin: 0; color: var(--text-2); }
 .deals-empty b { color: var(--text); }
+
+/* Browse (Sept 30, Codex pack section D): one trigger in the header and one drawer, on every page. The category bar stays
+   on the store pages (Shop and product pages) at every size it has today, decisions 38 and 42, except on a phone's
+   product page, where the Menu trigger stands in for it so the Pin's product and its Buy button fit the first screen.
+   Guide and text pages get the drawer instead of a second header row. The drawer is the detail sheet (dialog.sheet: same
+   panel, backdrop, slide and easing) holding links. Phones: the trigger reads Menu and the drawer leads with Shop, Buying
+   Guides and Deals, which have no room beside the name. From 720px the header shows those three itself, the trigger reads
+   Browse, and the drawer is a panel under it holding the categories. */
+.browse-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: var(--r-pill);
+  font: 600 var(--fs-sm)/1 var(--font-ui); color: var(--text); text-decoration: none; white-space: nowrap;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong); -webkit-tap-highlight-color: transparent;
+  transition: transform 200ms var(--ease-out), box-shadow var(--dur-1) ease;
+}
+.browse-btn svg { width: 16px; height: 16px; flex: none; color: var(--accent); }
+.browse-btn:active { transform: scale(0.97); transition-duration: 100ms; }
+.browse-btn[aria-expanded="true"] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.browse-btn:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .browse-btn:hover { box-shadow: inset 0 0 0 1.5px var(--accent); } }
+@media (max-width: 719px) {
+  .sitenav, .w-browse { display: none; }
+  /* Phone product page (the Pinterest landing): one 63px header row instead of 117px. The categories are in the Menu
+     drawer and the "All our picks" tiles. Owner's call (it changes decision 42 on phones): delete this line to bring the
+     swipeable bar back here. */
+  .top.on-product .catnav { display: none; }
+  /* Without scripts the drawer cannot open, so the three links come back as a header row of their own (the footer
+     carries them too, for browsers that do not know this query). */
+  @media (scripting: none) { .sitenav { display: flex; order: 1; flex: 1 0 100%; } .catnav { order: 2; } }
+}
+/* The page lock is the detail sheet's (html.sheet-open). On pages whose header is sticky (guides, text pages, tablets and
+   up) that lock turns <body> into a scroll box, which un-sticks the header: it vanished behind the dimmed page while the
+   drawer was open. clip locks the same way without making a scroll box. The stable gutter keeps a mouse user's page from
+   shifting sideways when the scrollbar goes. Both apply only while the drawer is open. */
+html.browse-open { scrollbar-gutter: stable; }
+@supports (overflow: clip) { html.browse-open body { overflow: clip; } }
+/* Up to 40px from the top of the screen (the detail sheet stops at 88dvh): the three rows and twelve chips then fit most
+   phones without scrolling inside; on a shorter screen the drawer scrolls, as the detail sheet does. */
+.browse .sheet-inner { gap: var(--sp-3); max-height: calc(100dvh - 40px); }
+.browse-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+#browse-title:focus { outline: none; } /* focused only to start the drawer at its top, like #sheet-title */
+/* The three destinations: serif rows on hairlines, the ember dot on the reader's section. */
+.browse-site { display: grid; border-top: 1px solid var(--line); }
+.browse-site a {
+  display: flex; align-items: center; gap: 10px; min-height: 48px; border-bottom: 1px solid var(--line);
+  font: 500 var(--fs-lg)/var(--lh-snug) var(--font-display); letter-spacing: -0.015em; font-variation-settings: "opsz" 24, "SOFT" 30;
+  color: var(--text); text-decoration: none; -webkit-tap-highlight-color: transparent; transition: color var(--dur-1) ease;
+}
+.browse-site a[aria-current]::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, transparent); }
+.browse-site a:active { color: var(--accent-hi); }
+.browse .row-note { margin: var(--sp-2) 0 0; }
+/* The categories: the bar's chips, two to a row. The ember outline marks a product page's own category, and only that:
+   a mouse hover gets its own cue (brighter text, a lighter fill), so the pill under the pointer never reads as "you are here". */
+.browse-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.browse-cats a {
+  display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--r-pill);
+  font: 600 var(--fs-sm)/1.2 var(--font-ui); color: var(--text-2); text-decoration: none;
+  background: var(--card); box-shadow: inset 0 0 0 1px var(--line); -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-1) ease, background-color var(--dur-1) ease, box-shadow var(--dur-1) ease, transform 200ms var(--ease-out);
+}
+.browse-cats a:active { transform: scale(0.97); transition-duration: 100ms; }
+.browse-cats a[aria-current] { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.browse-site a:focus-visible, .browse-cats a:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+.browse-site a:focus-visible { border-radius: 6px; }
+@media (hover: hover) and (pointer: fine) { .browse-site a:hover { color: var(--accent-hi); } .browse-cats a:hover { color: var(--text); background: var(--ink-700); } }
+/* A same-page category jump focuses its wheel (tabindex -1, set by the drawer's script) so Tab carries on from there; like
+   #sheet-title, it is focused only as a starting point, so no ring around the whole wheel. */
+.shelf[tabindex="-1"]:focus { outline: none; }
+/* Tablet and up: no trigger on store pages (every chip is already in view). Elsewhere the drawer is a panel under the
+   header, its right edge on the trigger (the drawer's script sets the two offsets): a lighter dim with no blur, no grip,
+   and a short fade with a small drop instead of the phone's slide. */
+@media (min-width: 720px) {
+  .w-menu, .top.has-bar .browse-btn, .browse-site, .browse .grip, .browse .row-note { display: none; }
+  dialog.sheet.browse { inset: var(--browse-top, 72px) var(--browse-right, var(--gutter)) auto auto; width: min(520px, calc(100vw - 2 * var(--gutter))); overflow: visible; }
+  dialog.sheet.browse::backdrop { background: rgba(10, 7, 5, 0.35); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .browse .sheet-inner { max-height: calc(100dvh - var(--browse-top, 72px) - var(--sp-5)); padding: var(--sp-4) var(--sp-5) var(--sp-5); border-radius: var(--r-lg); box-shadow: var(--glow-soft), inset 0 0 0 1px var(--line-strong); }
+  .browse-cats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (prefers-reduced-motion: no-preference) { dialog.sheet.browse.closing .sheet-inner { animation: fade-out 160ms ease-out both; } }
+}
+/* Desktop store header (Shop and product pages): the brand, three links and every chip share one row, and the chips wrap
+   to a second row when they must, never a third (107px, as today). The three links never shrink. From 1280px the name
+   stays on one line. Guide and text pages have no chips, so their name is always on one line. */
+@media (min-width: 1080px) { .top:not(.has-bar) .brand, .sitenav, .browse-btn { flex: none; } }
+@media (min-width: 1280px) {
+  .top.has-bar .brand { flex: none; }
+  /* Our own browsers only: the "Internal testing" marker takes header room, so the name may wrap again (as it does today)
+     rather than push the chips to a third row. */
+  .top.has-bar:has(.internal-chip) .brand { flex: 0 1 auto; }
+}
+/* 1080 to 1279px (small laptops, Windows laptops at 125-175%, a tablet on its side): the third link costs about one chip
+   of room, so here the name breaks onto two lines as it does today (the logo keeps its size: .top .brand svg is
+   flex: none), and the header packs a little closer: 8px between its parts, the links 10px in from their edges with no
+   gap between them, the chips 4px apart and 12px in. Measured with the real fonts (drawer_check.mjs): two chip rows and
+   107px at every width from 1080 to 1279, as today, and still two with the chip and link text widened by 0.8px a letter. */
+@media (min-width: 1080px) and (max-width: 1279px) {
+  .top.has-bar { column-gap: var(--sp-2); }
+  .top.has-bar .spacer { flex-basis: 0; }
+  .top.has-bar .sitenav { gap: 0; }
+  .top.has-bar .sitenav a { padding: 0 10px; }
+  .top.has-bar .catnav { gap: 6px 4px; }
+  .top.has-bar .catnav a { padding: 0 12px; }
+}
+/* Windows High Contrast (forced colors) drops box-shadow, which draws the trigger's and the pills' edges, the current-place
+   outlines and the panel's edge, and repaints the ember dot. System-color borders and outlines stand in: ButtonText for an
+   edge, Highlight for where the reader is (and for an open trigger). Outlines, not borders, on the header links and the bar's
+   chips, so they keep their size as the highlight moves; the focus ring still wins on the focused link. */
+@media (forced-colors: active) {
+  .browse-btn, .browse-cats a { border: 1px solid ButtonText; }
+  .browse-btn[aria-expanded="true"] { border-color: Highlight; }
+  .browse-cats a[aria-current] { border: 2px solid Highlight; }
+  .sitenav a[aria-current]:not(:focus-visible), .catnav a[aria-current]:not(:focus-visible) { outline: 2px solid Highlight; outline-offset: -2px; }
+  .browse-site a[aria-current]::before { forced-color-adjust: none; background: Highlight; }
+  .browse .sheet-inner { border-top: 1px solid CanvasText; }
+}
+@media (forced-colors: active) and (min-width: 720px) { .browse .sheet-inner { border: 1px solid CanvasText; } }

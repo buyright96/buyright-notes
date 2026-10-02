@@ -111,7 +111,8 @@
     // Measure the unfolded header once (and on resize) so the page can hold that padding while the header is fixed on phones.
     // Page padding = the header's on-screen height: its box minus the 40px it overshoots above the screen (phone CSS).
     const fit = () => { if (!slim) { document.documentElement.classList.add('fixhead'); const over = matchMedia('(max-width: 719px)').matches ? 40 : 0; document.documentElement.style.setProperty('--top-h', Math.max(0, top.offsetHeight - over) + 'px'); } };
-    if (top) { fit(); window.addEventListener('resize', fit, { passive: true }); if (document.fonts) document.fonts.ready.then(fit);
+    // Measured again whenever the header's box changes (fonts arriving, the internal-mode marker being added).
+    if (top) { fit(); window.addEventListener('resize', fit, { passive: true }); if ('ResizeObserver' in window) new ResizeObserver(fit).observe(top); else if (document.fonts) document.fonts.ready.then(fit);
       window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true }); } }
   const setBar = (show) => { bar.classList.toggle('show', show); bar.toggleAttribute('inert', !show); bar.setAttribute('aria-hidden', String(!show)); };
   let watchUnderBar = () => {};
@@ -155,10 +156,16 @@
 
   // Category bar: "All picks" plus one chip per category that has a product (every category, even on product pages).
   // A chip jumps to its wheel when that wheel is on this page (a shareable #hash); otherwise it goes home to that wheel.
-  // The chip for the section you are looking at is highlighted, on every page.
+  // The chip for the section you are looking at is highlighted, on every page. On a phone's product page the bar is
+  // hidden (storefront.css .on-product) and the Browse drawer (templates/partials/browse.html) holds the same links.
   const nav = $('catnav');
   const sections = [...shelves.querySelectorAll('section.shelf')];
   const here = (id) => sections.some(s => s.id === id);
+  // Jumps land below the header on every store page, with or without the bar (measured again when the header's box changes).
+  const header = document.querySelector('.top');
+  const setNavH = () => document.documentElement.style.setProperty('--nav-h', `${header.offsetHeight + 8}px`);
+  if (header) { setNavH(); addEventListener('resize', setNavH, { passive: true }); if ('ResizeObserver' in window) new ResizeObserver(setNavH).observe(header); }
+  let setActive = () => {};
   if (nav && categories.length) {
     const links = [['top', 'All picks'], ...categories.map(c => [c.id, c.label])].map(([id, label]) => {
       const a = document.createElement('a'); a.textContent = label; a.dataset.target = id;
@@ -167,10 +174,8 @@
       return a;
     });
     nav.replaceChildren(...links);
-    const header = document.querySelector('.top');
-    const setNavH = () => document.documentElement.style.setProperty('--nav-h', `${header.offsetHeight + 8}px`);
-    setNavH(); addEventListener('resize', setNavH, { passive: true });
-    const setActive = (id) => {
+    setNavH(); // the bar now has its chips
+    setActive = (id) => {
       for (const a of links) { const on = a.dataset.target === id; a.toggleAttribute('aria-current', on); if (on && nav.scrollWidth > nav.clientWidth + 1) nav.scrollTo({ left: a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2, behavior: reduceMotion ? 'auto' : 'smooth' }); }
     };
     // Scroll-spy: the shelf nearest the top of the screen owns the highlight. Above the first shelf it is "All picks"
@@ -186,10 +191,11 @@
       }, { rootMargin: '-35% 0px -40% 0px' });
       sections.forEach(s => spy.observe(s));
     }
-    // Arriving with #kitchen (from another page's chip): shelves are built by script, so jump once they exist.
-    const want = decodeURIComponent(location.hash.slice(1));
-    if (want && here(want)) requestAnimationFrame(() => { document.getElementById(want).scrollIntoView({ block: 'start' }); setActive(want); });
   } else if (nav) nav.hidden = true;
+  // Arriving with #kitchen (from the Browse drawer, a tile or a saved link): shelves are built by script, so jump once they
+  // exist. Runs on product pages too (/p/<ID>/#<its category> is a saved route), whether or not the bar is showing.
+  const want = decodeURIComponent(location.hash.slice(1));
+  if (want && here(want)) requestAnimationFrame(() => { document.getElementById(want).scrollIntoView({ block: 'start' }); setActive(want); });
 
   // Product pages end with every category as a tile, so the whole shop is one tap away from any Pin (owner, Sept 24:
   // "navigation that takes you to a home area that shows all of the sections"). Tiles open that wheel on the home page.

@@ -118,8 +118,9 @@ function renderDetail(text) {
   }
   close(); return out.join('');
 }
-// Everything a crawler needs is in the HTML itself: the category bar, every category's picks, and (on product pages)
-// the "All our picks" tiles. storefront.js rebuilds the same things with the wheels; without it the plain links work.
+// Everything a crawler needs is in the HTML itself: the category bar (every store page), the Browse drawer's links (every
+// page), every category's picks, and (on product pages) the "All our picks" tiles. storefront.js rebuilds the bar, the
+// picks and the tiles with the wheels; without it the plain links work.
 // Same rules as storefront.js: a category exists when a LIVE product lists it; a product page shows its own category
 // (if it has more than one pick, else the first non-hot category with more than one) and then Hot deals.
 const categories = (data.reels || []).map(r => ({ ...r, items: buildable.filter(p => (p.reels || [p.category]).includes(r.id)) })).filter(r => r.items.length);
@@ -142,14 +143,33 @@ const staticShelves = (hero, isHome, rootPrefix) => pageCats(hero, isHome).map(c
 </section>`).join('\n');
 const staticTiles = (hero, rootPrefix) => categories.map(c => { const pic = c.items.find(p => p.product_id !== hero.product_id) || c.items[0]; return `<a class="tile" href="${rootPrefix}./#${c.id}"${c.id === hero.category ? ' aria-current="true"' : ''}><span class="card-media">${pic.card_image ? `<img src="${esc(rootPrefix + pic.card_image)}" alt="${esc(pic.image_alt || '')}" width="1024" height="1280" loading="lazy" decoding="async">` : ''}</span><b>${esc(c.label)}</b><span>${c.items.length} ${c.items.length === 1 ? 'pick' : 'picks'}</span></a>`; }).join('');
 const pageTpl = rd('templates/page.html');
-// ---------- shared header and footer (templates/partials), so a nav change is one edit for every page ----------
-const partials = { header: rd('templates/partials/header.html'), footer: rd('templates/partials/footer.html') };
-// Site nav: the same two links on every page; `current` marks where the reader is. Add a page here and it appears everywhere.
-const siteNav = (rootPrefix, current) => `    <nav class="sitenav" aria-label="Site"><a href="${rootPrefix || './'}"${current === 'shop' ? ' aria-current="page"' : ''}>Shop</a><a href="${rootPrefix}guides/"${current === 'guides' ? ' aria-current="page"' : ''}>Guides</a></nav>`;
-const shopNav = () => '';
-const frame = (html, { rootPrefix, nav, footerLine, current = '' }) => html
-  .replace('{{HEADER}}', partials.header.replace('{{SITENAV}}', siteNav(rootPrefix, current)).replace('{{NAV}}', nav))
-  .replace('{{FOOTER}}', partials.footer.replace('{{FOOTER_LINE}}', footerLine))
+// ---------- shared header, footer and Browse drawer (templates/partials), so a nav change is one edit for every page ----------
+const partials = { header: rd('templates/partials/header.html'), footer: rd('templates/partials/footer.html'), browse: rd('templates/partials/browse.html') };
+// A collection's name wherever it is shown (nav, hub heading, back link): site.config.json collection_labels, else the folder name.
+const collLabel = (coll) => (cfg.collection_labels || {})[coll] || coll[0].toUpperCase() + coll.slice(1);
+// Site nav: the same three links, with the same labels, on every page (header from 720px; the Menu drawer and the footer
+// on phones). Add a page here and it appears everywhere. Deals is the current deals hub, named in site.config.json
+// (deals_page), so a new event is a one-line change; a path that is not a page in content/ fails the build.
+const DEALS = (cfg.deals_page || '').replace(/^\/+|\/+$/g, '');
+if (DEALS && !fs.existsSync(path.join(root, 'content', `${DEALS}.md`))) throw Error(`site.config.json deals_page "${cfg.deals_page}" is not a page in content/`);
+const SITE_LINKS = [['shop', 'Shop', ''], ['guides', collLabel('guides'), 'guides/'], ...(DEALS ? [['deals', 'Deals', `${DEALS}/`]] : [])];
+// `current` is the section the page sits in. `exact`: the page is that link's own destination (aria-current="page");
+// otherwise the link is marked as the reader's section (aria-current="true": a product page under Shop, a guide under Buying Guides).
+const siteLinks = (rootPrefix, current, exact) => SITE_LINKS.map(([id, label, href]) => `<a href="${rootPrefix + href || './'}"${current === id ? ` aria-current="${exact ? 'page' : 'true'}"` : ''}>${esc(label)}</a>`).join('');
+const siteNav = (rootPrefix, current, exact) => `    <nav class="sitenav" aria-label="Site">${siteLinks(rootPrefix, current, exact)}</nav>`;
+// Browse drawer (templates/partials/browse.html), in every page's HTML: the three site links (shown on phones, where the
+// header has no room for them) and one link per category. `here` holds the categories whose wheel is on this page: those
+// are same-page anchors, the rest open that wheel on the Shop page. `cat` marks a product page's own category.
+const browse = (rootPrefix, current, exact, here, cat) => partials.browse
+  .replace('{{BROWSE_SITE}}', siteLinks(rootPrefix, current, exact))
+  .replace('{{BROWSE_CATS}}', categories.map(c => `<a href="${here.has(c.id) ? '' : rootPrefix + './'}#${c.id}"${c.id === cat ? ' aria-current="true"' : ''}>${esc(c.label)}</a>`).join(''));
+// `nav` is the category bar (store pages; `has-bar` on the header). `topMod` adds a header class (`on-product`: the bar
+// gives way to the Menu drawer on phones). The Browse trigger is a plain link until the drawer's script upgrades it:
+// `browseHref` is where it goes without the script (the Shop page's shelves, unless the page lists the categories itself).
+const frame = (html, { rootPrefix, nav, footerLine, current = '', exact = false, here = new Set(), cat = '', browseHref = '', topMod = '' }) => html
+  .replace('{{HEADER}}', partials.header.replace('{{TOP_MOD}}', (nav ? ' has-bar' : '') + topMod).replace('{{SITENAV}}', siteNav(rootPrefix, current, exact)).replace('{{BROWSE_HREF}}', browseHref || `${rootPrefix}./#shelves`).replace('{{NAV}}', nav))
+  .replace('{{FOOTER}}', partials.footer.replace('{{FOOTER_SITE}}', siteLinks(rootPrefix, current, exact)).replace('{{FOOTER_LINE}}', footerLine))
+  .replace('{{BROWSE}}', () => browse(rootPrefix, current, exact, here, cat)) // a function, so a "$" in the drawer's script is never read as a replace pattern
   .replaceAll('{{ROOT}}', rootPrefix);
 // ---------- articles: content/<collection>/<slug>.md with front matter -> <collection>/<slug>/index.html ----------
 function frontMatter(raw) {
@@ -180,12 +200,15 @@ const featuredRow = (rootPrefix) => {
 const FOOTER_LINE = "Prices and availability change. We link you to Amazon to see today's.";
 // Home page row of guides: the newest four, as text tiles, with a link to the whole collection.
 const guidesRow = (rootPrefix) => guides.filter(g => !g.front.merged_into).length ? `    <section class="guides-row" aria-labelledby="guides-h">
-      <div class="row-head"><h2 class="h2" id="guides-h">Guides</h2><a class="btn btn-ghost btn-sm" href="${rootPrefix}guides/">All guides</a></div>
+      <div class="row-head"><h2 class="h2" id="guides-h">${esc(collLabel('guides'))}</h2><a class="btn btn-ghost btn-sm" href="${rootPrefix}guides/">All guides</a></div>
       <div class="guide-tiles">${guides.filter(g => !g.front.merged_into).slice(0, 6).map(g => `<a class="guide-tile" href="${rootPrefix}guides/${g.slug}/"><b>${esc(g.front.title)}</b><span>${esc(g.front.cluster || '')}</span></a>`).join('')}</div>
     </section>` : '';
 function storePage({ rootPrefix, heroId, title, description, url, image, ld, heroBuyUrl = '#', heroGuideUrl = '#', hero }) {
   const isHome = !heroId;
-  return frame(storeTpl, { rootPrefix, nav: '    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>', footerLine: FOOTER_LINE, current: 'shop' })
+  // Every store page keeps the category bar at every size it has today (decisions 38 and 42). On phones a product page
+  // hides it (`on-product`, storefront.css) so the Pin's product and its Buy button fit the first screen; the Menu drawer
+  // holds the same categories there.
+  return frame(storeTpl, { rootPrefix, nav: '    <nav class="catnav" id="catnav" aria-label="Browse picks">{{CATNAV}}</nav>', topMod: isHome ? '' : ' on-product', footerLine: FOOTER_LINE, current: 'shop', exact: isHome, here: new Set(hero ? pageCats(hero, isHome).map(c => c.id) : []), cat: isHome ? '' : hero?.category, browseHref: isHome ? '#shelves' : '#catgrid' })
     .replace('{{FEATURED}}', isHome ? featuredRow(rootPrefix) : '')
     .replace('<!--META-->', meta({ title, description, url, image, type: heroId ? 'article' : 'website', extra: ld ? jsonld(ld) : '' }))
     .replace('{{PIN_FIGURE}}', heroId ? pinFigure(hero, rootPrefix) : '')
@@ -302,17 +325,17 @@ for (const [coll, items] of Object.entries(collections)) {
     const rootPrefix = '../../', url = abs(`${coll}/${it.slug}/`);
     const hasAmazon = /amazon\.com/.test(it.body) || /\{\{BUY:/.test(it.body) || it.body.includes('{{FIT_FUNNEL}}') || it.body.includes('{{DEAL_LIST}}'); // the funnel, deals and buy buttons carry tagged links
     const byline = `<p class="byline">${it.front.cluster ? `<b>${esc(it.front.cluster)}</b>` : ''}${it.front.date ? `<span>${esc(new Date(it.front.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }))}</span>` : ''}</p>`;
-    const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(coll)}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
+    const content = `<a class="backlink" href="../"><span aria-hidden="true">&larr;</span> All ${esc(collLabel(coll).toLowerCase())}</a>\n` + tools(md(it.body)).replace(/(<h1[^>]*>.*?<\/h1>)/, `$1\n${byline}${hasAmazon ? `\n<p class="disclosure">${esc(DISCLOSURE_LINE)}</p>` : ''}`);
     // FAQPage schema from a "Questions people ask" section: each ### question with the paragraph under it.
     const faq = [...it.body.matchAll(/^### (.+)\n+([^\n#].*)$/gm)].map(m => ({ '@type': 'Question', name: m[1].trim(), acceptedAnswer: { '@type': 'Answer', text: m[2].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\*\*?/g, '').trim() } }));
     const faqLd = faq.length && /^## Questions people ask/m.test(it.body) ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq }] : [];
-    const ld = it.front.merged_into ? null : [...faqLd, { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', image: abs(it.front.image || (cfg.collection_share_images || {})[coll] || cfg.default_share_image), datePublished: it.front.date || undefined, dateModified: it.front.updated || it.front.date || undefined, url: base ? url : undefined, mainEntityOfPage: base ? url : undefined, author: org, publisher: org }, crumbs([[cfg.name, base ? `${base}/` : undefined], [coll[0].toUpperCase() + coll.slice(1), abs(`${coll}/`)], [it.front.title, url]])];
+    const ld = it.front.merged_into ? null : [...faqLd, { '@context': 'https://schema.org', '@type': 'Article', headline: it.front.title, description: it.front.description || '', image: abs(it.front.image || (cfg.collection_share_images || {})[coll] || cfg.default_share_image), datePublished: it.front.date || undefined, dateModified: it.front.updated || it.front.date || undefined, url: base ? url : undefined, mainEntityOfPage: base ? url : undefined, author: org, publisher: org }, crumbs([[cfg.name, base ? `${base}/` : undefined], [collLabel(coll), abs(`${coll}/`)], [it.front.title, url]])];
     written.push(wr(`${coll}/${it.slug}/index.html`, frame(pageTpl
       .replace('<!--META-->', meta({ title: `${it.front.title} · ${cfg.name}`, description: it.front.description || homeDesc, url: base ? (it.front.merged_into ? abs(`${coll}/${it.front.merged_into}/`) : url) : '', type: 'article', image: it.front.image || (cfg.collection_share_images || {})[coll], extra: (ld ? jsonld(ld) : '') + (it.front.merged_into ? '\n<meta name="robots" content="noindex,follow">' : '') }))
       .replace('<!--ANALYTICS-->', analytics)
-      .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: coll })));
+      .replace('{{CONTENT}}', content), { rootPrefix, nav: '', footerLine: FOOTER_LINE, current: `${coll}/${it.slug}` === DEALS ? 'deals' : coll, exact: `${coll}/${it.slug}` === DEALS })));
   }
-  const label = coll[0].toUpperCase() + coll.slice(1);
+  const label = collLabel(coll);
   const listed = items.filter(i => !i.front.merged_into);
   const groups = [...new Set(listed.map(i => i.front.cluster || ''))];
   const card = (i) => `<article class="guide-card"><h2><a href="${i.slug}/">${esc(i.front.card_title || i.front.title)}</a></h2><p>${esc(i.front.card_line || i.front.description || '')}</p><p class="actions"><a class="btn btn-primary btn-sm" href="${i.slug}/">Read the guide</a>${i.front.tool_anchor ? `<a class="btn btn-ghost btn-sm" href="${i.slug}/#${i.front.tool_anchor}">${esc(i.front.tool_label || 'Open the tool')}</a>` : ''}</p></article>`;
@@ -323,7 +346,7 @@ for (const [coll, items] of Object.entries(collections)) {
   written.push(wr(`${coll}/index.html`, frame(pageTpl
     .replace('<!--META-->', meta({ title: (cfg.collection_titles || {})[coll] || `${label} · ${cfg.name}`, description: (cfg.collection_descriptions || {})[coll] || `The long version behind our picks: who each is for, what to check, and who should skip it.`, url: base ? abs(`${coll}/`) : '', image: (cfg.collection_share_images || {})[coll] , extra: jsonld(hubLd) }))
     .replace('<!--ANALYTICS-->', analytics)
-    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1>${hubIntro}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll })));
+    .replace('{{CONTENT}}', `<h1 class="h1">${esc(label)}</h1>${hubIntro}\n${list}`), { rootPrefix: '../', nav: '', footerLine: FOOTER_LINE, current: coll, exact: true })));
 }
 
 // ---------- 404, manifest, robots, sitemap ----------

@@ -77,7 +77,8 @@ if(!document.querySelector('.internal-chip')){var chip=document.createElement('a
       <span>BuyRight <em>Notes</em></span>
     </a>
     <span class="spacer"></span>
-    <nav class="sitenav" aria-label="Site"><a href="../">Shop</a><a href="../guides/">Guides</a></nav>
+    <nav class="sitenav" aria-label="Site"><a href="../">Shop</a><a href="../guides/">Buying Guides</a><a href="../guides/prime-big-deal-days-2026/">Deals</a></nav>
+    <a class="browse-btn" id="browse-btn" href=".././#shelves"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="w-menu">Menu</span> <span class="w-browse">Browse</span></a>
 
   </header>
   <main class="prose">
@@ -100,11 +101,11 @@ if(!document.querySelector('.internal-chip')){var chip=document.createElement('a
 <p>We may update these terms; the date above changes when we do. Questions go through the <a href="../contact/">Contact</a> page.</p>
   </main>
   <footer>
-    <nav>
-      <a href="../guides/">Guides</a>
-      <a href="../guides/home-espresso-setup/">Home espresso</a>
+    <nav aria-label="Main pages"><a href="../">Shop</a><a href="../guides/">Buying Guides</a><a href="../guides/prime-big-deal-days-2026/">Deals</a></nav>
+    <nav aria-label="About this site">
       <a href="../about/">About</a>
       <a href="../how-we-pick/">How we pick</a>
+      <a href="../about/#the-affiliate-part">Disclosure</a>
       <a href="../privacy/">Privacy</a>
       <a href="../terms/">Terms</a>
       <a href="../contact/">Contact</a>
@@ -112,6 +113,115 @@ if(!document.querySelector('.internal-chip')){var chip=document.createElement('a
     <span>Prices and availability change. We link you to Amazon to see today's.</span>
   </footer>
 </div>
+
+<dialog class="sheet browse" id="browse" aria-labelledby="browse-title">
+  <div class="sheet-inner">
+    <div class="grip" aria-hidden="true"></div>
+    <div class="browse-head">
+      <h2 class="h2" id="browse-title" tabindex="-1" autofocus><span class="w-menu">Menu</span> <span class="w-browse">Browse</span></h2>
+      <button class="btn btn-quiet btn-sm close" type="button" id="browse-close">Close</button>
+    </div>
+    <nav class="browse-site" aria-label="Site"><a href="../">Shop</a><a href="../guides/">Buying Guides</a><a href="../guides/prime-big-deal-days-2026/">Deals</a></nav>
+    <p class="row-note" aria-hidden="true">Categories</p>
+    <nav class="browse-cats" aria-label="Categories"><a href=".././#hot_deals">Deal watch</a><a href=".././#kitchen">Kitchen</a><a href=".././#clean_home">Clean home</a><a href=".././#beauty">Beauty</a><a href=".././#coffee_bar">Coffee bar</a><a href=".././#baking">Baking</a><a href=".././#reading">Reading</a><a href=".././#tech">Tech</a><a href=".././#baby">Baby</a><a href=".././#hosting">Hosting</a><a href=".././#pets">Pets</a><a href=".././#wellness">Wellness</a></nav>
+  </div>
+</dialog>
+<script>
+// The Browse drawer, on every page. Without this script the trigger is a plain link (to the category tiles on a product
+// page, to the Shop page's shelves anywhere else) and the footer carries Shop, Buying Guides and Deals, so nothing here is
+// needed to get around the site. The drawer is the same native <dialog class="sheet"> as "Why we picked it": top layer,
+// the page behind is inert, Escape closes, and focus goes back to the trigger. Phones: the bottom sheet. From 720px: a
+// panel under the trigger.
+(() => {
+  const btn = document.getElementById('browse-btn'), dlg = document.getElementById('browse');
+  if (!btn || !dlg || typeof dlg.showModal !== 'function') return;
+  const root = document.documentElement, inner = dlg.querySelector('.sheet-inner'), title = document.getElementById('browse-title');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, wide = window.matchMedia('(min-width: 720px)');
+  const token = (name, fallback) => getComputedStyle(root).getPropertyValue(name).trim() || fallback;
+  document.addEventListener('touchstart', () => {}, { passive: true }); // iPhone only shows :active press states when a touchstart listener exists
+  btn.setAttribute('role', 'button'); btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-controls', 'browse'); btn.setAttribute('aria-expanded', 'false');
+  // From 720px the panel hangs under the header with its right edge on the trigger's, kept on screen if the trigger
+  // ever sits too near the left. Measured from the panel's own box at offset 0, so a scrollbar gutter cannot skew it.
+  const place = () => {
+    if (!wide.matches) return;
+    const b = btn.getBoundingClientRect(), head = document.querySelector('header.top');
+    dlg.style.setProperty('--browse-top', Math.round((head ? head.getBoundingClientRect().bottom : b.bottom) + 8) + 'px');
+    dlg.style.setProperty('--browse-right', '0px'); const d = dlg.getBoundingClientRect();
+    dlg.style.setProperty('--browse-right', Math.round(Math.max(8, Math.min(d.right - b.right, d.right - d.width - 8))) + 'px');
+  };
+  const unlock = () => root.classList.remove('sheet-open', 'browse-open');
+  let jumped = false; // closed by choosing a wheel on this page: focus follows the jump, not the trigger
+
+  function open() {
+    if (dlg.open) return;
+    dlg.classList.remove('closing'); inner.style.transform = '';
+    dlg.showModal(); root.classList.add('sheet-open', 'browse-open'); place(); btn.setAttribute('aria-expanded', 'true');
+    title.focus({ preventScroll: true }); // the top of the drawer, not its first link (iPhone scrolls a dialog to whatever it focuses)
+    inner.scrollTop = 0; // always open at the top: a browser can bring a reopened dialog back at the scroll position it closed with
+    // Run from the script for the same reason as the detail sheet's slide (storefront.js openSheet). Phones: the same
+    // slide up, same easing. From 720px: a short fade with a small drop. fill: none, so nothing can stick.
+    if (!reduce && inner.animate) inner.animate(wide.matches ? [{ opacity: 0, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'none' }] : [{ transform: 'translateY(100%)' }, { transform: 'none' }],
+      { duration: wide.matches ? 200 : 420, easing: wide.matches ? token('--ease-out', 'ease-out') : token('--ease-drawer', 'cubic-bezier(.32,.72,0,1)'), fill: 'none' });
+  }
+  // shut: closed now, no animation (a wheel was chosen, or the animation has finished). close: animate out first
+  // (Close, Escape, a tap outside).
+  function shut() { dlg.classList.remove('closing'); inner.style.transform = ''; unlock(); if (dlg.open) dlg.close(); }
+  function close() {
+    if (!dlg.open || dlg.classList.contains('closing')) return;
+    if (reduce) { shut(); return; }
+    dlg.classList.add('closing');
+    // Only if this close is still the current one: a quick second Escape lets Chrome close the dialog at once, and a reopen
+    // inside the timer window (open() clears 'closing') must not be shut by this stale timer.
+    const done = () => { clearTimeout(t); inner.removeEventListener('animationend', done); if (dlg.classList.contains('closing')) shut(); };
+    const t = setTimeout(done, 300); inner.addEventListener('animationend', done);
+  }
+  // Every way of closing ends here: unlock the page, reset the trigger and hand focus back to it (Safari does not focus a
+  // tapped link, so the return is explicit). Where the trigger is not shown (a store page from 720px, reached by widening
+  // the window with the drawer open), the category bar stands in for it.
+  const back = () => btn.getClientRects().length ? btn : document.querySelector('.catnav a[aria-current]') || document.querySelector('.catnav a');
+  dlg.addEventListener('close', () => { unlock(); btn.setAttribute('aria-expanded', 'false'); if (!jumped) { const b = back(); if (b) b.focus({ preventScroll: true }); } jumped = false; });
+  btn.addEventListener('click', (e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; e.preventDefault(); open(); }); // a modified click still opens the link in a new tab
+  btn.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); open(); } }); // it is a button now: Space works as well as Enter
+  document.getElementById('browse-close').addEventListener('click', close);
+  dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); }); // Escape, and the Android back gesture
+  dlg.addEventListener('click', (e) => {
+    if (e.target === dlg) { close(); return; } // a tap on the dimmed page
+    const a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // a link to another page: the drawer stays up until that page replaces this one
+    const href = a.getAttribute('href'), el = document.getElementById(decodeURIComponent(href.slice(1)));
+    if (!el) { a.setAttribute('href', (window.__ROOT || '') + './' + href); return; } // that wheel is not on this page after all (a ?p= swap): open it on the Shop page
+    // A wheel on this page: close at once, then jump, so the browser scrolls an unlocked page. Focus moves to the wheel
+    // (it would otherwise drop to <body>), so Tab carries on from there; preventScroll, as the jump is already scrolling to it.
+    e.preventDefault(); jumped = true; shut();
+    if (location.hash === href) el.scrollIntoView(); else location.hash = href;
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+  });
+  window.addEventListener('resize', () => { if (dlg.open) place(); }, { passive: true });
+  // Crossing 720px with the drawer open (a phone turned, a window resized) swaps the bottom sheet for the panel and hides
+  // whichever links the new size does not show, which can take focus with them: close it at once (no animation, the layout
+  // under it just changed), through the close event, so focus goes back to the trigger.
+  const onWide = () => { if (dlg.open) shut(); };
+  if (wide.addEventListener) wide.addEventListener('change', onWide); else if (wide.addListener) wide.addListener(onWide);
+  window.addEventListener('pageshow', (e) => { if (e.persisted) shut(); }); // Back to this page: the drawer it left open is closed
+
+  // Drag the grip down to dismiss, as on the detail sheet (phones; the panel has no grip).
+  const grip = dlg.querySelector('.grip');
+  if (grip && window.PointerEvent) {
+    let y0 = 0, y1 = 0, t1 = 0, vel = 0, on = false;
+    grip.addEventListener('pointerdown', (e) => { on = true; y0 = y1 = e.clientY; t1 = performance.now(); vel = 0; grip.setPointerCapture(e.pointerId); inner.style.transition = 'none'; });
+    grip.addEventListener('pointermove', (e) => { if (!on) return; const now = performance.now(); vel = (e.clientY - y1) / Math.max(1, now - t1); y1 = e.clientY; t1 = now; const dy = e.clientY - y0; inner.style.transform = `translateY(${dy > 0 ? dy : dy * 0.2}px)`; });
+    const end = () => {
+      if (!on) return; on = false;
+      inner.style.transition = 'transform 300ms var(--ease-drawer)';
+      if (y1 - y0 > inner.offsetHeight * 0.3 || vel > 0.11) { inner.style.transform = 'translateY(100%)'; setTimeout(() => { inner.style.transition = ''; shut(); }, 300); }
+      else { inner.style.transform = ''; setTimeout(() => { inner.style.transition = ''; }, 300); }
+    };
+    grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end);
+  }
+})();
+</script>
+
 <script>
 // Folds (<details class="fold">) stay closed, so a jump link, a finder link or a shared #link would land on a shut box.
 // Open the fold that holds the target (on load, on hash change, and as a same-page link is tapped), then scroll to it.
